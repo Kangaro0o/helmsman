@@ -7,7 +7,7 @@
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
         <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-        <el-alert title="成功提示的文案" type="success"></el-alert>
+        <el-button @click="login">登录</el-button>
       </div>
     </div>
   </div>
@@ -15,8 +15,26 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import { login } from '@/api/login'
 
 export default {
+  data() {
+    return {
+      userInfo: {
+        username: 'kelvin',
+        password: '123456'
+      }
+    }
+  },
+  methods: {
+    login() {
+      login(this.userInfo).then(data => {
+        console.log(data)
+      }).catch(error => {
+        console.error(error)
+      })
+    }
+  },
   components: {
     Logo
   }
