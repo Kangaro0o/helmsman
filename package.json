@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "nuxt": "^2.0.0",
-    "element-ui": "^2.4.11"
+    "element-ui": "^2.4.11",
+    "js-cookie": "^2.2.0"
   },
   "devDependencies": {}
 }
