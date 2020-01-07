@@ -15,7 +15,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-// import { login } from '@/api/login'
+import { login } from '@/api/login'
 
 export default {
   data() {
@@ -28,9 +28,7 @@ export default {
   },
   methods: {
     async login() {
-      await this.$store.dispatch('login', this.userInfo).then(_ => {
-        console.log("正确的请求")
-      })
+      await this.$store.dispatch('user/Login', this.userInfo)
     }
   },
   components: {

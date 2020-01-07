@@ -1,20 +1,17 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import config from './config'
+import { state as user } from '@/store/user'
+import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
-import store from '@/store'
 
-// 创建axios实例
-const service = axios.create({
-  baseURL: 'http://120.55.168.67:7300/mock/5e13222762413f3b595c34e4/thunder', // Api的base_url
-  timeout: 15000 // 1.5秒
-})
+const service = axios.create(config)
 
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  // if (store.token) {
-  //   config.headers['token'] = getToken()
-  // }
+  if (user.token) {
+    config.headers['Auth-Token'] = getToken()
+  }
   return config
 }, error => {
   console.log(error)
