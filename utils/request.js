@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import { getToken } from '@/utils/auth'
+import store from '@/store'
 
 // 创建axios实例
 const service = axios.create({
@@ -11,7 +12,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  // if (store.getters.token) {
+  // if (store.token) {
   //   config.headers['token'] = getToken()
   // }
   return config
