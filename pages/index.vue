@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     async login() {
-      await this.$store.dispatch('user/Login', this.userInfo)
+      await this.$store.dispatch('Login', this.userInfo)
     }
   },
   components: {
