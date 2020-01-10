@@ -1,4 +1,4 @@
-# thunder
+# HelmsMan
 
 > My super-duper Nuxt.js project
 
