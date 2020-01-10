@@ -1,4 +1,4 @@
-# thunder
+# beve
 
 > My super-duper Nuxt.js project
 
