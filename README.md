@@ -1,4 +1,4 @@
-# beve
+# HelmsMan
 
 > My super-duper Nuxt.js project
 
