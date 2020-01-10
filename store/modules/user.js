@@ -35,6 +35,19 @@ const user = {
         })
       })
     },
+    // 获取用户信息
+    GetInfo({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getInfo().then(response => {
+          const data = response.data
+          commit('SET_NAME', data.username)
+          commit('SET_AVATAR', data.icon)
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     // 登出
     LogOut({ commit }) {
       return new Promise((resolve, reject) => {
