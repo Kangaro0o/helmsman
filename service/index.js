@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from './config'
-import { state as user } from '@/store/user'
+import createStore from '@/store'
 import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
 
@@ -9,7 +9,7 @@ const service = axios.create(config)
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  if (user.token) {
+  if (createStore().getters.token) {
     config.headers['Auth-Token'] = getToken()
   }
   return config
@@ -24,11 +24,6 @@ service.interceptors.response.use(response => {
   const res = response.data
   // code不是200是为报错
   if (res.code !== 200) {
-    Message({
-      message: res.message,
-      type: 'error',
-      duration: 3 * 1000
-    })
     // 401|403:未登录
     if (res.code === 401 || res.code === 403) {
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
@@ -37,9 +32,16 @@ service.interceptors.response.use(response => {
         type: 'warning'
       }).then(_ => {
         // TODO 做退出登录操作，返回登录页
-        // store.dispatch('LogOut').then(_ => {
-        //   location.reload() // 为了重新实例化vue-router对象
-        // })
+        createStore().dispatch('LogOut').then(_ => {
+          console.log("logout")
+          location.reload()
+        })
+      })
+    } else {
+      Message({
+        message: res.message,
+        type: 'error',
+        duration: 3 * 1000
       })
     }
     return Promise.reject("error")
