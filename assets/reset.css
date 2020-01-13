@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+*::after,*::before {
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+  color: #333;
+}
+ul,ol,li{
+  list-style: none;
+}
+body {
+font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC";
+height: 100%;
+width: 100%;
+font-size: 12px;
+}
+html{
+  width: 100%;
+}
