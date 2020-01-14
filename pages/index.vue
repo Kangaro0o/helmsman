@@ -1,25 +1,18 @@
 <template>
-  <div class="container"></div>
+  <div>
+    <mainPage></mainPage>
+  </div>
 </template>
 
 <script>
-import { login } from '@/api/login'
+import MainPage from '@/components/MainPage'
 
 export default {
-  data() {
-    return {
-      userInfo: {
-        username: 'kelvin',
-        password: '123456'
-      }
-    }
+  components: {
+    'mainPage': MainPage
   },
   methods: {
-    async login() {
-      await this.$store.dispatch('Login', this.userInfo)
-    }
-  },
-  components: {
+
   }
 }
 </script>

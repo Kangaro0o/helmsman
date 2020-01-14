@@ -1,5 +1,10 @@
+/**
+ * @author Kelvin
+ * @description 登录相关的方法
+ */
 import request from '@/service'
-import { user } from './url';
+import { user } from '@/api/url';
+
 export function login(userInfo) {
   return request({
     url: user.login,

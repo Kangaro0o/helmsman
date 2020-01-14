@@ -1,3 +1,7 @@
+/**
+ * @author Kelvin
+ * @description 菜单相关方法
+ */
 import request from '@/service'
 import { menu } from '@/api/url'
 
