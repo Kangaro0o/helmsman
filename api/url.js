@@ -6,3 +6,11 @@ export const user = {
   info: '/info',
   logout: '/logout'
 }
+
+/**
+ * 菜单相关的URL
+ */
+export const menu = {
+  navItems: '/navItems',
+  tabItems: '/tabItems'
+}

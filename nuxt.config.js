@@ -12,7 +12,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
   /*
@@ -31,7 +31,8 @@ export default {
   */
   plugins: [
     { src: '@/plugins/element-ui' },
-    { src: '@/plugins/nprogress', ssr: false }
+    { src: '@/plugins/nprogress', ssr: false },
+    { src: '@/plugins/common', srr: false }
   ],
   /*
   ** Nuxt.js dev-modules
