@@ -33,12 +33,12 @@
             <span class="icon"></span>
           </label>
         </form>
-        <ul class="search-result" v-show="isFocus">
+        <!-- <ul class="search-result" v-show="isFocus">
           <li v-for="(item,index) in results" :key="index">
             <span class="item-name">{{item.name}}</span>
             <span class="item-num">约有{{item.number}}件</span>
           </li>
-        </ul>
+        </ul>-->
       </div>
     </div>
     <div
@@ -64,24 +64,19 @@
 </template>
 
 <script>
-// import $ from 'jQuery'
-// import HeaderMenu from './HeaderMenu'
-
+import { getNavItems, getTabItems } from '@/api/menu';
+import { Message } from 'element-ui'
 export default {
+  created() {
+    this.getNavItems()
+  },
+  mounted() {
+    this.getTabItems()
+  },
   data() {
     return {
-      navItems: [
-        { name: '小米手机', type: 'miphone' },
-        { name: '红米', type: 'redmi' },
-        { name: '平板 · 笔记本', type: 'pad' },
-        { name: '电视', type: 'tv' },
-        { name: '盒子 · 影音', type: 'box' },
-        { name: '路由器', type: 'router' },
-        { name: '智能硬件', type: 'hardware' },
-        { name: '服务', type: '' },
-        { name: '社区', type: '' }
-      ],
-      results: [
+      navItems: [],
+      /* results: [
         { name: '小米手机5', number: '11' },
         { name: '空气净化器2', number: '1' },
         { name: '活塞耳机', number: '4' },
@@ -92,57 +87,8 @@ export default {
         { name: '小米体重秤', number: '1' },
         { name: '小米插线板', number: '13' },
         { name: '配件优惠套装', number: '32' }
-      ],
-      tabItems: {
-        miphone: [
-          { title: '小米6', imgUrl: '/img/xm6.png', link: 'https://www.mi.com/mi6/', price: '2499元起', info: '新品' },
-          { title: '小米Max 2', imgUrl: '/img/max2.png', link: 'https://www.mi.com/max2/', price: '1699元起', info: '新品' },
-          { title: '小米Note 2', imgUrl: '/img/xiaomiNOTE2.jpg', link: 'https://www.mi.com/minote2/', price: '2799元起', info: '现货' },
-          { title: '小米MIX', imgUrl: '/img/MIX.jpg', link: 'https://www.mi.com/mix/', price: '3499元起', info: '现货' },
-          { title: '小米5s Plus', imgUrl: '/img/5splus.jpg', link: 'https://www.mi.com/mi5splus/', price: '2299元起', info: '现货' },
-          { title: '小米手机5c', imgUrl: '/img/mi5c.png', link: 'https://www.mi.com/mi5c/', price: '1499元起', info: '现货' },
-        ],
-        redmi: [
-          { title: '红米Note 4X', imgUrl: '/img/hmn4x.jpg', link: 'https://www.mi.com/redminote4x/', price: '799元起', info: '新品' },
-          { title: '红米4X', imgUrl: '/img/hm4x.jpg', link: 'https://www.mi.com/redmi4x/', price: '699元起', info: '新品' },
-          { title: '红米4A', imgUrl: '/img/hm4a.png', link: 'https://www.mi.com/redmi4a/', price: '599元起', info: '新品' },
-          { title: '红米4', imgUrl: '/img/hm4.jpg', link: 'https://www.mi.com/redmi4', price: '799元起', info: '新品' },
-        ],
-        pad: [
-          { title: '小米平板3 64GB', imgUrl: '/img/mipad3.png', link: 'https://www.mi.com/mipad3/', price: '1499元', info: '新品' },
-          { title: '小米笔记本Air 12.5', imgUrl: '/img/bijiben12.5.jpg', link: 'https://www.mi.com/mibookair-12/', price: '3599元', info: '新品' },
-          { title: '小米笔记本Air 13.3', imgUrl: '/img/bijiben13.3.jpg', link: 'https://www.mi.com/mibookair/', price: '4999元', info: '新品' }
-        ],
-        tv: [
-          { title: '小米电视4 49英寸', imgUrl: '/img/xmds_49.png', link: 'https://www.mi.com/mitv4/49/', price: '3499元', info: '新品' },
-          { title: '小米电视4 55英寸', imgUrl: '/img/xmds_55.png', link: 'https://www.mi.com/mitv4/55/', price: '3999元起', info: '新品' },
-          { title: '小米电视4 65英寸', imgUrl: '/img/xmds_65.png', link: 'https://www.mi.com/mitv4/65/', price: '9999元', info: '新品' },
-          { title: '小米电视4A 43英寸', imgUrl: '/img/xmds4a_43.png', link: 'https://www.mi.com/mitv4A/43/', price: '2099元', info: '新品' },
-          { title: '小米电视4A 49英寸', imgUrl: '/img/xmds4a_49.png', link: 'https://www.mi.com/mitv4A/49/', price: '2599元', info: '新品' }
-        ],
-        box: [
-          { title: '小米盒子3s', imgUrl: '/img/mihezi.png', link: 'https://www.mi.com/mibox3s/', price: '299元', info: '新品' },
-          { title: '小米盒子3c', imgUrl: '/img/mihezi3c.png', link: 'https://www.mi.com/mibox3c/', price: '199元', info: '新品' },
-          { title: '小米盒子3 增强版', imgUrl: '/img/hezi3s.jpg', link: 'https://www.mi.com/hezi3s/', price: '399元', info: '新品' },
-          { title: '小米家庭影院', imgUrl: '/img/jiatingyingyuan.png', link: 'https://www.mi.com/misurround/', price: '1999元', info: '新品' },
-          { title: '小米家庭音响 标准版', imgUrl: '/img/yinxiang.jpg', link: 'https://item.mi.com/1160800074.html', price: '699元', info: '新品' }
-        ],
-        router: [
-          { title: '小米路由器 HD/Pro', imgUrl: '/img/HD-Pro.png', link: 'https://www.mi.com/miwifihd/', price: '499元起', info: '新品' },
-          { title: '小米路由器 3G', imgUrl: '/img/3G.png', link: 'https://www.mi.com/miwifi3g/', price: '249元', info: '新品' },
-          { title: '小米路由器 3', imgUrl: '/img/xmlyq3.png', link: 'https://www.mi.com/miwifi3/', price: '149元起', info: '新品' },
-          { title: '小米路由器 3C', imgUrl: '/img/3C.png', link: 'https://www.mi.com/miwifi3c/', price: '99元', info: '新品' },
-          { title: '小米WiFi电力猫', imgUrl: '/img/cilimao.png', link: 'https://www.mi.com/plc/', price: '249元', info: '新品' },
-          { title: '小米WiFi放大器 2', imgUrl: '/img/fdq2.jpg', link: 'https://item.mi.com/1164700010.html', price: '49元', info: '新品' }
-        ],
-        hardware: [
-          { title: '小米体脂秤', imgUrl: '/img/tzc.jpg', link: 'https://www.mi.com/scale2/', price: '199元', info: '新品' },
-          { title: '小米手环2', imgUrl: '/img/sh2.png', link: 'https://www.mi.com/shouhuan2/', price: '149元', info: '新品' },
-          { title: '小米净水器', imgUrl: '/img/jsqcs.png', link: 'https://www.mi.com/water3/', price: '1499元起', info: '新品' },
-          { title: '小米VR眼镜 PLAY2', imgUrl: '/img/xmvrplay2.png', link: 'https://www.mi.com/mivr2c/', price: '99元', info: '新品' },
-          { title: '米家IH电饭煲', imgUrl: '/img/dfb.jpg', link: 'https://www.mi.com/dianfanbao2/', price: '399元', info: '新品' },
-        ]
-      },
+      ], */
+      tabItems: {},
       selected: '',
       isFocus: false,
       isEnter: false,
@@ -151,6 +97,33 @@ export default {
     }
   },
   methods: {
+    getNavItems() {
+      getNavItems().then(res => {
+        // 根据返回的状态码获取状态对象
+        let result = this.$resultCode.getStatus(res.code)
+        // 把返回的数据赋值给data()中定义好的变量
+        this.navItems = res.data.navItems
+        // 根据状态对象显示响应的提示信息
+        if (res.message !== "" && res.message !== null) {
+          Message({
+            message: res.message,
+            type: result.type
+          })
+        }
+      })
+    },
+    getTabItems() {
+      getTabItems().then(res => {
+        let result = this.$resultCode.getStatus(res.code)
+        this.tabItems = res.data.tabItems
+        if (res.message !== "" && res.message !== null) {
+          Message({
+            message: res.message,
+            type: result.type
+          })
+        }
+      })
+    },
     inputFocus: function () {
       this.isFocus = true
     },
