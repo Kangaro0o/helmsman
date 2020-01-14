@@ -2,15 +2,22 @@
  * 用户相关的URL
  */
 export const user = {
-  login: '/login',
-  info: '/info',
-  logout: '/logout'
+  login: '/user/login',
+  info: '/user/info',
+  logout: '/user/logout'
 }
 
 /**
  * 菜单相关的URL
  */
 export const menu = {
-  navItems: '/navItems',
-  tabItems: '/tabItems'
+  navItems: '/menu/navItems',
+  tabItems: '/menu/tabItems'
+}
+
+/**
+ * 商品相关的URL
+ */
+export const goods = {
+  carouselItems: '/goods/carouselItems'
 }
