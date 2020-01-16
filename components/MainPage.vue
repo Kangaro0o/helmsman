@@ -1,11 +1,12 @@
 <template>
   <div class="main">
     <div class="main-top">
+      <span class="main-nav"></span>
       <mainCarousel></mainCarousel>
     </div>
     <div class="main-page">
-      <!--小米明星单品-->
-      <!-- <starGoods></starGoods> -->
+      <!--秒杀专栏-->
+      <mainSecKill></mainSecKill>
       <!--家电-->
       <!-- <householdAppliances></householdAppliances> -->
       <!--智能-->
@@ -30,7 +31,7 @@
 
 <script>
 import MainCarousel from '@/components/MainCarousel'
-// import StarGoods from './StarGoods'
+import MainSecKill from '@/components/MainSecKill'
 // import HouseholdAppliances from './HouseholdAppliances'
 // import Intelligence from './Intelligence'
 // import Collocation from './Collocation'
@@ -43,9 +44,8 @@ import MainCarousel from '@/components/MainCarousel'
 
 export default {
   components: {
-    // 'mainNav': MainNav,
     'mainCarousel': MainCarousel,
-    // 'starGoods': StarGoods,
+    'mainSecKill': MainSecKill,
     // 'householdAppliances': HouseholdAppliances,
     // 'intelligence': Intelligence,
     // 'collocation': Collocation,
@@ -68,8 +68,19 @@ export default {
     position: relative;
   }
   .main-page {
-    background: #f5f5f5;
+    position: relative;
+    width: 100%;
     margin: 0 auto;
+    background: #f5f5f5;
+  }
+  .main-nav {
+    width: 1226px;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    height: 458px;
   }
 }
 </style>

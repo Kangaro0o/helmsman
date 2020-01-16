@@ -51,7 +51,8 @@
         <li v-for="(key,index) in tabItems[item.type]" :key="index">
           <div class="product">
             <p class="info">{{key.info}}</p>
-            <a :href="key.link">
+            <!-- TODO:点击图片跳转 -->
+            <a href="#">
               <img :src="key.imgUrl" alt />
             </a>
             <p class="title">{{key.title}}</p>
@@ -114,6 +115,7 @@ export default {
     },
     getTabItems() {
       getTabItems().then(res => {
+        console.log(res)
         let result = this.$resultCode.getStatus(res.code)
         this.tabItems = res.data.tabItems
         if (res.message !== "" && res.message !== null) {
