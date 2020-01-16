@@ -4,7 +4,7 @@
       <transition-group name="fade" tag="div" class="fade">
         <div
           class="fade-item"
-          v-for="(item,index) in carouselItems"
+          v-for="(item,index) in fadeItems"
           v-show="index === curIndex"
           :key="item.link"
         >
@@ -20,48 +20,33 @@
         <span class="icon"></span>
       </div>
       <div class="play-dot">
-        <span
-          class="dot"
-          v-for="n in carouselItems.length"
-          :class="{active: n === curIndex + 1}"
-          :key="n"
-        ></span>
+        <span class="dot" v-for="n in 5" :class="{active: n === curIndex + 1}" :key="n"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getCarouselItems } from '@/api/goods';
 export default {
   data() {
     return {
       curIndex: 0,
       timeId: '',
-      carouselItems: []
+      fadeItems: [
+        { imgUrl: '/img/xmad-1.jpg', link: 'https://item.mi.com/buyphone/redmi4x' },
+        { imgUrl: '/img/xmad-2.jpg', link: 'https://item.mi.com/product/10000030.html' },
+        { imgUrl: '/img/xmad-3.jpg', link: 'https://item.mi.com/product/10000029.html' },
+        { imgUrl: '/img/xmad-4.jpg', link: 'https://www.mi.com/buytv/' },
+        { imgUrl: '/img/xmad-5.jpg', link: 'https://www.mi.com/mibookair/' }
+      ]
     }
-  },
-  created() {
-    this.getCarouselItems()
   },
   mounted() { //Vue2.0 替换了之前的ready，详见文档生命周期函数mounted
     this.autoPlay()
   },
   methods: {
-    getCarouselItems() {
-      getCarouselItems().then(res => {
-        let status = this.$resultCode.getStatus(res.code)
-        this.carouselItems = res.data.carouselItems
-        if (res.message !== "" && res.message !== null) {
-          Message({
-            message: res.message,
-            type: result.type
-          })
-        }
-      })
-    },
     playNext() {
-      let lastIndex = this.carouselItems.length - 1
+      let lastIndex = this.fadeItems.length - 1
       if (this.curIndex < lastIndex) {
         this.curIndex += 1
       } else {
@@ -69,7 +54,7 @@ export default {
       }
     },
     playPre() {
-      let lastIndex = this.carouselItems.length - 1
+      let lastIndex = this.fadeItems.length - 1
       if (this.curIndex > 0) {
         this.curIndex -= 1
       } else {
@@ -107,7 +92,6 @@ export default {
     }
     .play-pre {
       position: absolute;
-      left: 0;
       top: 50%;
       margin-top: -35px;
       z-index: 2;
