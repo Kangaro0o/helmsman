@@ -8,14 +8,13 @@
 </template>
 
 <script>
-import Loghead from '@/components/log_head'
-import Logbottom from '@/components/log_bottom'
+import log_head from '@/components/log_head'
+import log_bottom from '@/components/log_bottom'
 export default {
   components: {
-    'loghead': Loghead,
-    'logbottom': Logbottom
+    'loghead': log_head,
+    'logbottom': log_bottom
   }
-    
 }
 </script>
 
