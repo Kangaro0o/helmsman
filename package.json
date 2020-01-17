@@ -12,13 +12,16 @@
   },
   "dependencies": {
     "axios": "^0.19.1",
+    "crypto-js": "^3.1.9-1",
     "element-ui": "^2.4.11",
+    "hq": "^0.0.4",
     "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "nuxt": "2.11.0"
   },
   "devDependencies": {
+    "mockjs": "^1.1.0",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.1"
   }
