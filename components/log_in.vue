@@ -3,7 +3,7 @@
         <div class="login-box">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
                 class="demo-ruleForm login-container" status-icon>
-            <h3 class="title">系统登录</h3>
+            <h3 class="title">账号登录</h3>
             <el-form-item prop="account">
             <el-input type="text" v-model="ruleForm.account" auto-complete="off" placeholder="账号"
                         id="loginEmail"></el-input>
@@ -111,11 +111,11 @@ export default {
 }
 
 .login-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
+  top: 20%;
+  left: 70%;
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   display: block;
   width: 100%;
   max-width: 400px;
