@@ -15,7 +15,7 @@ export default {
 </script>
 
 
-<style lang="stylus" scoped>
+<style  scoped>
 .h_logo {
     width: 200px;
     height: 98px;
