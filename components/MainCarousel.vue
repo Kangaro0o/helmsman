@@ -4,11 +4,12 @@
       <transition-group name="fade" tag="div" class="fade">
         <div
           class="fade-item"
-          v-for="(item,index) in fadeItems"
+          v-for="(item,index) in carouselItems"
           v-show="index === curIndex"
-          :key="item.link"
+          :key="item.gid"
         >
-          <a :href="item.link">
+          <!-- 商品id，用于跳转item.gid -->
+          <a href="#">
             <img :src="item.imgUrl" alt />
           </a>
         </div>
@@ -20,33 +21,41 @@
         <span class="icon"></span>
       </div>
       <div class="play-dot">
-        <span class="dot" v-for="n in 5" :class="{active: n === curIndex + 1}" :key="n"></span>
+        <span
+          class="dot"
+          v-for="n in carouselItems.length"
+          :class="{active: n === curIndex + 1}"
+          :key="n"
+        ></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getCarouselItems } from '@/api/goods'
 export default {
   data() {
     return {
       curIndex: 0,
       timeId: '',
-      fadeItems: [
-        { imgUrl: '/img/xmad-1.jpg', link: 'https://item.mi.com/buyphone/redmi4x' },
-        { imgUrl: '/img/xmad-2.jpg', link: 'https://item.mi.com/product/10000030.html' },
-        { imgUrl: '/img/xmad-3.jpg', link: 'https://item.mi.com/product/10000029.html' },
-        { imgUrl: '/img/xmad-4.jpg', link: 'https://www.mi.com/buytv/' },
-        { imgUrl: '/img/xmad-5.jpg', link: 'https://www.mi.com/mibookair/' }
-      ]
+      carouselItems: []
     }
+  },
+  created() {
+    this.getCarouselItems()
   },
   mounted() { //Vue2.0 替换了之前的ready，详见文档生命周期函数mounted
     this.autoPlay()
   },
   methods: {
+    getCarouselItems() {
+      getCarouselItems().then(res => {
+        this.carouselItems = res.data.carouselItems
+      })
+    },
     playNext() {
-      let lastIndex = this.fadeItems.length - 1
+      let lastIndex = this.carouselItems.length - 1
       if (this.curIndex < lastIndex) {
         this.curIndex += 1
       } else {
@@ -54,7 +63,7 @@ export default {
       }
     },
     playPre() {
-      let lastIndex = this.fadeItems.length - 1
+      let lastIndex = this.carouselItems.length - 1
       if (this.curIndex > 0) {
         this.curIndex -= 1
       } else {

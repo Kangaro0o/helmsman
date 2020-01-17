@@ -18,7 +18,7 @@
 export default {
   data() {
     return {
-      starGoods: [
+      seckillGoods: [
         { title: '小米5c 64GB 移动版', text: '直降200元，轻薄金属机身', price: '1299元', imgUrl: './static/img/stargoods-1.png', link: 'https://item.mi.com/product/10000030.html' },
         { title: '小米5s Plus', text: '64GB版本，下单立减200元', price: '2099元起', imgUrl: './static/img/stargoods-2.png', link: 'https://item.mi.com/product/10000025.html' },
         { title: '小米MIX', text: '下单立减200元，领券再减50元', price: '3249元起', imgUrl: './static/img/stargoods-3.png', link: 'https://item.mi.com/product/10000022.html' },

@@ -21,3 +21,10 @@ export const menu = {
 export const goods = {
   carouselItems: '/goods/carouselItems'
 }
+
+/**
+ * 秒杀商品相关的URL
+ */
+export const seckill = {
+  slide: '/seckill/slide'
+}

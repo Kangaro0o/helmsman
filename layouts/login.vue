@@ -1,6 +1,6 @@
 <template>
   <div>
-       <log></log>
+       <log1></log1>
        
     <div>我的博客导航栏在这里</div>
     <nuxt/>
