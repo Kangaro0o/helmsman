@@ -50,13 +50,12 @@
       <ul v-for="(item,index) in navItems" v-show="item.type === selected" :key="index">
         <li v-for="(key,index) in tabItems[item.type]" :key="index">
           <div class="product">
-            <p class="info">{{key.info}}</p>
-            <!-- TODO:点击图片跳转 -->
+            <!-- TODO:点击图片跳转 item.goods_id -->
             <a href="#">
               <img :src="key.imgUrl" alt />
             </a>
-            <p class="title">{{key.title}}</p>
-            <p class="price">{{key.price}}</p>
+            <p class="title">{{key.goods_name}}</p>
+            <p class="price">{{key.goods_price}}</p>
           </div>
         </li>
       </ul>
@@ -307,16 +306,9 @@ export default {
           padding-right: 10px;
         }
         a > img {
+          margin-top: 40px;
           width: 159px;
           height: 110px;
-        }
-        .info {
-          line-height: 10px;
-          height: 10px;
-          padding: 5px 20px;
-          margin-bottom: 20px;
-          color: #ff6700;
-          border: 1px solid #ff6700;
         }
         .title {
           margin-top: 20px;

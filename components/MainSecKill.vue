@@ -2,29 +2,51 @@
   <div class="seckill-goods">
     <h2>舵手秒杀</h2>
     <div class="goods-container">
-      <div class="goods-item" v-for="(item,index) in starGoods" :key="index">
-        <a :href="item.link">
+      <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
+        <!-- 商品id:item.goods_id -->
+        <a href="#">
           <img :src="item.imgUrl" alt />
-          <p class="title">{{item.title}}</p>
+          <p class="title">{{item.goods_name}}</p>
         </a>
-        <p class="text">{{item.text}}</p>
-        <p class="price">{{item.price}}</p>
+        <p class="text">{{item.desc}}</p>
+        <p class="price">{{item.goods_price}}元</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { slide } from '@/api/seckill'
 export default {
+  created() {
+    this.getSlide()
+  },
   data() {
     return {
-      seckillGoods: [
-        { title: '小米5c 64GB 移动版', text: '直降200元，轻薄金属机身', price: '1299元', imgUrl: './static/img/stargoods-1.png', link: 'https://item.mi.com/product/10000030.html' },
-        { title: '小米5s Plus', text: '64GB版本，下单立减200元', price: '2099元起', imgUrl: './static/img/stargoods-2.png', link: 'https://item.mi.com/product/10000025.html' },
-        { title: '小米MIX', text: '下单立减200元，领券再减50元', price: '3249元起', imgUrl: './static/img/stargoods-3.png', link: 'https://item.mi.com/product/10000022.html' },
-        { title: '小米电视4A 43英寸', text: '老人小孩都会用的人工智能语音电视', price: '2099元', imgUrl: './static/img/stargoods-4.png', link: 'https://item.mi.com/product/5348.html' },
-        { title: '小米平板3', text: '今早10点开售', price: '1499元', imgUrl: './static/img/stargoods-5.png', link: 'https://www.mi.com/mipad3/' }
-      ]
+      time_id: 0,
+      start_time: 0,
+      end_time: 0,
+      seckillGoods: []
+    }
+  },
+  methods: {
+    getSlide() {
+      slide().then(res => {
+        // 根据返回的状态码获取状态对象
+        let result = this.$resultCode.getStatus(res.code)
+        // 把返回的数据赋值给data()中定义好的变量
+        this.time_id = res.data.time_id
+        this.start_time = res.data.start_time
+        this.end_time = res.data.end_time
+        this.seckillGoods = res.data.list
+        // 根据状态对象显示响应的提示信息
+        if (res.message !== "" && res.message !== null) {
+          Message({
+            message: res.message,
+            type: result.type
+          })
+        }
+      })
     }
   }
 }
