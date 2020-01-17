@@ -92,7 +92,7 @@ export default {
 }
 
 </script>
-<style scoped>
+<style  scoped>
 
 .title {
   text-align: center;
