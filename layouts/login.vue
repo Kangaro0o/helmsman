@@ -1,23 +1,21 @@
 <template>
   <div>
-       <log></log>
-       
-    <div>我的博客导航栏在这里</div>
+    <loghead></loghead>
     <nuxt/>
-    <footers></footers>
-   
+    <logbottom></logbottom>
   </div>
   
 </template>
 
 <script>
-import Footer from '@/components/Footer'
-import log from '@/components/log_in'
+import Loghead from '@/components/log_head'
+import Logbottom from '@/components/log_bottom'
 export default {
-    components: {
-    'footers': Footer,
-    'log': log
+  components: {
+    'loghead': Loghead,
+    'logbottom': Logbottom
   }
+    
 }
 </script>
 
