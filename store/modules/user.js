@@ -27,8 +27,8 @@ const user = {
         login(username, password).then(response => {
           const data = response.data
           setToken(data.token)
-          console.log("store login被调用")
-          commit('SET_TOKEN', data.token)
+          console.log("store login被调用").
+            commit('SET_TOKEN', data.token)
           resolve()
         }).catch(error => {
           reject(error)

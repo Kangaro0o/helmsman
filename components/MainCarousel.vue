@@ -6,9 +6,9 @@
           class="fade-item"
           v-for="(item,index) in carouselItems"
           v-show="index === curIndex"
-          :key="item.gid"
+          :key="item.goods_id"
         >
-          <!-- 商品id，用于跳转item.gid -->
+          <!-- 商品id，用于跳转item.goods_id -->
           <a href="#">
             <img :src="item.imgUrl" alt />
           </a>

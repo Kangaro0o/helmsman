@@ -99,30 +99,33 @@ export default {
   methods: {
     getNavItems() {
       getNavItems().then(res => {
-        // 根据返回的状态码获取状态对象
-        let result = this.$resultCode.getStatus(res.code)
-        // 把返回的数据赋值给data()中定义好的变量
-        this.navItems = res.data.navItems
-        // 根据状态对象显示响应的提示信息
-        if (res.message !== "" && res.message !== null) {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错了，则弹框提示
+        if (status !== success) {
           Message({
             message: res.message,
-            type: result.type
+            type: status.type
           })
+          return
         }
+        this.navItems = res.data.navItems
       })
-    },
+    }
+    ,
     getTabItems() {
       getTabItems().then(res => {
-        console.log(res)
-        let result = this.$resultCode.getStatus(res.code)
-        this.tabItems = res.data.tabItems
-        if (res.message !== "" && res.message !== null) {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错则弹框提示
+        if (status !== success) {
           Message({
             message: res.message,
-            type: result.type
+            type: status.type
           })
+          return
         }
+        this.tabItems = res.data.tabItems
       })
     },
     inputFocus: function () {
