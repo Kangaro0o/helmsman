@@ -1,7 +1,11 @@
 <template>
   <div>
     <loghead></loghead>
+<<<<<<< HEAD
     <nuxt />
+=======
+    <nuxt/>
+>>>>>>> 4892f00f43bd46d04a05d936a196d5ca149d7cdf
     <logbottom></logbottom>
   </div>
 </template>
