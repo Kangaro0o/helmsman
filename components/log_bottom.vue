@@ -22,7 +22,7 @@ export default {
 </script>
 
 
-<style lang="stylus" scoped>
+<style scoped>
 .n-footer {
     background: #fff;
     margin-top: 0;

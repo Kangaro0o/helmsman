@@ -20,7 +20,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style  scoped>
 .h_logo {
   width: 200px;
   height: 98px;

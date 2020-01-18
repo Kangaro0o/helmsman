@@ -92,7 +92,7 @@ export default {
 }
 
 </script>
-<style lang="stylus" scoped>
+<style  scoped>
 
 .title {
   text-align: center;
