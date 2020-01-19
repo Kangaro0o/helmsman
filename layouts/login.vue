@@ -1,11 +1,7 @@
 <template>
-  <div>
+  <div id = "app">
     <loghead></loghead>
-<<<<<<< HEAD
-    <nuxt />
-=======
     <nuxt/>
->>>>>>> 4892f00f43bd46d04a05d936a196d5ca149d7cdf
     <logbottom></logbottom>
   </div>
 </template>
@@ -20,5 +16,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #app {
+    font-size: 14px;
+    font-family: arial,"Hiragino Sans GB", "Microsoft YaHei","微軟正黑體","儷黑 Pro", sans-serif;
+    color: #757575;
+  }
+</style>
 
 

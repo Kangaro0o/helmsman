@@ -6,7 +6,6 @@
 </template>
 <script>
 import log from '@/components/log_in'
-
 export default {
   components: {
     'log': log

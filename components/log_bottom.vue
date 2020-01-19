@@ -37,6 +37,18 @@ export default {
 .nf-link-area {
     text-align: center;
 }
+.nf-link-area li{
+    display: inline-block;
+}.nf-link-area a:hover, .nf-link-area a.current {
+    color: #333;
+}
+.nf-link-area a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 0 10px;
+    color: #757575;
+}
 .show_more_lang {
     background: #fff;
     border: 1px solid #ccc;
@@ -51,6 +63,7 @@ button, input, select, textarea {
 .nf-intro {
     padding: 10px;
 }
-
-
+a {
+    color: #757575;
+}
 </style>

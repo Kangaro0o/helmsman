@@ -22,14 +22,17 @@ export default {
 
 <style  scoped>
 .h_logo {
-  width: 200px;
-  height: 98px;
-  background: url("https://account.xiaomi.com/static/res/7f6f2f5/account-static/respassport/acc-2014/img/mistore_logo.png")
-    no-repeat;
+    width: 200px;
+    height: 98px;
+    background: url(https://account.xiaomi.com/static/res/7f6f2f5/account-static/respassport/acc-2014/img/mistore_logo.png) no-repeat;
 }
-.h_panel,
-.login_banner {
-  width: 1130px;
-  margin: 0 auto;
+.h_logo a {
+    display: block;
+    height: 98px;
+    text-indent: -9999em;
+}
+.h_panel, .login_banner {
+    width: 1130px;
+    margin: 0 auto;
 }
 </style>
