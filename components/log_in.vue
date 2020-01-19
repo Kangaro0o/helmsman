@@ -101,9 +101,10 @@ export default {
 
 .page {
   background-color: #eff3f4;
-  position: absolute;
+  position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 515px;
+  padding-top: 30px;
   font-size: 16px;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
@@ -113,14 +114,15 @@ export default {
 .login-box {
   position: relative;
   top: 20%;
-  left: 70%;
+  left: 0;
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, 0);
+  transform: translate(-50%, 0%);
   display: block;
   width: 100%;
   max-width: 400px;
   background-color: #FFF;
   margin: 0;
+  margin-left: 1000px;
   padding: 2.25em;
   box-sizing: border-box;
   border: solid 1px #DDD;
