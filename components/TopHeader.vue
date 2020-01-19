@@ -50,13 +50,12 @@
       <ul v-for="(item,index) in navItems" v-show="item.type === selected" :key="index">
         <li v-for="(key,index) in tabItems[item.type]" :key="index">
           <div class="product">
-            <p class="info">{{key.info}}</p>
-            <!-- TODO:点击图片跳转 -->
+            <!-- TODO:点击图片跳转 item.goods_id -->
             <a href="#">
               <img :src="key.imgUrl" alt />
             </a>
-            <p class="title">{{key.title}}</p>
-            <p class="price">{{key.price}}</p>
+            <p class="title">{{key.goods_name}}</p>
+            <p class="price">{{key.goods_price}}</p>
           </div>
         </li>
       </ul>
@@ -100,30 +99,33 @@ export default {
   methods: {
     getNavItems() {
       getNavItems().then(res => {
-        // 根据返回的状态码获取状态对象
-        let result = this.$resultCode.getStatus(res.code)
-        // 把返回的数据赋值给data()中定义好的变量
-        this.navItems = res.data.navItems
-        // 根据状态对象显示响应的提示信息
-        if (res.message !== "" && res.message !== null) {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错了，则弹框提示
+        if (status !== success) {
           Message({
             message: res.message,
-            type: result.type
+            type: status.type
           })
+          return
         }
+        this.navItems = res.data.navItems
       })
-    },
+    }
+    ,
     getTabItems() {
       getTabItems().then(res => {
-        console.log(res)
-        let result = this.$resultCode.getStatus(res.code)
-        this.tabItems = res.data.tabItems
-        if (res.message !== "" && res.message !== null) {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错则弹框提示
+        if (status !== success) {
           Message({
             message: res.message,
-            type: result.type
+            type: status.type
           })
+          return
         }
+        this.tabItems = res.data.tabItems
       })
     },
     inputFocus: function () {
@@ -307,16 +309,9 @@ export default {
           padding-right: 10px;
         }
         a > img {
+          margin-top: 40px;
           width: 159px;
           height: 110px;
-        }
-        .info {
-          line-height: 10px;
-          height: 10px;
-          padding: 5px 20px;
-          margin-bottom: 20px;
-          color: #ff6700;
-          border: 1px solid #ff6700;
         }
         .title {
           margin-top: 20px;
