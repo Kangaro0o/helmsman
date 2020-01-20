@@ -24,7 +24,7 @@ const user = {
     // 登录
     Login({ commit }, { username, password }) {
       return new Promise((resolve, reject) => {
-        login(username, password).then(response => {
+        login({ username, password }).then(response => {
           const data = response.data
           setToken(data.token)
           console.log("store login被调用").
