@@ -49,7 +49,7 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
           <i>:</i>
           <span>30</span>
           <i>:</i>
-          <span>{{seconds}}</span>
+          <span>19</span>
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
