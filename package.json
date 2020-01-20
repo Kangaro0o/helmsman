@@ -4,6 +4,12 @@
   "description": "一个专门让你剁手的网站",
   "author": "Kelvin",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
