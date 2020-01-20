@@ -47,9 +47,9 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
         <div class="countdown clearfix">
           <span>00</span>
           <i>:</i>
-          <span>24</span>
+          <span>30</span>
           <i>:</i>
-          <span>11</span>
+          <span>{{seconds}}</span>
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
@@ -98,6 +98,12 @@ export default {
         this.end_time = res.data.end_time
         this.seckillGoods = res.data.list
       })
+    }
+  },
+  computed: {
+    // seconds的getter
+    seconds: function () {
+      return this.start_time
     }
   }
 }
