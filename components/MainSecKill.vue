@@ -43,13 +43,14 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 7x4iTALjhcgVQSIl3v87w5vePcY/AQYAFYR6skFSqBUAAAAASUVORK5CYII="
           alt="小米闪购"
         />
-        <div class="desc">距离结束还有</div>
-        <div class="countdown clearfix">
+        <div class="desc" v-show="!isEnd">距离结束还有</div>
+        <div class="desc" v-show="isEnd">本场已经结束</div>
+        <div class="countdown clearfix" v-show="!isEnd">
           <span>00</span>
           <i>:</i>
           <span>30</span>
           <i>:</i>
-          <span>19</span>
+          <span>{{second}}</span>
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
@@ -78,7 +79,11 @@ export default {
       time_id: '',
       start_time: '',
       end_time: '',
-      seckillGoods: []
+      seckillGoods: [],
+      second: '',
+      minute: '',
+      hour: '',
+      isEnd: false
     }
   },
   methods: {
@@ -97,13 +102,23 @@ export default {
         this.start_time = res.data.start_time
         this.end_time = res.data.end_time
         this.seckillGoods = res.data.list
+        this.countdown()
       })
-    }
-  },
-  computed: {
-    // seconds的getter
-    seconds: function () {
-      return this.start_time
+    },
+    countdown() {
+      let date = null
+      let start_time = new Date(this.start_time)
+      let end_time = new Date(end_time)
+      setInterval(_ => {
+        date = new Date()
+        // 如果当前时间超过截止日期
+        if (date > end_time) {
+          // 本场结束
+          this.isEnd = true
+        }
+        this.second = date.getSeconds()
+      }, 1000)
+
     }
   }
 }
