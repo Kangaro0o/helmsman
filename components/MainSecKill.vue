@@ -1,9 +1,17 @@
 <template>
   <div class="seckill-goods">
-    <h2>舵手秒杀</h2>
+    <div class="box-hd">
+      <h2>舵手秒杀</h2>
+      <div class="more">
+        <a href="//www.mi.com/a/h/9891.html" target="_blank" class="more-link">
+          查看全部
+          <i class="el-icon-caret-right"></i>
+        </a>
+      </div>
+    </div>
     <div class="goods-container">
       <div class="flashsale-countdown">
-        <div class="round">14:00 场</div>
+        <div class="round">10:00 场</div>
         <img
           src="data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAA1CAYAAAAklDnhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
@@ -33,25 +41,27 @@ kBtXIpwT3iFV06zqquaKPKEtKIsM6Mo/StoWiQeMvSCJjO4+54hEwTCjuTk0STgckUm6QxTY3LgU
 Kc+/jyFrblyKCIkKbnPjSkT8HDGV5saVyBAtVHZz40Ik7HNTRtrcuBARF2tQbW5ciCR0mhvbIs2E
 cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 7x4iTALjhcgVQSIl3v87w5vePcY/AQYAFYR6skFSqBUAAAAASUVORK5CYII="
-          alt
+          alt="小米闪购"
         />
-        <div class="desc" :show="false"></div>
-        <div ckass="countdown clearfix">
+        <div class="desc">距离结束还有</div>
+        <div class="countdown clearfix">
           <span>00</span>
           <i>:</i>
-          <span>00</span>
+          <span>24</span>
           <i>:</i>
-          <span>00</span>
+          <span>11</span>
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
-        <!-- 商品id:item.goods_id -->
-        <a href="#">
+        <a :href="item.goods_id">
           <img :src="item.imgUrl" alt />
           <p class="title">{{item.goods_name}}</p>
         </a>
         <p class="text">{{item.desc}}</p>
-        <p class="price">{{item.goods_price}}元</p>
+        <p class="price">
+          <span>{{item.goods_price}}元</span>
+          <del>{{item.seckill_price}}元</del>
+        </p>
       </div>
     </div>
   </div>
@@ -61,33 +71,32 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 import { slide } from '@/api/seckill'
 export default {
   created() {
-    this.getSlide()
+    this.getSlideList()
   },
   data() {
     return {
-      time_id: 0,
-      start_time: 0,
-      end_time: 0,
+      time_id: '',
+      start_time: '',
+      end_time: '',
       seckillGoods: []
     }
   },
   methods: {
-    getSlide() {
+    getSlideList() {
       slide().then(res => {
-        // 根据返回的状态码获取状态对象
-        let result = this.$resultCode.getStatus(res.code)
-        // 把返回的数据赋值给data()中定义好的变量
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        if (status != success) {
+          Message({
+            message: res.message,
+            type: status.type
+          })
+          return
+        }
         this.time_id = res.data.time_id
         this.start_time = res.data.start_time
         this.end_time = res.data.end_time
         this.seckillGoods = res.data.list
-        // 根据状态对象显示响应的提示信息
-        if (res.message !== "" && res.message !== null) {
-          Message({
-            message: res.message,
-            type: result.type
-          })
-        }
       })
     }
   }
@@ -99,20 +108,93 @@ export default {
   width: 1226px;
   margin: 0 auto;
   margin-top: 26px;
-  h2 {
-    font-size: 22px;
-    font-weight: 200;
-    line-height: 58px;
-    color: #333;
+  .box-hd {
+    position: relative;
+    height: 58px;
+    -webkit-font-smoothing: antialiased;
+    h2 {
+      font-size: 22px;
+      font-weight: 200;
+      line-height: 58px;
+      color: #333;
+    }
+    .more {
+      position: absolute;
+      top: 0;
+      right: 0;
+      a {
+        color: #757575;
+        background-color: rgba(0, 0, 0, 0);
+        &:hover {
+          text-decoration: none;
+          color: #ef3a3b;
+        }
+        &:a:-webkit-any-link {
+          color: -webkit-link;
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+      .more-link {
+        font-size: 16px;
+        line-height: 58px;
+        color: #424242;
+        transition: all 0.4s;
+      }
+    }
   }
   .goods-container {
-    height: 340px;
+    height: 380px;
     width: 1226px;
     display: flex;
     justify-content: space-between;
+    .flashsale-countdown {
+      border-top-color: #e53935;
+      width: 234px;
+      height: 340px;
+      border-top-width: 1px;
+      border-top-style: solid;
+      background: #f1eded;
+      text-align: center;
+      .round {
+        font-size: 21px;
+        color: #ef3a3b;
+        padding-top: 54px;
+      }
+      img {
+        margin: 25px auto;
+        border: 0;
+      }
+      .desc {
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 15px;
+      }
+      .countdown {
+        width: 168px;
+        margin: 28px auto 0;
+        span {
+          width: 46px;
+          height: 46px;
+          background: #605751;
+          color: #fff;
+          font-size: 24px;
+          line-height: 46px;
+          float: left;
+        }
+        i {
+          width: 15px;
+          float: left;
+          height: 46px;
+          line-height: 46px;
+          color: #605751;
+          font-size: 28px;
+          font-style: normal;
+        }
+      }
+    }
     .goods-item {
       width: 234px;
-      height: 300px;
+      height: 340px;
       background: #fafafa;
       display: flex;
       flex-direction: column;
@@ -159,6 +241,10 @@ export default {
       .price {
         color: #ff6709;
         font-size: 14px;
+        del {
+          color: #b0b0b0;
+          text-decoration: line-through;
+        }
       }
     }
   }
