@@ -31,13 +31,146 @@
           </ul>
         </div>
       </div>
+      <div class="seckill-con">
+        <div class="container J_seckillCon">
+          <ul class="J_currentCon clearfix active">
+            <li>
+              <a href="#" class="item-box">
+                <span class="img-con">
+                  <img
+                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
+                    class="done"
+                  />
+                </span>
+                <span class="pro-con">
+                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
+                  <span class="desc">精选原生竹浆，健康环保</span>
+                  <span class="process hide J_process">
+                    <span style="width: 50%"></span>
+                    <em>50%</em>
+                  </span>
+                  <span class="price">
+                    27.90元
+                    <del>32.9元</del>
+                  </span>
+                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
+                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-box">
+                <span class="img-con">
+                  <img
+                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
+                    class="done"
+                  />
+                </span>
+                <span class="pro-con">
+                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
+                  <span class="desc">精选原生竹浆，健康环保</span>
+                  <span class="process hide J_process">
+                    <span style="width: 50%"></span>
+                    <em>50%</em>
+                  </span>
+                  <span class="price">
+                    27.90元
+                    <del>32.9元</del>
+                  </span>
+                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
+                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-box">
+                <span class="img-con">
+                  <img
+                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
+                    class="done"
+                  />
+                </span>
+                <span class="pro-con">
+                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
+                  <span class="desc">精选原生竹浆，健康环保</span>
+                  <span class="process hide J_process">
+                    <span style="width: 50%"></span>
+                    <em>50%</em>
+                  </span>
+                  <span class="price">
+                    27.90元
+                    <del>32.9元</del>
+                  </span>
+                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
+                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-box">
+                <span class="img-con">
+                  <img
+                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
+                    class="done"
+                  />
+                </span>
+                <span class="pro-con">
+                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
+                  <span class="desc">精选原生竹浆，健康环保</span>
+                  <span class="process hide J_process">
+                    <span style="width: 50%"></span>
+                    <em>50%</em>
+                  </span>
+                  <span class="price">
+                    27.90元
+                    <del>32.9元</del>
+                  </span>
+                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
+                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-box">
+                <span class="img-con">
+                  <img
+                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
+                    class="done"
+                  />
+                </span>
+                <span class="pro-con">
+                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
+                  <span class="desc">精选原生竹浆，健康环保</span>
+                  <span class="process hide J_process">
+                    <span style="width: 50%"></span>
+                    <em>50%</em>
+                  </span>
+                  <span class="price">
+                    27.90元
+                    <del>32.9元</del>
+                  </span>
+                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
+                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  head() {
+    return {
+      title: '舵手商城 - 秒杀商品',
+      meta: [
+        { hid: 'seckill-page', name: 'description', content: '秒杀商品' }
+      ]
+    }
+  }
 }
 </script>
 
@@ -151,5 +284,185 @@ li {
   margin-left: 0;
   font-size: 14px;
   vertical-align: middle;
+}
+.seckill .seckill-con ul.active {
+  display: block;
+}
+.seckill .seckill-con ul {
+  display: none;
+  margin-left: -13px;
+}
+.seckill ul,
+.seckill p {
+  margin: 0;
+  padding: 0;
+}
+.seckill .seckill-con ul li {
+  background: #fff;
+  width: 400px;
+  height: 190px;
+  margin-left: 13px;
+  margin-bottom: 13px;
+  transition: all 0.2s linear;
+  position: relative;
+  z-index: 2;
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+.seckill li {
+  list-style: none;
+  float: left;
+}
+.seckill .seckill-con ul .item-box {
+  display: block;
+}
+.seckill .seckill-con ul li a {
+  color: #757575;
+  text-decoration: none;
+  cursor: pointer;
+}
+.seckill .seckill-con ul li .img-con {
+  width: 190px;
+  height: 190px;
+  float: left;
+  margin-left: 0px !important;
+  padding-top: 0px !important;
+  background-color: #e9e9e9;
+  border: 0 none;
+  overflow: hidden;
+}
+.seckill .seckill-con ul li span {
+  display: block;
+}
+.seckill .seckill-con ul li img {
+  width: 100%;
+  height: 190px;
+  display: block;
+  padding: 0;
+  border-style: none;
+}
+img {
+  border: 0;
+}
+.seckill .seckill-con ul li .pro-con {
+  margin-left: 210px;
+  width: 180px;
+  padding-top: 30px;
+}
+.seckill .seckill-con ul li span {
+  display: block;
+}
+.seckill .seckill-con ul li .pro-con .name {
+  font-size: 16px;
+  color: #333;
+  height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  line-height: 16px;
+}
+.seckill .seckill-con ul li .pro-con .desc {
+  color: rgba(0, 0, 0, 0.54);
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 16px;
+  height: 32px;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.seckill .seckill-con ul li .pro-con .process {
+  width: 146px;
+  height: 5px;
+  margin-top: 10px;
+  position: relative;
+  background: #f5f5f5;
+}
+.hide {
+  display: none !important;
+}
+.seckill .seckill-con ul li .pro-con .process span {
+  display: block;
+  background: #f1393a;
+  transition: width 1s;
+  height: 100%;
+}
+.seckill .seckill-con ul li .pro-con .process em {
+  font-style: normal;
+  position: absolute;
+  right: -35px;
+  top: -2px;
+  line-height: 1;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+.seckill .seckill-con ul li .pro-con .price {
+  font-size: 16px;
+  color: #f1393a;
+  line-height: 1;
+  margin-top: 14px;
+}
+.seckill .seckill-con ul li span {
+  display: block;
+}
+.seckill .seckill-con ul li .pro-con .price del {
+  margin-left: 10px;
+  font-size: 12px;
+}
+.seckill .seckill-con ul li .pro-con .price em,
+.seckill .seckill-con ul li .pro-con .price del {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  font-style: normal;
+}
+del {
+  text-decoration: line-through;
+}
+.seckill .seckill-con ul li .pro-con .btn-primary {
+  background: #f1393a !important;
+  border-color: #f1393a !important;
+}
+.seckill .seckill-con ul li .pro-con .btn {
+  margin-top: 19px;
+  font-size: 14px;
+}
+.seckill .seckill-con ul li span {
+  display: block;
+}
+.btn {
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+  width: 158px;
+  height: 38px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #b0b0b0;
+  font-size: 14px;
+  line-height: 38px;
+  text-align: center;
+  color: #b0b0b0;
+  cursor: pointer;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.btn-green {
+  background: #83c44e;
+  border-color: #83c44e;
+  color: #fff;
+}
+.btn-primary {
+  background: #ff6700;
+  border-color: #ff6700;
+  color: #fff;
+}
+.btn-small {
+  width: 118px;
+  height: 28px;
+  font-size: 12px;
+  line-height: 28px;
 }
 </style>
