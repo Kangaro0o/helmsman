@@ -3,7 +3,7 @@
     <div class="box-hd">
       <h2>舵手秒杀</h2>
       <div class="more">
-        <a href="//www.mi.com/a/h/9891.html" target="_blank" class="more-link">
+        <a href="/seckill" target="_blank" class="more-link">
           查看全部
           <i class="el-icon-caret-right"></i>
         </a>
