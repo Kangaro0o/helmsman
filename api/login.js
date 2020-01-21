@@ -6,25 +6,25 @@ import request from '@/service'
 import { user } from '@/api/url';
 
 export function login(userInfo) {
-  return request(
-    user.login,
-    userInfo,
-    { method: 'post' }
-  )
+  return request({
+    url: user.login,
+    params: userInfo,
+    method: 'post'
+  })
 }
 
 export function getInfo() {
-  return request(
-    user.info,
-    {},
-    { method: 'get' }
+  return request({
+    url: user.info,
+    method: 'get'
+  }
   )
 }
 
 export function logout() {
-  return request(
-    user.logout,
-    {},
-    { method: 'get' }
+  return request({
+    url: user.logout,
+    method: 'get'
+  }
   )
 }
