@@ -11,7 +11,7 @@
     </div>
     <div class="goods-container">
       <div class="flashsale-countdown">
-        <div class="round">10:00 场</div>
+        <div class="round">{{play}} 场</div>
         <img
           src="data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAA1CAYAAAAklDnhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
@@ -43,12 +43,11 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 7x4iTALjhcgVQSIl3v87w5vePcY/AQYAFYR6skFSqBUAAAAASUVORK5CYII="
           alt="小米闪购"
         />
-        <div class="desc" v-show="!isEnd">距离结束还有</div>
-        <div class="desc" v-show="isEnd">本场已经结束</div>
-        <div class="countdown clearfix" v-show="!isEnd">
-          <span>00</span>
+        <div class="desc">{{desc}}</div>
+        <div class="countdown clearfix">
+          <span>{{hour}}</span>
           <i>:</i>
-          <span>30</span>
+          <span>{{minute}}</span>
           <i>:</i>
           <span>{{second}}</span>
         </div>
@@ -76,14 +75,14 @@ export default {
   },
   data() {
     return {
-      time_id: '',
-      start_time: '',
-      end_time: '',
+      play: '',
+      start_time: 0,
+      end_time: 0,
       seckillGoods: [],
-      second: '',
-      minute: '',
-      hour: '',
-      isEnd: false
+      second: '00',
+      minute: '00',
+      hour: '00',
+      desc: '正在加载中'
     }
   },
   methods: {
@@ -91,7 +90,7 @@ export default {
       slide().then(res => {
         let status = this.$resultCode.getStatus(res.code)
         let success = this.$resultCode.getSuccessStatus()
-        if (status != success) {
+        if (status !== success) {
           Message({
             message: res.message,
             type: status.type
@@ -102,23 +101,50 @@ export default {
         this.start_time = res.data.start_time
         this.end_time = res.data.end_time
         this.seckillGoods = res.data.list
+        this.parsePlay(this.start_time)
         this.countdown()
       })
     },
     countdown() {
-      let date = null
+      let now = null
       let start_time = new Date(this.start_time)
-      let end_time = new Date(end_time)
+      let end_time = new Date(this.end_time)
       setInterval(_ => {
-        date = new Date()
-        // 如果当前时间超过截止日期
-        if (date > end_time) {
-          // 本场结束
-          this.isEnd = true
+        now = new Date()
+        // 如果当前时间小于开始时间
+        if (now < start_time) {
+          this.desc = '距离开始还有'
+          this.timeDiff(now, start_time)
+        } else if (now < end_time) {
+          this.desc = '距离结束还有'
+          this.timeDiff(now, end_time)
+        } else {
+          this.desc = '本场已经结束'
+          this.hour = '00'
+          this.minute = '00'
+          this.second = '00'
         }
-        this.second = date.getSeconds()
       }, 1000)
 
+    },
+    timeDiff(start, end) { // start和end是Date对象
+      let dateDiff = end.getTime() - start.getTime() // 时间差的毫秒数
+      let dayDiff = Math.floor(dateDiff / (24 * 60 * 60 * 1000)) // 计算出相差天数
+      let remainTimeWithoutDay = dateDiff % (24 * 60 * 60 * 1000) // 计算天数后剩余的毫秒数
+      let hourDiff = Math.floor(remainTimeWithoutDay / (60 * 60 * 1000)) // 计算出相差的小时数
+      let remainTimeWithoutHour = remainTimeWithoutDay % (60 * 60 * 1000) // 计算小时数后剩余的毫秒数
+      let minuteDiff = Math.floor(remainTimeWithoutHour / (60 * 1000)) // 计算相差分钟数
+      let remainTimeWithoutMinute = remainTimeWithoutHour % (60 * 1000) // 计算分钟数后剩余的毫秒数
+      let secondDiff = Math.round(remainTimeWithoutMinute / 1000) // 计算相差秒数
+      this.hour = (dayDiff * 24 + hourDiff) < 10 ? '0' + (dayDiff * 24 + hourDiff) : (dayDiff * 24 + hourDiff)
+      this.minute = minuteDiff < 10 ? '0' + minuteDiff : minuteDiff
+      this.second = secondDiff < 10 ? '0' + secondDiff : secondDiff
+    },
+    parsePlay(start_time) {
+      let start = new Date(start_time)
+      let hour = start.getHours()
+      let minute = start.getMinutes() < 10 ? '0' + start.getMinutes() : start.getMinutes()
+      this.play = hour + ":" + minute
     }
   }
 }
