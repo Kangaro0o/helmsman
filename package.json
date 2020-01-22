@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "axios": "^0.19.1",
-    "crypto-js": "^3.1.9-1",
     "element-ui": "^2.4.11",
     "hq": "^0.0.4",
     "js-cookie": "^2.2.0",
