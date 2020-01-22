@@ -2,7 +2,7 @@
   <div class="h_panel">
     <div class="h_logo">
       <a
-        href="//www.mi.com/index.html"
+        href="/"
         target="_parent"
         data-stat-repeat="true"
         data-stat-id="21e8a1aff8ffd4e4"
