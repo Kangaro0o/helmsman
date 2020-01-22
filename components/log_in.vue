@@ -26,7 +26,7 @@
           </el-button>
           </el-form-item>
           <el-form-item style="width:100%;">
-          <router-link to="/login/register">
+          <router-link to="/register">
               <el-button style="width:100%;">
               注册
               </el-button>
@@ -83,6 +83,7 @@ export default {
           this.logining = true
           const loginParams = { username: this.ruleForm.account, password: sha256(this.ruleForm.checkPass) }
           login(loginParams).then(res => {
+            console.log(res)
             let status = this.$resultCode.getStatus(res.code)
             let success = this.$resultCode.getSuccessStatus()
             if (status!==success){
