@@ -1,7 +1,7 @@
 <template>
   <div class='page'>
     <div class="login-bg">
-      <a href="https://www.mi.com/redmik30" target="_parent" id="J_link" 
+      <a href="/" target="_parent" id="J_link" 
             data-log_code="pc#bid=3576645.1&amp;page=promotion" data-stat-repeat="true" data-stat-id="621ba5d6a42e822d" 
             onclick="_msq.push(['trackEvent', 'ba30dc918f1e51a9-621ba5d6a42e822d', 'https://www.mi.com/redmik30', 'pcpid', 'pc#bid=3576645.1&amp;page=promotion']);">
         舵手网

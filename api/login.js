@@ -1,5 +1,5 @@
 /**
- * @author Kelvin
+ * @author Beverly
  * @description 登录相关的方法
  */
 import request from '@/service'
