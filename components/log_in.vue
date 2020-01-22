@@ -9,7 +9,7 @@
               class="demo-ruleForm login-container" status-icon>
           <h3 class="title">账号登录</h3>
           <el-form-item prop="account">
-          <el-input type="text" v-model="ruleForm.account" auto-complete="off" placeholder="账号"
+          <el-input type="text" v-model="ruleForm.account" auto-complete="off" placeholder="手机号"
                       id="loginEmail"></el-input>
           </el-form-item>
           <el-form-item prop="checkPass">
