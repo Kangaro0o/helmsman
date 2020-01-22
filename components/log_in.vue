@@ -1,11 +1,7 @@
 <template>
   <div class='page'>
     <div class="login-bg">
-      <a href="/" target="_parent" id="J_link" 
-            data-log_code="pc#bid=3576645.1&amp;page=promotion" data-stat-repeat="true" data-stat-id="621ba5d6a42e822d" 
-            onclick="_msq.push(['trackEvent', 'ba30dc918f1e51a9-621ba5d6a42e822d', 'https://www.mi.com/redmik30', 'pcpid', 'pc#bid=3576645.1&amp;page=promotion']);">
-        舵手网
-      </a>
+      <a href="/" target="_parent" id="J_link" >舵手网</a>
     </div>
     <div class="login-panel">
       <div class="login-box">
@@ -49,16 +45,29 @@ import { login } from '@/api/login'
 export default {
   name: 'app-login',
   data () {
+    var checkPhone = (rule, value, callback) => {  // 检查账号格式
+      if (!value) {
+        return callback(new Error('手机号不能为空'));
+      } else {
+        const reg = /^[1](([3|5|8][\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\d]{8}$/
+        console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
+        } else {
+          return callback(new Error('请输入正确的手机号'));
+        }
+      }
+    };
     return {
       logining: false,
       fromUrl: '/',
       ruleForm: {
-        account: 'admin',
-        checkPass: '123456'
+        account: '',
+        checkPass: ''
       },
       rules: {
         account: [
-          { required: true, message: '请输入账号', trigger: 'blur' }
+          { required: true, validator: checkPhone, trigger: 'blur' }
         ],
         checkPass: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -78,11 +87,11 @@ export default {
             this.$message({
               message: '登录成功！',
               type: 'success',
-              duration: 1000
+              duration: 1500
             })
             setTimeout(() => {
               this.$router.push(this.fromUrl)
-            }, 1000);
+            }, 1500);
           }).catch(err => {
             this.logining = false
             console.log(err)
@@ -102,13 +111,8 @@ export default {
     })
   }
 }
-function wait(ms){
-   var start = new Date().getTime();
-   var end = start;
-   while(end < start + ms) {
-     end = new Date().getTime();
-  }
-}
+
+
 </script>
 
 
@@ -169,4 +173,3 @@ function wait(ms){
   font-family: 'Source Sans Pro', sans-serif;
 }
 </style>
-
