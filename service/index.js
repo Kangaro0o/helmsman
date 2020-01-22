@@ -37,18 +37,11 @@ service.interceptors.response.use(response => {
           location.reload()
         })
       })
-    } else {
-      Message({
-        message: res.message,
-        type: 'error',
-        duration: 3 * 1000
-      })
     }
     return Promise.reject("error")
-  } else {
-    // 否则把信息递交给调用方处理
-    return res
   }
+  // 把信息递交给调用方处理
+  return res
 }, error => {
   console.log('err' + error)
   Message({
