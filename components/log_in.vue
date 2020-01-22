@@ -82,19 +82,25 @@ export default {
         if (valid) {
           this.logining = true
           const loginParams = { username: this.ruleForm.account, password: sha256(this.ruleForm.checkPass) }
-          login(loginParams).then(data => {
+          login(loginParams).then(res => {
+            let status = this.$resultCode.getStatus(res.code)
+            let success = this.$resultCode.getSuccessStatus()
+            if (status!==success){
+              Message({
+              message: res.message,
+              type: status.type
+              })
+              return
+            }
             this.logining = false
             this.$message({
               message: '登录成功！',
               type: 'success',
-              duration: 1500
+              duration: 1000
             })
             setTimeout(() => {
               this.$router.push(this.fromUrl)
-            }, 1500);
-          }).catch(err => {
-            this.logining = false
-            console.log(err)
+            }, 1000);
           })
         } else {
           console.log('error submit!!')
