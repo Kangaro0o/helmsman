@@ -67,6 +67,8 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
   </div>
 </template>
 
+
+
 <script>
 import { slide } from '@/api/seckill'
 export default {
