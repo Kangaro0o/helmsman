@@ -8,7 +8,7 @@ import { user } from '@/api/url';
 export function login(userInfo) {
   return request({
     url: user.login,
-    params: userInfo,
+    data: userInfo,
     method: 'post'
   })
 }
