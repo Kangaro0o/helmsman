@@ -136,6 +136,8 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
+  margin-left: 30px;
+  float:left;
   .service {
     width: 1226px;
     margin: 0 auto;
