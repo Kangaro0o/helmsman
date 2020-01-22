@@ -30,7 +30,7 @@
           </el-button>
           </el-form-item>
           <el-form-item style="width:100%;">
-          <router-link to="/register">
+          <router-link to="/login/register">
               <el-button style="width:100%;">
               注册
               </el-button>
@@ -77,9 +77,12 @@ export default {
             this.logining = false
             this.$message({
               message: '登录成功！',
-              type: 'success'
+              type: 'success',
+              duration: 1000
             })
-            this.$router.push(this.fromUrl)
+            setTimeout(() => {
+              this.$router.push(this.fromUrl)
+            }, 1000);
           }).catch(err => {
             this.logining = false
             console.log(err)
@@ -99,7 +102,13 @@ export default {
     })
   }
 }
-
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
 </script>
 
 
