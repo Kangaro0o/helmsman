@@ -24,10 +24,10 @@
               id="loginEmail"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="checkPass">
+          <el-form-item prop="password">
             <el-input
               type="password"
-              v-model="ruleForm.checkPass"
+              v-model="ruleForm.password"
               auto-complete="off"
               placeholder="密码"
               id="loginPassword"
@@ -73,19 +73,19 @@ export default {
           return callback(new Error('请输入正确的手机号'));
         }
       }
-    };
+    }
     return {
       logining: false,
       fromUrl: '/',
       ruleForm: {
         phone: '',
-        checkPass: ''
+        password: ''
       },
       rules: {
-        // phone: [
-        //   { required: true, validator: checkPhone, trigger: 'blur' }
-        // ],
-        checkPass: [
+        phone: [
+          { required: true, validator: checkPhone, trigger: 'blur' }
+        ],
+        password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       },
@@ -96,14 +96,13 @@ export default {
     handleSubmit(ev) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.logining = true
-          const loginParams = { phone: this.ruleForm.phone, password: this.ruleForm.checkPass }
-          login(loginParams).then(res => {
-            console.log(res)
+          // this.logining = true
+          let params = { phone: this.ruleForm.phone, password: this.ruleForm.password }
+          this.$store.dispatch('Login', params).then(res => {
             let status = this.$resultCode.getStatus(res.code)
             let success = this.$resultCode.getSuccessStatus()
             if (status !== success) {
-              Message({
+              this.$message({
                 message: res.message,
                 type: status.type
               })
@@ -124,14 +123,8 @@ export default {
           return false
         }
       })
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (from.fullPath !== '/register' && !from.meta.errorPage) {
-        vm.fromUrl = from.fullPath
-      }
-    })
+    },
+
   }
 }
 

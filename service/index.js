@@ -38,7 +38,6 @@ service.interceptors.response.use(response => {
         })
       })
     }
-    return Promise.reject("error")
   }
   // 把信息递交给调用方处理
   return res
