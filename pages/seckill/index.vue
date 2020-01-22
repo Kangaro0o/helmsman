@@ -321,6 +321,10 @@ li {
   text-decoration: none;
   cursor: pointer;
 }
+/* .seckill .seckill-con ul li:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  margin-top: -1px;
+} */
 .seckill .seckill-con ul li .img-con {
   width: 190px;
   height: 190px;

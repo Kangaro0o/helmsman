@@ -9,7 +9,7 @@
         </ul>
       </div>
       <div class="topbar-info">
-        <a href="#">登录</a>
+        <a href="/login">登录</a>
         <a href="#">注册</a>
       </div>
       <div class="topbar-cart" @mouseenter="cartEnter" @mouseleave="cartOut">
