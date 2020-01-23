@@ -1,4 +1,5 @@
 <template>
+
   <div class="body">
       <div class="site-header">
       <div class="container">
@@ -9,7 +10,6 @@
             <h2>支付订单</h2>
           </div>
             <div class="topbar-info" id="J_userInfo">
-
             <el-dropdown>
             
                 <span class="el-dropdown-link">
@@ -22,10 +22,6 @@
                     <el-dropdown-item><a rel="nonfollow" href="//account.xiaomi.com/" target="_blank">小米账号</a></el-dropdown-item>
                     <el-dropdown-item><a rel="nonfollow" href="https://order.mi.com/site/logout">退出登录</a></el-dropdown-item>
                 <!-- <a rel="nofollow" class="user-name" href="//my.mi.com/portal" target="_blank">
-
-            <span class="user">
-                <a rel="nofollow" class="user-name" href="//my.mi.com/portal" target="_blank">
-
                 <span class="name">衔烛句芒</span>
                 <i class="iconfont"></i>
                 </a>
@@ -35,7 +31,6 @@
             <li><a rel="nonfollow" href="https://order.mi.com/user/favorite" target="_blank">我的喜欢</a></li>
             <li><a rel="nonfollow" href="//account.xiaomi.com/" target="_blank">小米账号</a></li>
             <li><a rel="nonfollow" href="https://order.mi.com/site/logout">退出登录</a></li>
-
             </ul> -->
                 </el-dropdown-menu>
            
@@ -45,24 +40,18 @@
             <span class="el-dropdown-link"><a rel="nofollow" class="link link-order" href="//static.mi.com/order/" target="_blank">我的订单</a>
             </span>
             </div>
-
             </div>              
       </div>
       </div>
       <div class="section section-order">
           <div class="order-info clearfix">
-
               <div class="fl">
-
-              <div class="f1">
-
                   <h2 class="title">订单提交成功！去付款咯~</h2>
                   <p class="order-time" id="J_deliveDesc"></p>
                   <p class="order-time">请在<span class="pay-time-tip">5小时15分</span>
                   内完成支付，超时后将取消订单</p>
                   <p class="post-info" id="J-postinfo">收货信息:test 15850682367 &nbsp;&nbsp;江苏省南京市鼓楼区汉口路22号南京大学南苑四舍</p>
               </div>
-
               <div class="fr">
                   <p class="total">
                         应付总额 
@@ -103,12 +92,6 @@
           <i class="iconfont icon-right">√</i>
       </div>
       <div class="section section-payment">
-
-          </div>
-          <i class="iconfont icon-right">√</i>
-      </div>
-      <div class="payment-body">
-
       <div class="cash-title" id="J_cashTitle">选择以下支付方式</div>
       <div class="payment-box">
           <div class="payment-header clearfix">
@@ -193,7 +176,6 @@
 import Footer from '@/components/Footer'
 
 export default {
-
 //      data() {
 //        return {
 //            activeNames:['1']
@@ -205,15 +187,12 @@ export default {
 //         }
 //     },
   
-
-
   components: {
     'pagefooter': Footer
   },
   layout: 'payment'
   // page component definitions
   
-
   
 
 }
@@ -265,10 +244,6 @@ export default {
 .el-icon-arrow-down{
      font-size:12px;
 }
-
-
-
-
 .event-desc{
     width: 894px;
     background-color: #fafafa;
@@ -306,11 +281,7 @@ export default {
     color: #424242;
 }
 .topbar-info{
-
     margin-top:40px;
-
-    margin-top:30px;
-
     line-height:40px;
     position: relative;
     float:right;
@@ -372,7 +343,7 @@ export default {
     
    
 }
-.payment-body{
+.section-payment{
     margin-left:30px;
 }
 .footerclass{
@@ -393,9 +364,7 @@ export default {
     border-bottom:1px solid #e0e0e0;
     font-size:18px;
     min-width: 1226px;
-
    
-
 }
 .section{
     padding:30px 48px;
@@ -449,5 +418,11 @@ export default {
 .clearfix{
     *zoom: 1;
 }
-
+.clearfix::before{
+    clear:both;
+}
+.clearfix::after{
+  content: " ";
+    display: table;
+}
 </style>
