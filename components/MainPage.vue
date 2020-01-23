@@ -26,6 +26,7 @@
       <!--视频-->
       <!-- <miVideo></miVideo> -->
     </div>
+  
   </div>
 </template>
 
