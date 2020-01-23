@@ -26,5 +26,6 @@ export const goods = {
  * 秒杀商品相关的URL
  */
 export const seckill = {
-  slide: '/seckill/slide'
+  slide: '/seckill/slide',
+  list: '/seckill/list'
 }

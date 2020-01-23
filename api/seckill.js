@@ -12,3 +12,11 @@ export const slide = _ => {
     method: 'get'
   })
 }
+
+// 获取秒杀商品列表
+export const seckillList = _ => {
+  return request({
+    url: seckill.list,
+    method: 'get'
+  })
+}

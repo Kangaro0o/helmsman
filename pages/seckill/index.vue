@@ -7,25 +7,18 @@
       <div class="seckill-banner J_seckillBannerWrap">
         <div class="container J_seckillBanner relative">
           <ul>
-            <li class="J_currentBanner active">
+            <li
+              class="J_currentBanner"
+              :class="{'active': isActive(item.start_time, item.end_time)}"
+              v-for="(item, index) in list"
+              :key="index"
+            >
               <a href="#">
-                <em>14:00</em>
+                <em>{{parsePlay(item.start_time)}}</em>
                 <span>
-                  抢购中
-                  <br />距结束05:10:46
+                  {{playStatus(item.start_time, item.end_time)}}
+                  <br />距结束
                 </span>
-              </a>
-            </li>
-            <li class>
-              <a href="#">
-                <em>20:00</em>
-                <span>即将开始</span>
-              </a>
-            </li>
-            <li class>
-              <a href="#">
-                <em>22:00</em>
-                <span>即将开始</span>
               </a>
             </li>
           </ul>
@@ -162,6 +155,7 @@
 </template>
 
 <script>
+import { seckillList } from '@/api/seckill'
 export default {
   head() {
     return {
@@ -170,6 +164,59 @@ export default {
         { hid: 'seckill-page', name: 'description', content: '秒杀商品' }
       ]
     }
+  },
+  created() {
+    this.getSeckillList()
+  },
+  data() {
+    return {
+      list: []
+    }
+  },
+  methods: {
+    getSeckillList() {
+      seckillList().then(res => {
+        this.list = res.data.list
+      })
+    },
+    parsePlay: start_time => {
+      let start = new Date(start_time)
+      let hour = start.getHours()
+      let minute = start.getMinutes() < 10 ? '0' + start.getMinutes() : start.getMinutes()
+      return hour + ":" + minute
+    },
+    // 当前激活的秒杀活动场次
+    isActive: (start_time, end_time) => {
+      let start = new Date(start_time)
+      let end = new Date(end_time)
+      let now = new Date()
+      if (now >= start && now <= end)
+        return true
+      return false
+    },
+    // 秒杀活动场次状态
+    playStatus: (start_time, end_time) => {
+      let now = new Date();
+      // 今天的23:59:59
+      let now_end = now;
+      now_end.setHours(23, 59, 59)
+      // 明天的23:59:59
+      let tomorrow = new Date(now.getTime() + (24 * 60 * 60 * 1000))
+      let start = new Date(start_time)
+      let end = new Date(end_time)
+      if (now < start) {
+        if (start > tomorrow) {
+          return "耐心等待"
+        } else if (start > now_end) {
+          return "明日开始"
+        }
+        return "即将开始"
+      } else if (now < end) {
+        return "抢购中"
+      }
+      return "已结束"
+    }
+    //即将开始 明日开始 抢购中
   }
 }
 </script>
