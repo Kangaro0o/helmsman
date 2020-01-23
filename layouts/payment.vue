@@ -2,7 +2,7 @@
     <div >
         <nuxt/>
         <footers class="footercss"></footers>
-        <footers></footers>
+       
     </div>
 </template>
 <script>

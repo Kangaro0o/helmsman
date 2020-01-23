@@ -1,5 +1,4 @@
 <template>
-
   <div class="body">
       <div class="site-header">
       <div class="container">
@@ -46,11 +45,6 @@
             <span class="el-dropdown-link"><a rel="nofollow" class="link link-order" href="//static.mi.com/order/" target="_blank">我的订单</a>
             </span>
             </div>
-
-            </ul>
-            </span>
-            <span class="sep">|</span>
-            <a rel="nofollow" class="link link-order" href="//static.mi.com/order/" target="_blank">我的订单</a>
 
             </div>              
       </div>
@@ -272,9 +266,8 @@ export default {
      font-size:12px;
 }
 
-}
-</script>
-<style>
+
+
 
 .event-desc{
     width: 894px;
@@ -379,11 +372,7 @@ export default {
     
    
 }
-
-.section-payment{
-
 .payment-body{
-
     margin-left:30px;
 }
 .footerclass{
@@ -460,11 +449,5 @@ export default {
 .clearfix{
     *zoom: 1;
 }
-.clearfix::before{
-    clear:both;
-}
-.clearfix::after{
-  content: " ";
-    display: table;
-}
+
 </style>
