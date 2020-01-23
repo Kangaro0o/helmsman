@@ -5,7 +5,10 @@ const user = {
   state: {
     token: getToken(),
     name: '',
-    avatar: ''
+    email: '',
+    phone: '',
+    addressId: '',
+    role: ''
   },
 
   mutations: {
@@ -15,21 +18,34 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+    SET_EMAIL: (state, email) => {
+      state.email = email
+    },
+    SET_PHONE: (state, phone) => {
+      state.phone = phone
+    },
+    SET_ADDRESSID: (state, addressId) => {
+      state.addressId = addressId
+    },
+    SET_ROLE: (state, role) => {
+      state.role = role
     }
   },
 
   actions: {
     // 登录
-    Login({ commit }, { username, password }) {
+    Login({ commit }, { phone, password }) {
       return new Promise((resolve, reject) => {
-        login({ username, password }).then(response => {
+        login({ phone, password }).then(response => {
           const data = response.data
           setToken(data.token)
-          console.log("store login被调用").
-            commit('SET_TOKEN', data.token)
-          resolve()
+          commit('SET_TOKEN', data.token)
+          commit('SET_NAME', data.user.name)
+          commit('SET_EMAIL', data.user.email)
+          commit('SET_PHONE', data.user.phone)
+          commit('SET_ADDRESSID', data.user.addressId)
+          commit('SET_ROLE', data.user.role)
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

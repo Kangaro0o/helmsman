@@ -5,11 +5,11 @@
 import request from '@/service'
 import { user } from '@/api/url';
 
-export function login(userInfo) {
+export const login = userInfo => {
   return request({
     url: user.login,
-    data: userInfo,
-    method: 'post'
+    method: 'post',
+    data: userInfo
   })
 }
 

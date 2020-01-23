@@ -2,6 +2,7 @@
     <div >
         <nuxt/>
         <footers class="footercss"></footers>
+        <footers></footers>
     </div>
 </template>
 <script>
@@ -12,9 +13,11 @@
             'footers':Footer
         }
     }
+
 </script>
 <style >
 .footercss{
     float:left;
 }
 </style>
+</script>
