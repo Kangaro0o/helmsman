@@ -71,6 +71,7 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 
 <script>
 import { slide } from '@/api/seckill'
+import { timeDiff as td, parsePlay as pp } from '@/utils/date'
 export default {
   created() {
     this.getSlideList()
@@ -130,23 +131,13 @@ export default {
 
     },
     timeDiff(start, end) { // start和end是Date对象
-      let dateDiff = end.getTime() - start.getTime() // 时间差的毫秒数
-      let dayDiff = Math.floor(dateDiff / (24 * 60 * 60 * 1000)) // 计算出相差天数
-      let remainTimeWithoutDay = dateDiff % (24 * 60 * 60 * 1000) // 计算天数后剩余的毫秒数
-      let hourDiff = Math.floor(remainTimeWithoutDay / (60 * 60 * 1000)) // 计算出相差的小时数
-      let remainTimeWithoutHour = remainTimeWithoutDay % (60 * 60 * 1000) // 计算小时数后剩余的毫秒数
-      let minuteDiff = Math.floor(remainTimeWithoutHour / (60 * 1000)) // 计算相差分钟数
-      let remainTimeWithoutMinute = remainTimeWithoutHour % (60 * 1000) // 计算分钟数后剩余的毫秒数
-      let secondDiff = Math.round(remainTimeWithoutMinute / 1000) // 计算相差秒数
-      this.hour = (dayDiff * 24 + hourDiff) < 10 ? '0' + (dayDiff * 24 + hourDiff) : (dayDiff * 24 + hourDiff)
-      this.minute = minuteDiff < 10 ? '0' + minuteDiff : minuteDiff
-      this.second = secondDiff < 10 ? '0' + secondDiff : secondDiff
+      const res = td(start, end)
+      this.hour = res['hour']
+      this.minute = res['minute']
+      this.second = res['second']
     },
     parsePlay(start_time) {
-      let start = new Date(start_time)
-      let hour = start.getHours()
-      let minute = start.getMinutes() < 10 ? '0' + start.getMinutes() : start.getMinutes()
-      this.play = hour + ":" + minute
+      this.play = pp(start_time)
     }
   }
 }
