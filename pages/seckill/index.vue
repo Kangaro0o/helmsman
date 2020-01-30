@@ -27,120 +27,21 @@
       <div class="seckill-con">
         <div class="container J_seckillCon">
           <ul class="J_currentCon clearfix active">
-            <li>
-              <a href="#" class="item-box">
+            <li v-for="(item, index) in curList" :key="index">
+              <a :href="item.sgid" class="item-box">
                 <span class="img-con">
-                  <img
-                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
-                    class="done"
-                  />
+                  <img :src="item.imgUrl" class="done" />
                 </span>
                 <span class="pro-con">
-                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
-                  <span class="desc">精选原生竹浆，健康环保</span>
-                  <span class="process hide J_process">
+                  <span class="name" :title="item.goods_name">{{item.goods_name}}</span>
+                  <span class="desc">{{item.desc}}</span>
+                  <span class="process J_process" :class="{'hide': hide}">
                     <span style="width: 50%"></span>
                     <em>50%</em>
                   </span>
                   <span class="price">
-                    27.90元
-                    <del>32.9元</del>
-                  </span>
-                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
-                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="item-box">
-                <span class="img-con">
-                  <img
-                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
-                    class="done"
-                  />
-                </span>
-                <span class="pro-con">
-                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
-                  <span class="desc">精选原生竹浆，健康环保</span>
-                  <span class="process hide J_process">
-                    <span style="width: 50%"></span>
-                    <em>50%</em>
-                  </span>
-                  <span class="price">
-                    27.90元
-                    <del>32.9元</del>
-                  </span>
-                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
-                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="item-box">
-                <span class="img-con">
-                  <img
-                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
-                    class="done"
-                  />
-                </span>
-                <span class="pro-con">
-                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
-                  <span class="desc">精选原生竹浆，健康环保</span>
-                  <span class="process hide J_process">
-                    <span style="width: 50%"></span>
-                    <em>50%</em>
-                  </span>
-                  <span class="price">
-                    27.90元
-                    <del>32.9元</del>
-                  </span>
-                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
-                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="item-box">
-                <span class="img-con">
-                  <img
-                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
-                    class="done"
-                  />
-                </span>
-                <span class="pro-con">
-                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
-                  <span class="desc">精选原生竹浆，健康环保</span>
-                  <span class="process hide J_process">
-                    <span style="width: 50%"></span>
-                    <em>50%</em>
-                  </span>
-                  <span class="price">
-                    27.90元
-                    <del>32.9元</del>
-                  </span>
-                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
-                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="item-box">
-                <span class="img-con">
-                  <img
-                    src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/db0c370f85f438f4dda6cce9a770f7f2.jpg"
-                    class="done"
-                  />
-                </span>
-                <span class="pro-con">
-                  <span class="name" title>MIJOY 抽纸青春版 24包/箱</span>
-                  <span class="desc">精选原生竹浆，健康环保</span>
-                  <span class="process hide J_process">
-                    <span style="width: 50%"></span>
-                    <em>50%</em>
-                  </span>
-                  <span class="price">
-                    27.90元
-                    <del>32.9元</del>
+                    {{item.seckill_price}}元
+                    <del>{{item.goods_price}}元</del>
                   </span>
                   <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
                   <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
@@ -156,6 +57,7 @@
 
 <script>
 import { seckillList } from '@/api/seckill'
+import { timeDiff as td, parsePlay as pp } from '@/utils/date'
 export default {
   head() {
     return {
@@ -168,9 +70,18 @@ export default {
   created() {
     this.getSeckillList()
   },
+  updated() {
+    this.curList = this.list[0].list
+  },
   data() {
     return {
-      list: []
+      list: [], // 所有场次秒杀商品列表
+      curList: [], // 最近依次秒杀商品列表
+      hide: true, // 是否显示销售进度条
+      second: '00',
+      minute: '00',
+      hour: '00',
+
     }
   },
   methods: {
@@ -179,11 +90,8 @@ export default {
         this.list = res.data.list
       })
     },
-    parsePlay: start_time => {
-      let start = new Date(start_time)
-      let hour = start.getHours()
-      let minute = start.getMinutes() < 10 ? '0' + start.getMinutes() : start.getMinutes()
-      return hour + ":" + minute
+    getCurList: (index = 0) => {
+      return this.list[index].list
     },
     // 当前激活的秒杀活动场次
     isActive: (start_time, end_time) => {
@@ -194,11 +102,14 @@ export default {
         return true
       return false
     },
+    parsePlay: start_time => {
+      return pp(start_time)
+    },
     // 秒杀活动场次状态
     playStatus: (start_time, end_time) => {
       let now = new Date();
       // 今天的23:59:59
-      let now_end = now;
+      let now_end = new Date();
       now_end.setHours(23, 59, 59)
       // 明天的23:59:59
       let tomorrow = new Date(now.getTime() + (24 * 60 * 60 * 1000))
@@ -215,8 +126,16 @@ export default {
         return "抢购中"
       }
       return "已结束"
-    }
-    //即将开始 明日开始 抢购中
+    },
+    timeDiff: (start, end) => {
+      const res = td(start, end)
+      this.hour = res['hour']
+      this.minute = res['minute']
+      this.second = res['second']
+    },
+
+  },
+  computed: {
   }
 }
 </script>
