@@ -306,7 +306,7 @@ export default {
     background-color:#ff6700;
     width:55px;
     height:55px;
-    background:url(../assets/logo-mi.png) no-repeat;
+    background:url(/img/logo-mi.png) no-repeat;
 }
 .order-info{
     padding:20px 0;
