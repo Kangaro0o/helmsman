@@ -151,8 +151,8 @@ export default {
   width: 100%;
   max-width: 400px;
   background-color: #FFF;
-  margin: 0;
-  margin-left: 350px;
+  margin: 0 auto;
+  
   padding: 2.25em;
   box-sizing: border-box;
   border: solid 1px #DDD;
