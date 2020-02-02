@@ -9,15 +9,17 @@
           <ul>
             <li
               class="J_currentBanner"
-              :class="{'active': isActive(item.start_time, item.end_time)}"
+              :class="{'active': activeBanner(index)}"
               v-for="(item, index) in list"
               :key="index"
+              @click="switchBanner(index)"
             >
               <a href="#">
                 <em>{{parsePlay(item.start_time)}}</em>
                 <span>
                   {{playStatus(item.start_time, item.end_time)}}
-                  <br />距结束
+                  <br />
+                  <em v-if="index === 0">{{desc + " " + hour +":" + minute + ":" + second}}</em>
                 </span>
               </a>
             </li>
@@ -27,7 +29,8 @@
       <div class="seckill-con">
         <div class="container J_seckillCon">
           <ul class="J_currentCon clearfix active">
-            <li v-for="(item, index) in curList" :key="index">
+            <li v-for="(item, index) in curSeckillCon" :key="index">
+              <!-- 前往商品详情页 -->
               <a :href="item.sgid" class="item-box">
                 <span class="img-con">
                   <img :src="item.imgUrl" class="done" />
@@ -57,7 +60,7 @@
 
 <script>
 import { seckillList } from '@/api/seckill'
-import { timeDiff as td, parsePlay as pp } from '@/utils/date'
+import { parsePlay as pp, timeDiff as td } from '@/utils/date'
 export default {
   head() {
     return {
@@ -67,12 +70,6 @@ export default {
       ]
     }
   },
-  created() {
-    this.getSeckillList()
-  },
-  updated() {
-    this.curList = this.list[0].list
-  },
   data() {
     return {
       list: [], // 所有场次秒杀商品列表
@@ -81,29 +78,75 @@ export default {
       second: '00',
       minute: '00',
       hour: '00',
-
+      desc: '加载中', // 最近一场描述信息
+      start_time: '', // 最近一场开始时间
+      end_time: '', // 最近一场结束时间
+      activeIndex: 0, // 激活的Tab下标
+      isActive: false, // Tab是否active
     }
   },
+  created: function () {
+    this.getSeckillList()
+    this.isLogin()
+  },
   methods: {
+    // 判断是否登录
+    isLogin() {
+      const token = this.$store.getters.token
+      console.log("token", token)
+      if (token != null || token != "")
+        this.hide = false
+      this.hide = true
+    },
+    // 获取秒杀商品列表
     getSeckillList() {
       seckillList().then(res => {
         this.list = res.data.list
+        if (this.list.length !== 0 && this.list !== null) {
+          this.start_time = this.list[0].start_time
+          this.end_time = this.list[0].end_time
+          this.countdown()
+        }
       })
     },
-    getCurList: (index = 0) => {
-      return this.list[index].list
+    // 倒计时
+    countdown() {
+      let now = null
+      let start_time = new Date(this.start_time)
+      let end_time = new Date(this.end_time)
+      setInterval(_ => {
+        now = new Date()
+        // 如果当前时间小于开始时间
+        if (now < start_time) {
+          this.desc = '距开始'
+          this.timeDiff(now, start_time)
+        } else if (now < end_time) {
+          this.desc = '距结束'
+          this.timeDiff(now, end_time)
+        } else {
+          this.desc = '已结束'
+          this.hour = '00'
+          this.minute = '00'
+          this.second = '00'
+        }
+      }, 1000)
     },
-    // 当前激活的秒杀活动场次
-    isActive: (start_time, end_time) => {
-      let start = new Date(start_time)
-      let end = new Date(end_time)
-      let now = new Date()
-      if (now >= start && now <= end)
-        return true
-      return false
+    timeDiff(start, end) { // start和end是Date对象
+      const res = td(start, end)
+      this.hour = res['hour']
+      this.minute = res['minute']
+      this.second = res['second']
+    },
+    // 获取当前展示的秒杀商品列表
+    getCurList(index) {
+      if (this.list.length !== 0)
+        this.curList = this.list[index].list
     },
     parsePlay: start_time => {
       return pp(start_time)
+    },
+    switchBanner(index) {
+      this.activeIndex = index
     },
     // 秒杀活动场次状态
     playStatus: (start_time, end_time) => {
@@ -127,15 +170,15 @@ export default {
       }
       return "已结束"
     },
-    timeDiff: (start, end) => {
-      const res = td(start, end)
-      this.hour = res['hour']
-      this.minute = res['minute']
-      this.second = res['second']
-    },
-
+    activeBanner(index) {
+      return this.activeIndex === index
+    }
   },
   computed: {
+    curSeckillCon: function () {
+      this.getCurList(this.activeIndex)
+      return this.curList
+    }
   }
 }
 </script>

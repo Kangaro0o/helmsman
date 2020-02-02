@@ -3,7 +3,7 @@
     <div class="box-hd">
       <h2>舵手秒杀</h2>
       <div class="more">
-        <a href="/seckill" target="_blank" class="more-link">
+        <a href="/seckill" class="more-link">
           查看全部
           <i class="el-icon-caret-right"></i>
         </a>
@@ -128,7 +128,6 @@ export default {
           this.second = '00'
         }
       }, 1000)
-
     },
     timeDiff(start, end) { // start和end是Date对象
       const res = td(start, end)
