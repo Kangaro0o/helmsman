@@ -26,14 +26,14 @@
           </el-form-item>
           <el-form-item prop="password">
             <el-input
-              type="password"
+              :type="pwdType"
               v-model="ruleForm.password"
               auto-complete="off"
               placeholder="密码"
               id="loginPassword"
             ></el-input>
             <label id="showPasswordToggle">
-              <el-checkbox v-model="checked" id="showPasswordCheck">显示密码</el-checkbox>
+              <el-checkbox v-model="checked" id="showPasswordCheck" @change="changed">显示密码</el-checkbox>
             </label>
             <router-link to="/" style="float: right; color: #bbbbbb">忘记密码？</router-link>
           </el-form-item>
@@ -89,10 +89,18 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       },
-      checked: false
+      checked: false,
+      pwdType: "password"
     }
   },
   methods: {
+    changed() {  // 密码显示切换
+      if (this.checked) {
+        this.pwdType = ""
+      } else {
+        this.pwdType = "password"
+      }
+    },
     handleSubmit(ev) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
