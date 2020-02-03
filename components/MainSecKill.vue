@@ -94,7 +94,7 @@ export default {
         let status = this.$resultCode.getStatus(res.code)
         let success = this.$resultCode.getSuccessStatus()
         if (status !== success) {
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           })
