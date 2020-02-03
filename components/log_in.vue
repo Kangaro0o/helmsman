@@ -35,7 +35,7 @@
             <label id="showPasswordToggle">
               <el-checkbox v-model="checked" id="showPasswordCheck" @change="changed">显示密码</el-checkbox>
             </label>
-            <router-link to="/" style="float: right; color: #bbbbbb">忘记密码？</router-link>
+            <router-link to="/findpwd" style="float: right; color: #bbbbbb">忘记密码？</router-link>
           </el-form-item>
           <el-form-item style="width:100%;">
             <el-button
