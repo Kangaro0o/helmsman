@@ -106,7 +106,8 @@ export default {
         if (valid) {
           // this.logining = true
           let params = { phone: this.ruleForm.phone, password: this.ruleForm.password }
-          this.$store.dispatch('Login', params).then(res => {
+          // this.$store.dispatch('Login', params)
+          this.$store.dispatch('user/Login', params).then(res => {
             let status = this.$resultCode.getStatus(res.code)
             let success = this.$resultCode.getSuccessStatus()
             if (status !== success) {

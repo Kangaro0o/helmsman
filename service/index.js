@@ -1,6 +1,5 @@
 import axios from 'axios'
 import config from './config'
-import createStore from '@/store'
 import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
 
@@ -9,7 +8,7 @@ const service = axios.create(config)
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  if (createStore().getters.token) {
+  if (getToken()) {
     config.headers['Auth-Token'] = getToken()
   }
   return config
@@ -32,7 +31,7 @@ service.interceptors.response.use(response => {
         type: 'warning'
       }).then(_ => {
         // TODO 做退出登录操作，返回登录页
-        createStore().dispatch('LogOut').then(_ => {
+        $nuxt.$store.dispatch('user/LogOut').then(_ => {
           console.log("logout")
           location.reload()
         })
