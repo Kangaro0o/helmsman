@@ -1,12 +1,11 @@
 <template>
   <div class='page'>
-
     <div class="login-panel">
         <div class="login-box">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
-                class="demo-ruleForm login-container" status-icon>
+                class="demo-ruleForm login-container" status-icon v-model="rulesType">
             <h3 class="title">密码找回</h3>
-            <h4 class="input_message">请输入注册的手机号码：</h4>
+            <h4 class="input-message">请输入注册的手机号码：</h4>
             <el-form-item prop="phone">
             <el-input type="text" v-model="ruleForm.phone" auto-complete="off" placeholder="手机号"
                         id="loginEmail"></el-input>
@@ -18,10 +17,15 @@
                   auto-complete="off"
                   placeholder="验证码"
                   id="checkCode"
-                  style="width:70%;"
+                  style="width:60%;"
                 ></el-input>
               </label>
-              <img alt="图片验证码" src="/pass/getCode?icodeType=resetPwd&amp;1580705877288" title="看不清换一张" class="chkcode_img icode_image code-image">
+              <label class="send-message">
+                <el-button style="width:112px" @click="getCodeFun" :disabled="disabled">
+                  <template v-if="sending">发送验证码</template>
+                  <template v-else>重新发送({{second}})</template> 
+                </el-button>
+              </label>
             </el-form-item>
             <el-form-item style="width:100%;margin-top:30px;">
             <el-button type="primary" style="width:100%;" @click.native.prevent="submitNext" :loading="logining">
@@ -36,6 +40,8 @@
 
 <script>
 import {register} from '@/api/login'
+import {getchkCode} from '@/api/user'
+import {verify} from '@/api/user'
 
 export default {
   name: 'app-login',
@@ -43,14 +49,10 @@ export default {
      var checkPhone = (rule, value, callback) => {  // 检查账号格式
       if (!value) {
         return callback(new Error('手机号不能为空'));
+      } else if(!this.checkMobile(value)) {
+        return callback(new Error('请输入正确的手机号'));
       } else {
-        const reg = /^[1](([3|5|8][\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\d]{8}$/
-        // console.log(reg.test(value));
-        if (reg.test(value)) {
-          callback();
-        } else {
-          return callback(new Error('请输入正确的手机号'));
-        }
+        callback();
       }
     } 
    
@@ -67,10 +69,39 @@ export default {
         chkCode: [
           {required: true, message:"请输入验证码", trigger: 'blur'}
         ]
-      }
+      },
+      sending: true,
+      disabled: false,
+      second:60
     }
   },
   methods: {
+    getCodeFun() {
+      if(!this.sending)
+        return;
+      let tel = this.ruleForm.phone
+      if(this.checkMobile(tel)) {
+        getchkCode(this.ruleForm.phone).then(res => {
+          this.sending = false;
+          this.disabled = true;
+          this.timeDown();
+        }).catch(err => {
+          this.logining = false
+          console.log(err)
+        })
+      }
+    },
+    timeDown() {
+      let result = setInterval(() => {
+        --this.second;
+        if(this.second < 0) {
+          clearInterval(result);
+          this.sending = true;
+          this.disabled = false;
+          this.second = 60;
+        }
+      }, 1000);
+    },
     submitNext (ev) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -96,7 +127,7 @@ export default {
               duration: 1000
             })
             setTimeout(() => {
-              this.$router.push({path: '/login'})
+              this.$router.push({path: '/findpwd/next'})
             }, 1000);
           }).catch(err => {
             this.logining = false
@@ -107,6 +138,15 @@ export default {
           return false
         }
       })
+    },
+    checkMobile(str) {
+      const reg = /^[1](([3|5|8][\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\d]{8}$/
+      // console.log(reg.test(value));
+      if (reg.test(str)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
@@ -169,13 +209,13 @@ export default {
   pointer-events: none;
 }
 
-.input_message {
+.input-message {
   font-size: 14px;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-.chkcode_img {
-  margin-left: 3px;
+.send-message {
+  margin-left: 13px;
 }
 </style>

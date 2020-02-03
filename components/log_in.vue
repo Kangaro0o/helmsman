@@ -158,7 +158,7 @@ export default {
 }
 
 .login-bg {
-  background-image: url("https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/2e3028877530620f50043efb01575e3d.jpg");
+  background-image: url("../assets/fishgirl.jpg");
   background-repeat: no-repeat;
   background-position: top center;
   position: absolute;

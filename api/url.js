@@ -6,8 +6,8 @@ export const user = {
   info: '/user/info',
   logout: '/user/logout',
   register:'/user/register',
-  verify:'/user/verify'
-  
+  verify:'/user/verify',
+  chkcode:'/user/chkCode'
 }
 
 /**

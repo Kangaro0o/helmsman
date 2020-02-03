@@ -8,3 +8,10 @@ export const verify = verifyInfo => {
     data: verifyInfo
   })
 }
+export const getchkCode = phone => {
+  return request({
+    url: user.chkcode,
+    method: 'post',
+    data: {phone}
+  })
+}
