@@ -108,7 +108,7 @@ export default {
             this.logining = false
             let status=this.$resultCode.getStatus(data.code)
             let success=this.$resultCode.getSuccessStatus()
-            if(status!==sucess){
+            if(status!==success){
               this.$message({
                 message:data.message,
                 type:status.type
