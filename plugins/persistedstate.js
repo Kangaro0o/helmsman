@@ -1,17 +1,11 @@
 import createPersistedState from 'vuex-persistedstate'
-import Cookies from 'js-cookie'
+import { getItem, setItem, removeItem } from '@/utils/auth'
 
 let cookieStorage = {
-  getItem: function (key) {
-    return Cookies.getJSON(key);
-  },
-  setItem: function (key, value) {
-    return Cookies.set(key, value, { expires: 3, secure: false });
-  },
-  removeItem: function (key) {
-    return Cookies.remove(key);
-  }
-};
+  getItem: getItem,
+  setItem: setItem,
+  removeItem: removeItem
+}
 
 /**
  * vuex持久化

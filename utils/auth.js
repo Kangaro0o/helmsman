@@ -1,16 +1,33 @@
-import Cookie from "js-cookie"
+import Cookies from "js-cookie"
 
 const TokenKey = "loginToken"
-const TokenHead = "bearer"
+const TokenHead = "Bearer"
 
 export function getToken() {
-  return Cookie.get(TokenKey)
+  return getItem(TokenKey)
 }
 
 export function setToken(token) {
-  return Cookie.set(TokenKey, TokenHead + " " + token)
+  return setItem(TokenKey, TokenHead + " " + token)
 }
 
 export function removeToken() {
-  return Cookie.remove(TokenKey)
+  return removeItem(TokenKey)
+}
+
+export function getItem(key) {
+  return Cookies.getJSON(key)
+}
+
+export function setItem(key, value) {
+  return Cookies.set(key, value, { expires: 3, secure: false })
+}
+
+export function removeItem(key) {
+  return Cookies.remove(key)
+}
+
+export function removeAll() {
+  removeItem("nuxt-state")
+  removeToken()
 }
