@@ -39,15 +39,15 @@
                   <span class="name" :title="item.goods_name">{{item.goods_name}}</span>
                   <span class="desc">{{item.desc}}</span>
                   <span class="process J_process" :class="{'hide': hide}">
-                    <span style="width: 50%"></span>
-                    <em>50%</em>
+                    <span :style="curProgress(item.count, item.remain_count)"></span>
+                    <em>{{Math.floor(((item.count-item.remain_count)/item.count) * 100) }}%</em>
                   </span>
                   <span class="price">
                     {{item.seckill_price}}元
                     <del>{{item.goods_price}}元</del>
                   </span>
-                  <span class="btn btn-green btn-small btn-primary">登陆后抢购</span>
-                  <!-- <span class="btn btn-green btn-small btn-primary J_buy">立即抢购</span> -->
+                  <span class="btn btn-green btn-small btn-primary" v-if="hide">登陆后抢购</span>
+                  <span class="btn btn-green btn-small btn-primary J_buy" v-else>立即抢购</span>
                 </span>
               </a>
             </li>
@@ -92,11 +92,11 @@ export default {
   methods: {
     // 判断是否登录
     isLogin() {
-      const token = this.$store.getters.token
-      console.log("token", token)
+      const token = this.$store.state.user.token
       if (token != null || token != "")
         this.hide = false
-      this.hide = true
+      else
+        this.hide = true
     },
     // 获取秒杀商品列表
     getSeckillList() {
@@ -172,12 +172,21 @@ export default {
     },
     activeBanner(index) {
       return this.activeIndex === index
+    },
+    curProgress: (count, remain_count) => {
+      return "width:" + Math.floor((((count - remain_count) / count)) * 100) + "%"
     }
   },
   computed: {
     curSeckillCon: function () {
       this.getCurList(this.activeIndex)
       return this.curList
+    },
+    btnStatus: function () {
+      let now = new Date()
+      if (this.start_time > now || this.end_time < now)
+        return true // 禁用
+      return false
     }
   }
 }

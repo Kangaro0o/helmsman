@@ -4,7 +4,7 @@
  */
 
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeAll } from '@/utils/auth'
 
 export const state = () => ({
   token: getToken(),
@@ -45,6 +45,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       login({ phone, password }).then(response => {
         const data = response.data
+        setToken(data.token)
         commit('set_token', data.token)
         commit('set_name', data.user.name)
         commit('set_email', data.user.email)
@@ -61,8 +62,8 @@ export const actions = {
   LogOut({ commit }) {
     return new Promise((resolve, reject) => {
       logout().then(() => {
-        commit('set_token', '')
-        removeToken()
+        // commit('set_token', '')
+        removeAll()
         resolve()
       }).catch(error => {
         reject(error)

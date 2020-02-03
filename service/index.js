@@ -8,6 +8,7 @@ const service = axios.create(config)
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
+  console.log()
   if (getToken()) {
     config.headers['Auth-Token'] = getToken()
   }
