@@ -5,7 +5,9 @@ export const user = {
   login: '/user/login',
   info: '/user/info',
   logout: '/user/logout',
-  register:'/user/register'
+  register:'/user/register',
+  verify:'/user/verify'
+  
 }
 
 /**

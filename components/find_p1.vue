@@ -24,7 +24,7 @@
               <img alt="图片验证码" src="/pass/getCode?icodeType=resetPwd&amp;1580705877288" title="看不清换一张" class="chkcode_img icode_image code-image">
             </el-form-item>
             <el-form-item style="width:100%;margin-top:30px;">
-            <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit" :loading="logining">
+            <el-button type="primary" style="width:100%;" @click.native.prevent="submitNext" :loading="logining">
                 下一步
             </el-button>
             </el-form-item>
@@ -71,7 +71,43 @@ export default {
     }
   },
   methods: {
-    
+    submitNext (ev) {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.logining = true
+          var verifyInfo = {
+            phone: this.ruleForm.phone,
+            chkCode: this.ruleForm.chkCode
+          }
+          verify(verifyInfo).then(data => {
+            this.logining = false
+            let status=this.$resultCode.getStatus(data.code)
+            let success=this.$resultCode.getSuccessStatus()
+            if(status!==success){
+              this.$message({
+                message:data.message,
+                type:status.type
+              })
+              return
+            }
+            this.$message({
+              message: '验证成功！',
+              type: 'success',
+              duration: 1000
+            })
+            setTimeout(() => {
+              this.$router.push({path: '/login'})
+            }, 1000);
+          }).catch(err => {
+            this.logining = false
+            console.log(err)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
   }
 }
 
