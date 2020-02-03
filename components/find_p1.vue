@@ -39,11 +39,12 @@
 </template>
 
 <script>
+import {register} from '@/api/login'
 import {getchkCode} from '@/api/user'
 import {verify} from '@/api/user'
 
 export default {
-  name: 'app-login',
+  name: 'app-find_p1',
   data () {
      var checkPhone = (rule, value, callback) => {  // 检查账号格式
       if (!value) {
@@ -80,7 +81,16 @@ export default {
         return;
       let tel = this.ruleForm.phone
       if(this.checkMobile(tel)) {
-        getchkCode(this.ruleForm.phone).then(res => {
+        getchkCode(this.ruleForm.phone).then(data => {
+          let status=this.$resultCode.getStatus(data.code)
+          let success=this.$resultCode.getSuccessStatus()
+          if(status!==success){
+            this.$message({
+              message:data.message,
+              type:status.type
+            })
+            return
+          }
           this.sending = false;
           this.disabled = true;
           this.timeDown();
