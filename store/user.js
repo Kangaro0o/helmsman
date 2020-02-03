@@ -45,8 +45,6 @@ export const actions = {
     return new Promise((resolve, reject) => {
       login({ phone, password }).then(response => {
         const data = response.data
-        console.log("data", data)
-        setToken(data.token)
         commit('set_token', data.token)
         commit('set_name', data.user.name)
         commit('set_email', data.user.email)
