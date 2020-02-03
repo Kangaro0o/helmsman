@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import {register} from '@/api/login'
 import {getchkCode} from '@/api/user'
 import {verify} from '@/api/user'
 

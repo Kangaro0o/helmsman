@@ -159,6 +159,7 @@ export default {
 
 .login-bg {
   background-image: url("../assets/fishgirl.jpg");
+  background-size:cover; 
   background-repeat: no-repeat;
   background-position: top center;
   position: absolute;

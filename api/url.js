@@ -7,7 +7,8 @@ export const user = {
   logout: '/user/logout',
   register:'/user/register',
   verify:'/user/verify',
-  chkcode:'/user/chkCode'
+  chkcode:'/user/chkCode',
+  sendpwd:'/user/sendpwd'
 }
 
 /**
