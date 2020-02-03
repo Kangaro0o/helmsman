@@ -6,8 +6,8 @@
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
                 class="demo-ruleForm login-container" status-icon>
             <h3 class="title">注册</h3>
-            <el-form-item prop="account">
-            <el-input type="text" v-model="ruleForm.account" auto-complete="off" placeholder="手机号"
+            <el-form-item prop="phone">
+            <el-input type="text" v-model="ruleForm.phone" auto-complete="off" placeholder="手机号"
                         id="loginEmail"></el-input>
             </el-form-item>
             <el-form-item prop="password">
@@ -42,6 +42,20 @@ import {register} from '@/api/login'
 export default {
   name: 'app-login',
   data () {
+     var checkPhone = (rule, value, callback) => {  // 检查账号格式
+      if (!value) {
+        return callback(new Error('手机号不能为空'));
+      } else {
+        const reg = /^[1](([3|5|8][\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\d]{8}$/
+        // console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
+        } else {
+          return callback(new Error('请输入正确的手机号'));
+        }
+      }
+    } 
+   
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -64,12 +78,12 @@ export default {
     return {
       logining: false,
       ruleForm: {
-        account: '',
+        phone: '',
         password: '',
         checkPass: ''
       },
       rules: {
-        account: [
+        phone: [
           {required: true, message: '请输入手机号', trigger: 'blur'}
         ],
         password: [
@@ -87,9 +101,8 @@ export default {
         if (valid) {
           this.logining = true
           var registerInfo = {
-            username: this.ruleForm.account,
-            password: this.ruleForm.password,
-            checkPass: this.ruleForm.checkPass
+            phone: this.ruleForm.phone,
+            password: this.ruleForm.password
           }
           register(registerInfo).then(data => {
             this.logining = false
