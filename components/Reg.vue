@@ -80,11 +80,11 @@ export default {
       ruleForm: {
         phone: '',
         password: '',
-        checkPass: ''
+        checkPass: ''       
       },
       rules: {
         phone: [
-          {required: true, message: '请输入手机号', trigger: 'blur'}
+          {required: true, validator: checkPhone, trigger: 'blur'}
         ],
         password: [
           {validator: validatePass, trigger: 'blur'}
@@ -106,11 +106,23 @@ export default {
           }
           register(registerInfo).then(data => {
             this.logining = false
+            let status=this.$resultCode.getStatus(data.code)
+            let success=this.$resultCode.getSuccessStatus()
+            if(status!==sucess){
+              this.$message({
+                message:data.message,
+                type:status.type
+              })
+              return
+            }
             this.$message({
               message: '注册成功！',
-              type: 'success'
+              type: 'success',
+              duration: 1000
             })
-            this.$router.push({path: '/login'})
+            setTimeout(() => {
+              this.$router.push({path: '/login'})
+            }, 1000);
           }).catch(err => {
             this.logining = false
             console.log(err)
