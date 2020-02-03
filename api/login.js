@@ -28,3 +28,11 @@ export function logout() {
   }
   )
 }
+
+export const register = registerInfo => {
+  return request({
+    url: user.register,
+    method: 'post',
+    data: registerInfo
+  })
+} 
