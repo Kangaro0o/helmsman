@@ -136,7 +136,7 @@ export default {
               duration: 1000
             })
             setTimeout(() => {
-              this.$router.push({path: '/findpwd/next'})
+              this.$router.push({path: '/findpwd/next',query: {phone:this.ruleForm.phone}})
             }, 1000);
           }).catch(err => {
             this.logining = false

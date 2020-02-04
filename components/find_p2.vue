@@ -72,8 +72,8 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true
-          let password = this.ruleForm.password
-          sendpwd(password).then(data => {
+          let params = {password:this.ruleForm.password,phone:this.$route.query.phone}
+          sendpwd(params).then(data => {
             this.logining = false
             let status=this.$resultCode.getStatus(data.code)
             let success=this.$resultCode.getSuccessStatus()
@@ -85,7 +85,6 @@ export default {
               return
             }
             this.$router.push({path: '/login'})
-            
           }).catch(err => {
             this.logining = false
             console.log(err)

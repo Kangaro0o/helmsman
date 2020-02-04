@@ -22,9 +22,10 @@ export default {
 
 <style  scoped>
 .h_logo {
-    width: 200px;
+    width: 250px;
     height: 98px;
-    background: url(https://account.xiaomi.com/static/res/7f6f2f5/account-static/respassport/acc-2014/img/mistore_logo.png) no-repeat;
+    background: url("../assets/商城logo.png") no-repeat;
+    background-size: cover;
 }
 .h_logo a {
     display: block;

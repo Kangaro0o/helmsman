@@ -15,10 +15,10 @@ export const getchkCode = phone => {
     data: {phone}
   })
 }
-export const sendpwd = password => {
+export const sendpwd = params => {
   return request({
     url: user.sendpwd,
     method: 'post',
-    data: {password}
+    data: params
   })
 }
