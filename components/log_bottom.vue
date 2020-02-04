@@ -8,10 +8,10 @@
                 <li><a id="msg-privacy" href="/about/protocol/privacy" target="_blank">隐私政策</a></li>            
             </ul>             
         </div>              
-        <p class="nf-intro">小米公司版权所有-京ICP备10046444-<a class="beian-record-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134">
+        <p class="nf-intro">舵手公司版权所有-编号12138-<a class="beian-record-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134">
             <span>
                 <img src="https://account.xiaomi.com/static/res/9204d06/account-static/respassport/acc-2014/img/ghs.png">
-            </span>京公网安备11010802020134号</a>-京ICP证110507号
+            </span>备128128128号</a>-ICP12138号
         </p>            
     </div>
 </template>
