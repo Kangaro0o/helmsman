@@ -23,7 +23,8 @@ export const menu = {
  * 商品相关的URL
  */
 export const goods = {
-  carouselItems: '/goods/carouselItems'
+  carouselItems: '/goods/carouselItems',
+  goodsItems: '/goods/{type}/list/{orderBy}/{keywords}'
 }
 
 /**

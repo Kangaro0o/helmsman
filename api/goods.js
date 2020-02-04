@@ -11,3 +11,10 @@ export const getCarouselItems = _ => {
     method: 'get'
   })
 }
+
+export const getgoodsItems = _ => {  
+       return request({
+         url:goods.goodsItems,
+         method: 'get'
+       })  
+}
