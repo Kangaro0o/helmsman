@@ -67,12 +67,17 @@ export default {
       }
     }
   },
+  created: function() {
+    if(!this.$route.query.phone) {
+      this.$router.push({path: '/findpwd'})
+    }
+  },
   methods: {
     sendpwdFun (ev) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true
-          let params = {password:this.ruleForm.password,phone:this.$route.query.phone}
+          let params = {password: this.ruleForm.password, phone: this.$route.query.phone}
           sendpwd(params).then(data => {
             this.logining = false
             let status=this.$resultCode.getStatus(data.code)
@@ -85,6 +90,7 @@ export default {
               return
             }
             this.$router.push({path: '/login'})
+            
           }).catch(err => {
             this.logining = false
             console.log(err)
