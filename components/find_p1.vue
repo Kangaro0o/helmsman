@@ -3,7 +3,7 @@
     <div class="login-panel">
         <div class="login-box">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
-                class="demo-ruleForm login-container" status-icon v-model="rulesType">
+                class="demo-ruleForm login-container" status-icon>
             <h3 class="title">密码找回</h3>
             <h4 class="input-message">请输入注册的手机号码：</h4>
             <el-form-item prop="phone">
@@ -136,7 +136,7 @@ export default {
               duration: 1000
             })
             setTimeout(() => {
-              this.$router.push({path: '/findpwd/next',query: {phone:this.ruleForm.phone}})
+              this.$router.push({path: '/findpwd/next', query: {phone: this.ruleForm.phone}})
             }, 1000);
           }).catch(err => {
             this.logining = false
@@ -188,43 +188,4 @@ export default {
 
 .login-panel {
   margin: 0 auto;
-  width: 1130px;
-  padding-top: 78px;
-}
-
-.login-box {
-  position: relative;
-  top: 20%;
-  left: 0;
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  background-color: #FFF;
-  margin: 0 auto;
-  
-  padding: 2.25em;
-  box-sizing: border-box;
-  border: solid 1px #DDD;
-  border-radius: .5em;
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-.login-box .svgContainer {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 1em;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.input-message {
-  font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.send-message {
-  margin-left: 13px;
-}
-</style>
+  width: 
