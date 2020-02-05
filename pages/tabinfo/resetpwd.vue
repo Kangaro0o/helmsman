@@ -1,18 +1,18 @@
 <template>
   <div>
-    <tabin></tabin>
+    <tabpwd></tabpwd>
   </div>
 </template>
 <script>
-import tabin from '@/components/tab_in'
+import tabpwd from '@/components/tab_pwd'
 export default {
   head() {
     return {
-      title: "舵手商城 - 个人信息"
+      title: "舵手商城 - 修改密码"
     }
   },
   components: {
-    'tabin': tabin
+    'tabpwd': tabpwd
   },
   layout: 'tabinfo'
   // page component definitions
