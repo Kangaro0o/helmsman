@@ -24,7 +24,7 @@ export const menu = {
  */
 export const goods = {
   carouselItems: '/goods/carouselItems',
-  goodsItems: '/goods/{type}/list/{orderBy}/{keywords}'
+  goodsItems: '/goods/${type}/list/${orderBy}/${keywords}'
 }
 
 /**

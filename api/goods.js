@@ -18,3 +18,13 @@ export const getgoodsItems = _ => {
          method: 'get'
        })  
 }
+export default {
+     search(orderby,type,keywords){
+    return request({
+      url:'/goods/${type}/list/${orderby}/${keywords}',
+      method:'get',
+      data:goodslist
+
+    })
+  }
+}

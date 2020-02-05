@@ -1,35 +1,40 @@
 <template>
 <div id="app">
         <div class="phone-header">
-               <div class="phone-header-nav"><span>首页</span></div> 
+               <div class="phone-header-nav"><span>首页</span>
+               <i class="el-icon-arrow-right"></i>
+               <span>全部结果</span>
+               <i class="el-icon-arrow-right"></i>
+               
+               </div>
+                
         </div>
         <div class="filter-list" id="j_filterList">
                 <ul class="item show-less" id="list_item_class">
                 <span class="label">分类:</span> 
-                <li class="allactive">全部</li>
-                <li class="liactive">手机</li>
-                <li class="liactive">出行</li>
-                <li class="liactive">包</li>
-                <li class="liactive">日用百货</li>
-                <li class="liactive">手机配件</li>
-                <li class="liactive">手机贴膜</li>
+                <li class="liactive" v-for="(item,index) in list2Items" :key="index" >
+                <a @click="addClassfun2(index)" v-bind:class='{active:flag===index}'>
+                {{item}}
+                </a>
+
+                </li>
                 
-                <li class="liactive" v-for="l in 4" :key="l"> </li>
-                <span class="classer-more">更多</span><i class="el-icon-arrow-down icon-more">  </i>
+                
+                <span class="classer-more"><i class="el-icon-arrow-down icon-more">  </i></span>
                 </ul>
         </div>
         <div class="phone-orderBy">
           <div class="phone-list-box">
                <div style="height:30px;">
                 <ul class="order-list">
-                        <li class="active"><a>综合</a></li>
-                        <li class="order-item"><a>新品</a></li>                        
-                        <li class="order-item"><a>销量</a></li>
-                        <li class="order-item"><a>价格</a><i class="el-icon-top"></i></li>
+                <li v-for="(liitem,index) in liItems" :key="index" @click="addClassfun(index)" v-bind:class='{active:i===index}'>
+                <a  @click="addClassfun(index)" v-bind:class='{active:i===index}'>{{liitem.name}}</a>
+                </li>        
                 </ul>
                
              </div>
           <div class="phone-list" id="J_goodsList">
+                  <!-- <router-view v-if="isrouteralive"> -->
                 <div v-for="(item,index) in goodsItems" :key="index" class="phone-box">
                    <div class="phone-img"> <img :src="item.imgurl" alt/> </div>
                    <h2 class="phone-desc">{{item.goods_name}}</h2>
@@ -37,14 +42,16 @@
                    <p >{{item.desc}}</p>
                    <el-button type="danger">立即购买</el-button>
                 </div>
-         
+         <!-- </router-view> -->
         </div>
         <div class="phone-list-dottom">
            <el-pagination  :small="true" :background="true" 
                       layout="prev, pager, next"
             :total="20">
            </el-pagination> 
-         </div>  
+            <span>{{this.$store.state.user.name}}</span>  
+         </div>
+        
           </div>
              
         </div>
@@ -52,18 +59,76 @@
 </div>
 </template>
 <script scoped>
-import {getgoodsItems} from '@/api/goods'
+import {getgoodsItems, goodsApi} from '@/api/goods'
+
 export default {
      created(){
       this.getgoodsItems()
      },
+
      data()
      {
              return {
+                //      isrouteralive:true,
                      goodsItems:[],
+                //      varchangecolor1:false,
+                //      varchangecolor2:false,
+                //      varchangecolor3:false,
+                //      varchangecolor4:false,
+                //      isactive:false,
+                     i:0,
+                     flag:0,
+                     keywords:null,
+                     OrderBy:null,
+                     total:0,//总条数
+                     currentpage:1,//当前页
+                     pagesize:10,//每页大小
+                     liItems:[{id: 1,name:'综合'},{id:2,name:'新品'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
+                     list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']
              };
      },
+     
+     computed:{
+             computedclass:function(){
+                     return{
+                             changecolor:this.varchangecolor,
+                             
+                     }
+             },
+             
+     },
      methods: {
+        //      reload(){
+        //              this.isrouteralive=true
+        //              this.$nextTick(function(){
+        //                      this.isrouteralive=true
+        //              })
+        //      },
+             islogin(){
+                    const token=this.$store.user.token
+                    if(token !=null || token !="")
+                       ;
+                    else
+                      ;
+             },
+
+             addClassfun2(index) {
+                     this.flag=index;
+             },
+             addClassfun(index) {
+                     this.i=index;
+                     if(index==2)
+                      {  this.OrderBy=1
+                        
+                      
+                        console.log(goodsItems)
+                      }
+                     else
+                       { this.OrderBy=2;
+                //        this.$router.go(0);
+                        console.log("test");
+                       }
+             },
              getgoodsItems(){
              getgoodsItems().then(res => {
                      let status=this.$resultCode.getStatus(res.code)
@@ -77,7 +142,8 @@ export default {
                              return
                      }
                      this.goodsItems = res.data.goodsItems
-             })}
+             })},
+          
      },
      components: {
 
@@ -85,13 +151,10 @@ export default {
      layout: 'goodslist'
 }
 </script>
-<style >
- 
- a:hover{
-         background-color:#ff6700;
-          cursor: pointer;
-          outline: 0;
- }
+<style scoped>
+ .active {
+        color:#ff6700;
+}
 .phone-list-dottom{
         height:50px;
         float:left;
@@ -126,6 +189,7 @@ export default {
         padding-left:6%;
         margin-top:30px;
         height:75%;
+        width:1250px;
 }
 .type-list{
         background:#fff;
@@ -156,10 +220,7 @@ export default {
         
 }
 .icon-more{
-        margin-left: 4px;
-}
-.classer-more{
-
+        margin-left: -84px;
 }
  .liactive{
          margin-left:90px;
@@ -187,11 +248,15 @@ export default {
          height:40px;
  }
  .phone-header-nav{
-        padding-left:100px;
+        padding-left:90px;
         padding-top:10px;
         color:#757575; 
  }
 
 
-
+ li a:hover{
+        color:#ff6700;
+          cursor: pointer;
+          outline: 0;
+ } 
 </style>
