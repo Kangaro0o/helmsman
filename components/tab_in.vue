@@ -1,53 +1,61 @@
 <template>
   <div class="page">
-    <div class="tabin-bg"></div>
-    <div class = "tab-layout">
-    <h3>个人信息</h3>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
-                class="demo-ruleForm login-container" status-icon>
-        <div class="tabcon account-form" id="tmpl_setting">
-            <div class="account-form-raw">
-            <label class="account-form-label">昵称：</label>
-            <div class="account-form-field">
-                <el-form-item prop="name">
-                    <el-input type="text" v-model="ruleForm.name" auto-complete="off" placeholder="昵称"
-                        id="loginEmail" maxlength="16" tabindex="1" class="account-form-input"></el-input>
+    <div class="tabin-bg">
+        <div class = "tab-layout">
+        <h3>个人信息</h3>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
+                    class="demo-ruleForm login-container" status-icon>
+            <div class="tabcon account-form" id="tmpl_setting">
+                <div class="account-form-raw">
+                <label class="account-form-label">昵称：</label>
+                <div class="account-form-field">
+                    <el-form-item prop="name">
+                        <el-input type="text" v-model="ruleForm.name" auto-complete="off" placeholder="昵称"
+                            id="loginEmail" maxlength="16" tabindex="1" class="account-form-input"></el-input>
+                    </el-form-item>
+                    <span class="account-form-field-tip">道上的，报上名来！</span>
+                </div>
+                </div>
+                <div class="account-form-raw">
+                <label class="account-form-label">密码：</label>
+                <div class="account-form-field">
+                    <a href="/tabinfo/resetpwd">修改密码</a>
+                </div>
+                </div>
+                <div class="account-form-raw">
+                <label class="account-form-label">手机号：</label>
+                <div class="account-form-field">
+                    {{phone}}
+                </div>
+                <div class="account-form-field-phone">
+                    <a href="/tabinfo/resetphone">更改绑定</a>
+                </div>
+                </div>
+                <div class="account-form-raw">
+                <label class="account-form-label">邮箱：</label>
+                <div class="account-form-field">
+                    <el-form-item prop="mail">
+                        <el-input type="text" v-model="ruleForm.mail" auto-complete="off" placeholder="邮箱"
+                            id="loginEmail" maxlength="16" tabindex="1" class="account-form-input"></el-input>
+                    </el-form-item>
+                </div>
+                </div>
+                
+            <div class="account-form-field-submit mrg0">
+                <div class="account-form-error"><span></span></div>
+                <el-form-item class="btn btn-active">
+                    <el-button
+                    type="primary"
+                    @click.native.prevent="handleSubmit"
+                    :loading="logining"
+                    >更新设置</el-button>
                 </el-form-item>
-                <span class="account-form-field-tip">道上的，报上名来！</span>
+                
             </div>
-            </div>
-            <div class="account-form-raw">
-            <label class="account-form-label">密码：</label>
-            <div class="account-form-field">
-                <a href="/tabinfo/">修改密码</a>
-            </div>
-            </div>
-            <div class="account-form-raw">
-            <label class="account-form-label">手机号：</label>
-            <div class="account-form-field">
-                {{phone}}
-            </div>
-            <div class="account-form-field-phone">
-                <a href="/tabinfo/resetphone">更改绑定</a>
-            </div>
-            </div>
-            <div class="account-form-raw">
-            <label class="account-form-label">邮箱：</label>
-            <div class="account-form-field">
-                <el-form-item prop="mail">
-                    <el-input type="text" v-model="ruleForm.mail" auto-complete="off" placeholder="邮箱"
-                        id="loginEmail" maxlength="16" tabindex="1" class="account-form-input"></el-input>
-                </el-form-item>
-            </div>
-            </div>
-            
-        <div class="account-form-field-submit mrg0">
-            <div class="account-form-error"><span></span></div>
-            <button class="btn btn-active" @click.native.prevent="handleSubmit">更新设置</button>
-        </div>
 
+            </div>
+        </el-form>
         </div>
-    </el-form>
     </div>
   </div>
 </template>
@@ -59,7 +67,7 @@ export default {
         return {
             ruleForm: {
                 name: "bevecrly",
-                mail: "未绑定",
+                mail: "",
             },
             phone: "137****90",
            
@@ -74,8 +82,8 @@ export default {
         }
     },
 
-    method: {
-        handleSubmit (ev) {
+    methods: {
+        handleSubmit(ev) {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
                 this.logining = true
@@ -123,7 +131,6 @@ div {
 }
 
 .tab-layout {
-    margin-top: 100px;
     margin-left:300px;
     font: normal 13px/1.618 Helvetica,Arial,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
     min-height: 100%;
@@ -131,14 +138,13 @@ div {
 }
 
 .tabin-bg {
-  background-image: 0;
+  background-image: url("../assets/tabinfobg.png");
   background-size:cover; 
   background-repeat: no-repeat;
-  background-position: top center;
-  position: absolute;
+  background-position: top left;
   width: 100%;
-  height: 588px;
-  z-index: -10;
+  height: 470px;
+  padding-top: 120px;
 }
 
 h3 {
@@ -225,24 +231,13 @@ a {
 
 .account-form .btn {
     display: inline-block;
-    height: 36px;
-    padding: 0 35px;
     border-radius: 3px;
     color: #fff;
     font-size: 14px;
-    font-weight: 600;
     line-height: 36px;
+    width: 100px;
     text-align: center;
     outline: 0;
-    background-color: rgba(66,189,86,.5);
-}
-
-.account-form .btn-active {
-    cursor: pointer;
-    background-color: #2897ff;
-}
-
-.account-form .btn-active:hover, .account-form .btn-active:visited {
-    color: #fff;
+    margin-top: 30px;
 }
 </style>
