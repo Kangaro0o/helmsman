@@ -8,7 +8,9 @@ export const user = {
   register:'/user/register',
   verify:'/user/verify',
   chkcode:'/user/chkCode',
-  sendpwd:'/user/sendpwd'
+  sendpwd:'/user/sendpwd',
+  resetpwd:'/user/resetpwd',
+  tabupdate:'/user/tabupdate'
 }
 
 /**

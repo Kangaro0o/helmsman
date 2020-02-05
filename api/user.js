@@ -22,3 +22,18 @@ export const sendpwd = params => {
     data: params
   })
 }
+
+export const resetpwd = resetpwdInfo => {
+  return request({
+    url: user.resetpwd,
+    method: 'post',
+    data: resetpwdInfo
+  })
+}
+export const tabupdate = tabupdateInfo => {
+  return request({
+    url: user.tabupdate,
+    method: 'post',
+    data: tabupdateInfo
+  })
+}

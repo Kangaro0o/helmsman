@@ -1,18 +1,18 @@
 <template>
   <div>
-    <tabin></tabin>
+    <tabphone></tabphone>
   </div>
 </template>
 <script>
-import tabin from '@/components/tab_in'
+import tabphone from '@/components/tab_phone'
 export default {
   head() {
     return {
-      title: "舵手商城 - 个人信息"
+      title: "舵手商城 - 修改手机号"
     }
   },
   components: {
-    'tabin': tabin
+    'tabphone': tabphone
   },
   layout: 'tabinfo'
   // page component definitions

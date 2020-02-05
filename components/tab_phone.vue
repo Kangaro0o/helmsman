@@ -4,8 +4,8 @@
         <div class="login-box">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px"
                 class="demo-ruleForm login-container" status-icon>
-            <h3 class="title">密码找回</h3>
-            <h4 class="input-message">请输入注册的手机号码：</h4>
+            <h3 class="title">修改绑定的手机号</h3>
+            <h4 class="input-message">请输入新的手机号码：</h4>
             <el-form-item prop="phone">
             <el-input type="text" v-model="ruleForm.phone" auto-complete="off" placeholder="手机号"
                         id="loginEmail"></el-input>
@@ -28,8 +28,8 @@
               </label>
             </el-form-item>
             <el-form-item style="width:100%;margin-top:30px;">
-            <el-button type="primary" style="width:100%;" @click.native.prevent="submitNext" :loading="logining">
-                下一步
+            <el-button type="primary" style="width:100%;" @click.native.prevent="resetphone" :loading="logining">
+                确认修改
             </el-button>
             </el-form-item>
         </el-form>
@@ -110,7 +110,7 @@ export default {
         }
       }, 1000);
     },
-    submitNext (ev) {
+    resetphone (ev) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true
@@ -135,7 +135,7 @@ export default {
               duration: 1000
             })
             setTimeout(() => {
-              this.$router.push({path: '/findpwd/next', query: {phone: this.ruleForm.phone}})
+              this.$router.push({path: '/tabinfo'})
             }, 1000);
           }).catch(err => {
             this.logining = false
