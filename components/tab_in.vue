@@ -152,7 +152,6 @@ div {
 
 .tabin-bg {
   background-image: url("../assets/tabinfobg.png");
-  background-size:cover; 
   background-repeat: no-repeat;
   background-position: top left;
   width: 100%;
