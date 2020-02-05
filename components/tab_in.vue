@@ -167,7 +167,10 @@ h3 {
 .account-form {
     padding: 20px 0;
 }
-
+.page {
+    width: 1250px;
+    margin: 0 auto;
+}
 .account-form-raw {
     margin-bottom: 20px;
     position: relative;
