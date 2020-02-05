@@ -64,6 +64,19 @@
 import {tabupdate} from '@/api/user'
 export default {
     data() {
+        var checkMail = (rule, value, callback) => {  // 检查邮箱格式
+            if (!value) {
+                return callback(new Error('请输入邮箱'));
+            } else {
+                const reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+                // console.log(reg.test(value));
+                if (reg.test(value)) {
+                    callback();
+                } else {
+                    return callback(new Error('邮箱格式不正确'));
+                }
+            }
+        }
         return {
             ruleForm: {
                 name: "bevecrly",
@@ -73,10 +86,10 @@ export default {
            
             rules: {
                 name: [
-                { required: true, message: '请输入昵称', trigger: 'blur' }
+                    { required: true, message: '请输入昵称', trigger: 'blur' }
                 ],
                 mail: [
-                { required: true, message: '请输入邮箱', trigger: 'blur' }
+                    { required: true, validator: checkMail, trigger: 'blur' }
                 ]
             }
         }
