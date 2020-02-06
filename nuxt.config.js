@@ -32,7 +32,8 @@ export default {
   plugins: [
     { src: '@/plugins/element-ui' },
     { src: '@/plugins/nprogress', ssr: false },
-    { src: '@/plugins/common', srr: false }
+    { src: '@/plugins/common' },
+    { src: '@/plugins/persistedstate', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
