@@ -7,55 +7,22 @@
     <div class="main-page">
       <!--秒杀专栏-->
       <mainSecKill></mainSecKill>
-      <!--家电-->
-      <!-- <householdAppliances></householdAppliances> -->
-      <!--智能-->
-      <!-- <intelligence></intelligence> -->
-      <!--搭配-->
-      <!-- <collocation></collocation> -->
-      <!--配件-->
-      <!-- <parts></parts> -->
-      <!--周边-->
-      <!-- <relatedProducts></relatedProducts> -->
-      <!--为你推荐-->
-      <!-- <recommend></recommend> -->
-      <!--热评产品-->
-      <!-- <hotGoods></hotGoods> -->
-      <!--内容-->
-      <!-- <miContent></miContent> -->
-      <!--视频-->
-      <!-- <miVideo></miVideo> -->
+      <!--其他商品-->
+      <mainGoods></mainGoods>
     </div>
-  
   </div>
 </template>
 
 <script>
 import MainCarousel from '@/components/MainCarousel'
 import MainSecKill from '@/components/MainSecKill'
-// import HouseholdAppliances from './HouseholdAppliances'
-// import Intelligence from './Intelligence'
-// import Collocation from './Collocation'
-// import Parts from './Parts'
-// import RelatedProducts from './RelatedProducts'
-// import Recommend from './Recommend'
-// import HotGoods from './HotGoods'
-// import MiContent from './MiContent'
-// import MiVideo from './MiVideo'
+import MainGoods from '@/components/MainGoods'
 
 export default {
   components: {
     'mainCarousel': MainCarousel,
     'mainSecKill': MainSecKill,
-    // 'householdAppliances': HouseholdAppliances,
-    // 'intelligence': Intelligence,
-    // 'collocation': Collocation,
-    // 'parts': Parts,
-    // 'relatedProducts': RelatedProducts,
-    // 'recommend': Recommend,
-    // 'hotGoods': HotGoods,
-    // 'miContent': MiContent,
-    // 'miVideo': MiVideo
+    'mainGoods': MainGoods
   }
 }
 </script>

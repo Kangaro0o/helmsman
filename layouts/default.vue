@@ -3,7 +3,7 @@
     <topBar></topBar>
     <topHeader></topHeader>
     <nuxt />
-    <footers></footers>
+    <!-- <footers></footers> -->
   </div>
 </template>
 
