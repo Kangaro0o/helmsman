@@ -124,7 +124,7 @@ export default {
           this.desc = '距结束'
           this.timeDiff(now, end_time)
         } else {
-          this.desc = '已结束'
+          this.desc = '' // 已结束
           this.hour = '00'
           this.minute = '00'
           this.second = '00'

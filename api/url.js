@@ -5,12 +5,12 @@ export const user = {
   login: '/user/login',
   info: '/user/info',
   logout: '/user/logout',
-  register:'/user/register',
-  verify:'/user/verify',
-  chkcode:'/user/chkCode',
-  sendpwd:'/user/sendpwd',
-  resetpwd:'/user/resetpwd',
-  tabupdate:'/user/tabupdate'
+  register: '/user/register',
+  verify: '/user/verify',
+  chkcode: '/user/chkCode',
+  sendpwd: '/user/sendpwd',
+  resetpwd: '/user/resetpwd',
+  tabupdate: '/user/tabupdate'
 }
 
 /**
@@ -26,7 +26,8 @@ export const menu = {
  */
 export const goods = {
   carouselItems: '/goods/carouselItems',
-  goodsItems: '/goods/${type}/list/${orderBy}/${keywords}'
+  goodsItems: '/goods/${type}/list/${orderBy}/${keywords}',
+  list: '/goods/list/'
 }
 
 /**

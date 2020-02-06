@@ -12,9 +12,25 @@ export const getCarouselItems = _ => {
   })
 }
 
+
 export function getgoodsItems (type,pagenum,pagesize,orderby,keyword)  {  
        return request({
          url: `/goods/${type}/list/${pagenum}/${pagesize}/${orderby}/${keyword}/ `,
          method: 'get'
        })  
 }
+
+
+
+
+/**
+ * 获取商城首页商品列表
+ * @param {string} keyword 
+ */
+export const getGoodsList = keyword => {
+  return request({
+    url: goods.list + keyword,
+    method: 'get'
+  })
+}
+
