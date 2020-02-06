@@ -12,19 +12,30 @@ export const getCarouselItems = _ => {
   })
 }
 
-export const getgoodsItems = _ => {  
-       return request({
-         url:goods.goodsItems,
-         method: 'get'
-       })  
+export const getgoodsItems = _ => {
+  return request({
+    url: goods.goodsItems,
+    method: 'get'
+  })
 }
 export default {
-     search(orderby,type,keywords){
+  search(orderby, type, keywords) {
     return request({
-      url:'/goods/${type}/list/${orderby}/${keywords}',
-      method:'get',
-      data:goodslist
+      url: '/goods/${type}/list/${orderby}/${keywords}',
+      method: 'get',
+      data: goodslist
 
     })
   }
+}
+
+/**
+ * 获取商城首页商品列表
+ * @param {string} keyword 
+ */
+export const getGoodsList = keyword => {
+  return request({
+    url: goods.list + keyword,
+    method: 'get'
+  })
 }
