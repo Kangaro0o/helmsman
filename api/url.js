@@ -3,14 +3,14 @@
  */
 export const user = {
   login: '/user/login',
-  info: '/user/info',
   logout: '/user/logout',
-  register: '/user/register',
-  verify: '/user/verify',
-  chkcode: '/user/chkCode',
-  sendpwd: '/user/sendpwd',
-  resetpwd: '/user/resetpwd',
-  tabupdate: '/user/tabupdate'
+  register:'/user/register',
+  verify:'/user/verify',
+  chkcode:'/user/chkCode',
+  sendpwd:'/user/password',
+  resetpwd:'/user/resetPwd',
+  tabupdate:'/user/info',
+  fav:'/user/fav'
 }
 
 /**
