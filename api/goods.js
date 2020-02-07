@@ -18,16 +18,6 @@ export const getgoodsItems = _ => {
     method: 'get'
   })
 }
-export default {
-  search(orderby, type, keywords) {
-    return request({
-      url: '/goods/${type}/list/${orderby}/${keywords}',
-      method: 'get',
-      data: goodslist
-
-    })
-  }
-}
 
 /**
  * 获取商城首页商品列表
@@ -40,3 +30,13 @@ export const getGoodsList = keyword => {
   })
 }
 
+/**
+ * 获取商城首页搜索框的搜索提示
+ * @param {string} keyword 
+ */
+export const getGoodsTips = keyword => {
+  return request({
+    url: goods.tips + keyword,
+    method: 'get'
+  })
+}
