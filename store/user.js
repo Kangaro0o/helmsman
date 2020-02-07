@@ -3,7 +3,7 @@
  * @description 用户相关的状态树
  */
 
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout } from '@/api/login'
 import { getToken, setToken, removeAll } from '@/utils/auth'
 
 export const state = () => ({

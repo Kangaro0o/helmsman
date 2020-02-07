@@ -1,28 +1,43 @@
 <template>
-  <div class="main">
-    <div class="main-top">
-      <span class="main-nav"></span>
-      <mainCarousel></mainCarousel>
-    </div>
-    <div class="main-page">
-      <!--秒杀专栏-->
-      <mainSecKill></mainSecKill>
-      <!--其他商品-->
-      <mainGoods></mainGoods>
+  <div>
+    <topHeader @kw="getKeyword"></topHeader>
+    <div class="main">
+      <div class="main-top">
+        <span class="main-nav"></span>
+        <mainCarousel></mainCarousel>
+      </div>
+      <div class="main-page">
+        <!--秒杀专栏-->
+        <mainSecKill></mainSecKill>
+        <!--其他商品-->
+        <mainGoods :keyword="keyword"></mainGoods>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import TopHeader from '@/components/TopHeader'
 import MainCarousel from '@/components/MainCarousel'
 import MainSecKill from '@/components/MainSecKill'
 import MainGoods from '@/components/MainGoods'
 
 export default {
   components: {
+    'topHeader': TopHeader,
     'mainCarousel': MainCarousel,
     'mainSecKill': MainSecKill,
     'mainGoods': MainGoods
+  },
+  data() {
+    return {
+      keyword: ''
+    }
+  },
+  methods: {
+    getKeyword(kw) {
+      this.keyword = kw
+    }
   }
 }
 </script>

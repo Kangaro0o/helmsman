@@ -24,11 +24,13 @@
             @focus="inputFocus"
             @blur="inputBlur"
             :class="{'search-focus': isFocus,'search-enter': isEnter}"
+            v-model="keyword"
           />
           <label
             class="search-btn"
             value
             :class="{'search-focus': isFocus,'search-enter': isEnter}"
+            @click="search"
           >
             <span class="icon"></span>
           </label>
@@ -93,7 +95,8 @@ export default {
       isFocus: false,
       isEnter: false,
       isNavEnter: false,
-      isMenuEnter: false
+      isMenuEnter: false,
+      keyword: ''
     }
   },
   methods: {
@@ -139,9 +142,10 @@ export default {
     },
     searchLeave: function () {
       this.isEnter = false
+    },
+    search: function () {
+      this.$emit('kw', this.keyword)
     }
-  },
-  components: {
   }
 }
 </script>
