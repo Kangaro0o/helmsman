@@ -39,3 +39,4 @@ export const getGoodsList = keyword => {
     method: 'get'
   })
 }
+

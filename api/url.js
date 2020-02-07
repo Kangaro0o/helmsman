@@ -10,7 +10,7 @@ export const user = {
   sendpwd:'/user/password',
   resetpwd:'/user/resetPwd',
   tabupdate:'/user/info',
-  fav:'/user/fav'
+  
 }
 
 /**
@@ -28,6 +28,7 @@ export const goods = {
   carouselItems: '/goods/carouselItems',
   goodsItems: '/goods/${type}/list/${orderBy}/${keywords}',
   list: '/goods/list/'
+
 }
 
 /**
@@ -36,4 +37,10 @@ export const goods = {
 export const seckill = {
   slide: '/seckill/slide',
   list: '/seckill/list'
+}
+
+export const favorite = {
+  fav:'/favorite/list/',
+  delFav:'/favorite/',
+  addFav:'/favorite'
 }
