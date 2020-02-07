@@ -53,7 +53,6 @@
 <script>
 import { getFav } from '@/api/favorite'
 import { delFav } from '@/api/favorite'
-import { Message, MessageBox } from 'element-ui'
 export default {
   data() {
     return {
@@ -73,13 +72,13 @@ export default {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           });
           return;
         }
-        Message({
+        this.$message({
           message: res.message,
           type: status.type
         });
@@ -94,13 +93,13 @@ export default {
           let status = this.$resultCode.getStatus(res.code);
           let success = this.$resultCode.getSuccessStatus();
           if (status !== success) {
-            Message({
+            this.$message({
               message: res.message,
               type: status.type
             });
             return;
           }
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           });
@@ -113,13 +112,13 @@ export default {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           });
           return;
         }
-        Message({
+        this.$message({
           message: res.message,
           type: status.type
         });
