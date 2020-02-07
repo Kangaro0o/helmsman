@@ -52,6 +52,7 @@
 
 <script>
 import { getFav } from '@/api/favorite'
+import { delFav } from '@/api/favorite'
 import { Message, MessageBox } from 'element-ui'
 export default {
   data() {
@@ -107,7 +108,7 @@ export default {
         });
       }
     },
-    delFavFun(ev) {  
+    delFavFun(fid) {  
       delFav(fid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
