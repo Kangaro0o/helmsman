@@ -34,7 +34,7 @@
                         <!---->
                       </p>
                       <div class="actions">
-                        <a class="btn btn-small btn-line-gray">删除</a>
+                        <a class="btn btn-small btn-line-gray" @click="delFavFun(item.fid)" >删除</a>
                         <a :href="item.goods_id" class="btn btn-small btn-primary">查看详情</a>
                       </div>
                     </li>
@@ -106,6 +106,25 @@ export default {
           this.list = res.data.favItems;
         });
       }
+    },
+    delFavFun(ev) {  
+      delFav(fid).then(res => {
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          Message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }
+        Message({
+          message: res.message,
+          type: status.type
+        });
+        this.list = res.data.favItems;
+      });
+      
     }
   }
 };
