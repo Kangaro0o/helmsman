@@ -112,7 +112,7 @@ export default {
       let now = null
       let start_time = new Date(this.start_time)
       let end_time = new Date(this.end_time)
-      setInterval(_ => {
+      let task = setInterval(_ => {
         now = new Date()
         // 如果当前时间小于开始时间
         if (now < start_time) {
@@ -126,6 +126,7 @@ export default {
           this.hour = '00'
           this.minute = '00'
           this.second = '00'
+          clearInterval(task)
         }
       }, 1000)
     },
