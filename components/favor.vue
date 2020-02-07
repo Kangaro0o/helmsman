@@ -8,7 +8,7 @@
               <h1 class="title">喜欢的商品</h1>
               <label class="search-box">
                 <input type="text" v-model="search" placeholder="搜索商品" class="search" style="height: 30px;">
-                <i slot="suffix" class="el-icon-search icon-search"></i>
+                <i slot="suffix" class="el-icon-search icon-search"  @click="searchFavFun"></i>
               </label>
             </div>
             <div class="box-bd">
@@ -76,10 +76,25 @@ export default {
           });
           return;
         }
-        this.list = res.data.list;
+        this.list = res.data.favItems;
+      });
+    },
+  searchFavFun() {
+      getFav(this.keyword).then(res => {
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          Message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }
+        this.list = res.data.favItems;
       });
     }
   }
+  
 };
 </script>
 

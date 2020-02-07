@@ -19,7 +19,7 @@ export const getchkCode = phone => {
 export const sendpwd = params => {
   return request({
     url: user.sendpwd,
-    method: 'post',
+    method: 'patch',
     data: params
   })
 }
@@ -27,14 +27,14 @@ export const sendpwd = params => {
 export const resetpwd = resetpwdInfo => {
   return request({
     url: user.resetpwd,
-    method: 'post',
+    method: 'patch',
     data: resetpwdInfo
   })
 }
 export const tabupdate = tabupdateInfo => {
   return request({
     url: user.tabupdate,
-    method: 'post',
+    method: 'patch',
     data: tabupdateInfo
   })
 }
