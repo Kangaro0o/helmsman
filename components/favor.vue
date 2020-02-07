@@ -78,10 +78,7 @@ export default {
           });
           return;
         }
-        this.$message({
-          message: res.message,
-          type: status.type
-        });
+       
         this.list = res.data.favItems;
         console.log("aa"+this.list)
       });
