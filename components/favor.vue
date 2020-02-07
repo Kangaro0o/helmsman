@@ -123,7 +123,7 @@ export default {
           message: res.message,
           type: status.type
         });
-        this.list = res.data.favItems;
+        this.FavList();
       });
       
     }
