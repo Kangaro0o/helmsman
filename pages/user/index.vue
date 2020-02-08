@@ -76,9 +76,10 @@
                                         </div>
                                     </div>
                                     <div  class="address-item" v-for="(item,index) in list" :key="index">
-                                    <div class="name">周明珠</div>
-                                    <div class="tel">1585068367</div>
-                                    <div class="address">江苏省南京市鼓楼区南园四舍511</div>
+                                    <div class="name">{{item.receiver_name}}</div>
+                                    <div class="tel">{{item.receiver_phone}}</div>
+                                    <div class="address">{{item.address}}</div>
+                                     <!-- <div class="postcode">{{item.postcode}}</div> -->
                                     <div  class="address-action"><span class="operate">修改</span><span class="operate">删除</span></div>
                                     </div>
                                 </div> 
@@ -93,24 +94,14 @@
             <el-dialog title="添加收货地址" :visible.sync="dialogFormVisible" show-word-limit>
   <el-form :model="form">
     <el-form-item >
-        <el-input
-  type="text"
-  placeholder="请输入内容"
-  v-model="text"
-  maxlength="10"
-  show-word-limit
-></el-input>
-      <el-input type="text" placeholder="姓名" v-model="form.name"   maxlength="10"></el-input>
-      <el-input placeholder="手机号" v-model="form.name" autocomplete="off"></el-input>
+      <el-input type="text" placeholder="姓名" v-model="form.receiver_name"   maxlength="10"></el-input>
+      <el-input placeholder="手机号" v-model="form.receiver_phone" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item >
-      <!-- <el-select v-model="form.region" placeholder="请选择活动区域">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
-      </el-select> -->
+  
       <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
-      <el-input placeholder="详细地址"></el-input>
-       <el-input placeholder="邮编" v-model="form.code" autocomplete="off"></el-input>
+      <el-input placeholder="详细地址" v-model="form.receiver_address"></el-input>
+       <el-input placeholder="邮编" v-model="form.receiver_postcode" autocomplete="off"></el-input>
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -123,7 +114,11 @@
 </template>
 <script>
 import Footer from '@/components/Footer'
+import {getaddressItems ,addaddress} from '@/api/address'
 export default {
+    created(){
+        this.getaddressItems()
+    },
     components: {
         'userfooter': Footer
     },
@@ -218,9 +213,11 @@ export default {
             ],
             dialogFormVisible: false,
         form: {
-          name: '',
-          code:'',
-          region: '',
+          receiver_name: '',
+          receiver_postcode:'',
+          receiver_phone:'',
+          receiver_address:'',
+         region: '',
           date1: '',
           date2: '',
           delivery: false,
@@ -230,18 +227,41 @@ export default {
         },
 
     }},methods:{
+        getaddressItems(){
+            getaddressItems().then(res=>{
+                let status =this.$resultCode.getStatus(res.code)
+                let success= this.$resultCode.getSuccessStatus()
+                if(status !== success)
+                {
+                    Message({
+                        message:res.message,
+                        type:status.type
+                    })
+                    return 
+                }
+                this.list=res.data.addresslist
+            })
+
+        },
+        addaddress(){
+
+        },
          handleChange(value) {
         console.log(value);
       },
       adddiv(){
           this.dialogFormVisible = false
-          this.list.push({contactType:'',number:''})
+          this.list.push({receiver_name:this.form.receiver_name,receiver_phone:this.form.receiver_phone,address:this.form.receiver_address,postcode:this.form.postcode})
+          this.addaddress()//向后台添加地址
       }
     },
     layout: 'user'
 }
 </script>
 <style >
+.postcode{
+
+}
   .operate{
       margin-left:15px;
   }
