@@ -8,6 +8,7 @@
 import MainPage from '@/components/MainPage'
 
 export default {
+  layout: 'home',
   head() {
     return {
       title: '舵手商城-首页',
