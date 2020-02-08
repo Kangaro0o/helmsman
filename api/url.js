@@ -44,3 +44,8 @@ export const favorite = {
   delFav: '/favorite/',
   addFav: '/favorite'
 }
+
+export const address = {
+  addressItems:'/address/list',
+  addaddress:'/address/add'
+}
