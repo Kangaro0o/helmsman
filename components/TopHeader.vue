@@ -23,22 +23,26 @@
             type="search"
             @focus="inputFocus"
             @blur="inputBlur"
+            @input="getTips"
             :class="{'search-focus': isFocus,'search-enter': isEnter}"
+            v-model="keyword"
           />
           <label
             class="search-btn"
             value
             :class="{'search-focus': isFocus,'search-enter': isEnter}"
+            @click="search"
           >
             <span class="icon"></span>
           </label>
         </form>
-        <!-- <ul class="search-result" v-show="isFocus">
+        <ul class="search-result" v-show="isFocus">
           <li v-for="(item,index) in results" :key="index">
-            <span class="item-name">{{item.name}}</span>
-            <span class="item-num">约有{{item.number}}件</span>
+            <span class="item-name" @mousedown="selectTips(item)">
+              <small>{{item}}</small>
+            </span>
           </li>
-        </ul>-->
+        </ul>
       </div>
     </div>
     <div
@@ -66,6 +70,7 @@
 <script>
 import { getNavItems, getTabItems } from '@/api/menu';
 import { Message } from 'element-ui'
+import { getGoodsTips } from '@/api/goods'
 export default {
   created() {
     this.getNavItems()
@@ -76,24 +81,14 @@ export default {
   data() {
     return {
       navItems: [],
-      /* results: [
-        { name: '小米手机5', number: '11' },
-        { name: '空气净化器2', number: '1' },
-        { name: '活塞耳机', number: '4' },
-        { name: '小米路由器', number: '8' },
-        { name: '移动电源', number: '21' },
-        { name: '运动相机', number: '3' },
-        { name: '小米摄像机', number: '2' },
-        { name: '小米体重秤', number: '1' },
-        { name: '小米插线板', number: '13' },
-        { name: '配件优惠套装', number: '32' }
-      ], */
+      results: [],
       tabItems: {},
       selected: '',
       isFocus: false,
       isEnter: false,
       isNavEnter: false,
-      isMenuEnter: false
+      isMenuEnter: false,
+      keyword: ''
     }
   },
   methods: {
@@ -139,9 +134,24 @@ export default {
     },
     searchLeave: function () {
       this.isEnter = false
+    },
+    search: function () {
+      this.$emit('kw', this.keyword)
+    },
+    getTips: function () {
+      if (this.keyword !== "" && this.keyword !== null) {
+        getGoodsTips(this.keyword).then(res => {
+          this.results = res.data.results
+        })
+      } else {
+        this.results = []
+      }
+
+    },
+    selectTips: function (item) {
+      this.keyword = item
+      this.search()
     }
-  },
-  components: {
   }
 }
 </script>

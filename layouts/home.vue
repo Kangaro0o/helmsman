@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <topBar></topBar>
-    <topHeader @func="getMsgFromSon"></topHeader>
-    <nuxt :finfo="msgFromSon" />
+    <!-- <topHeader @func="getMsgFromSon"></topHeader> -->
+    <nuxt />
     <footers></footers>
   </div>
 </template>
@@ -10,12 +10,12 @@
 <script>
 import '@/assets/reset.css'
 import TopBar from '@/components/TopBar'
-import TopHeader from '@/components/TopHeader'
+
 import Footer from '@/components/Footer'
 export default {
   components: {
     'topBar': TopBar,
-    'topHeader': TopHeader,
+
     'footers': Footer
   },
   data() {

@@ -12,22 +12,18 @@ export const getCarouselItems = _ => {
   })
 }
 
-export const getgoodsItems = _ => {
-  return request({
-    url: goods.goodsItems,
-    method: 'get'
-  })
-}
-export default {
-  search(orderby, type, keywords) {
-    return request({
-      url: '/goods/${type}/list/${orderby}/${keywords}',
-      method: 'get',
-      data: goodslist
 
-    })
-  }
+export function getgoodsItems (type,pagenum,pagesize,orderby,keyword)  {  
+       return request({
+         url: `/goods/${type}/list/${pagenum}/${pagesize}/${orderby}/${keyword}/ `,
+         method: 'get'
+       })  
 }
+
+
+
+
+
 
 /**
  * 获取商城首页商品列表
@@ -39,4 +35,17 @@ export const getGoodsList = keyword => {
     method: 'get'
   })
 }
+
+
+/**
+ * 获取商城首页搜索框的搜索提示
+ * @param {string} keyword 
+ */
+export const getGoodsTips = keyword => {
+  return request({
+    url: goods.tips + keyword,
+    method: 'get'
+  })
+}
+
 

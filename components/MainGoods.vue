@@ -54,8 +54,11 @@ export default {
   data() {
     return {
       list: [],
-      keyword: 'all'
+      // keyword: 'all'
     }
+  },
+  props: {
+    keyword: String
   },
   created() {
     this.GoodsList()
@@ -65,6 +68,11 @@ export default {
       getGoodsList(this.keyword).then(res => {
         this.list = res.data.list
       })
+    }
+  },
+  watch: {
+    keyword: function () {
+      this.GoodsList()
     }
   }
 }
