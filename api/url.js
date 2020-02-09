@@ -38,11 +38,17 @@ export const seckill = {
   slide: '/seckill/slide',
   list: '/seckill/list'
 }
-
+// 收藏列表相关的URL
 export const favorite = {
   fav: '/favorite/list/',
   delFav: '/favorite/',
   addFav: '/favorite'
+}
+
+// 订单相关的url
+export const order = {
+  ord:'/order/list/',
+  delOrd:'/order/'
 }
 
 export const address = {
