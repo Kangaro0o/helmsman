@@ -20,22 +20,22 @@
               <ul class="filter-list J_orderType">
                 <li :class="{'active': isActive[4], 'first': true}">
                   <a
-                    @click="changeOrderStatus('all')"
+                    @click="changeOrderStatus(4)"
                   >全部有效订单</a>
                 </li>
                 <li :class="{'active': isActive[1]}">
                   <a
-                    @click="changeOrderStatus('unpaied')"
+                    @click="changeOrderStatus(1)"
                   >待支付</a>
                 </li>
                 <li :class="{'active': isActive[2]}">
                   <a
-                    @click="changeOrderStatus('unsend')"
+                    @click="changeOrderStatus(2)"
                   >待发货</a>
                 </li>
                 <li :class="{'active': isActive[3]}">
                   <a
-                    @click="changeOrderStatus('send')"
+                    @click="changeOrderStatus(3)"
                   >待收货</a>
                 </li>
               </ul>
@@ -131,7 +131,6 @@ export default {
       isActive: [0, false, false, false, true],
       currentStatus: 4,
       search: "",
-      statusNums: {"all": 4, "unpaied": 1, "unsend": 2, "send": 3},
       orderList: [],
       orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货"},
       keyword: "all",
@@ -164,8 +163,7 @@ export default {
       this.$router.push({ path: '/order/orderinfo', query: { oid: order_number } })
     },
     
-    changeOrderStatus(statusName) {
-      let status = this.statusNums[statusName];
+    changeOrderStatus(status) {
       if (this.currentStatus != status) {
         this.$set(this.isActive, this.currentStatus, false);
         this.$set(this.isActive, status, true);
