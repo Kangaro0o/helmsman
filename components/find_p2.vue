@@ -96,7 +96,7 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true
-          let params = { password: this.ruleForm.password, phone: this.$route.query.phone }
+          let params = { password: this.ruleForm.password, phone: this.$route.params.phone }
           sendpwd(params).then(data => {
             this.logining = false
             let status = this.$resultCode.getStatus(data.code)
