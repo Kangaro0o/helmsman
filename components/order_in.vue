@@ -18,22 +18,22 @@
             </h1>
             <div class="more clearfix">
               <ul class="filter-list J_orderType">
-                <li :class="{'active': isActive[4], 'first': true}">
+                <li :class="{ 'active': isActive[4], 'first': true }">
                   <a
                     @click="changeOrderStatus(4)"
                   >全部有效订单</a>
                 </li>
-                <li :class="{'active': isActive[1]}">
+                <li :class="{ 'active': isActive[1] }">
                   <a
                     @click="changeOrderStatus(1)"
                   >待支付</a>
                 </li>
-                <li :class="{'active': isActive[2]}">
+                <li :class="{ 'active': isActive[2] }">
                   <a
                     @click="changeOrderStatus(2)"
                   >待发货</a>
                 </li>
-                <li :class="{'active': isActive[3]}">
+                <li :class="{ 'active': isActive[3] }">
                   <a
                     @click="changeOrderStatus(3)"
                   >待收货</a>
@@ -95,7 +95,7 @@
                                     :href="item.goods_id"
                                   >{{item.goods_name}}</a>
                                 </p>
-                                <p class="price">{{item.goods_price}}</p>
+                                <p class="price">{{item.goods_price}} × {{item.count}}</p>
                               </li>
                             </ul>
                           </td>
