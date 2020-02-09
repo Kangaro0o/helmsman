@@ -5,23 +5,24 @@
                <i class="el-icon-arrow-right"></i>
                <span>全部结果</span>
                <i class="el-icon-arrow-right"></i>
+               <!-- 当前页面商品种类 -->
+               <span>{{this.$router.params}}</span>
                
                </div>
                 
         </div>
         <div class="filter-list" id="j_filterList">
-                <ul class="item show-less" id="list_item_class">
-                <span class="label">分类:</span> 
-                <li class="liactive" v-for="(item,index) in list2Items" :key="index" >
+                 <span class="label">分类:</span> 
+                <ul class="item-show-less" id="list_item_class">
+               
+                <li style="float:left; margin-left:60px;" v-for="(item,index) in list2Items" :key="index" @click="addClassfun2(index)" v-bind:class='{active:flag===index}' >
                 <a @click="addClassfun2(index)" v-bind:class='{active:flag===index}'>
                 {{item}}
                 </a>
-
                 </li>
                 
-                
-                <span class="classer-more"><i class="el-icon-arrow-down icon-more">  </i></span>
                 </ul>
+                <span class="classer-more"><i class="el-icon-arrow-down icon-more">  </i></span>
         </div>
         <div class="phone-orderBy">
           <div class="phone-list-box">
@@ -45,22 +46,23 @@
          <!-- </router-view> -->
         </div>
         <div class="phone-list-dottom">
-           <el-pagination  :small="true" :background="true" 
-                      layout="prev, pager, next"
-            :total="20">
+           <el-pagination  :small="true" :background="true" :page-size="pagesize" :total="goodsItems.length" :current-page="pagenum"
+                      @current-change="handlecurrentchange"
+                      @prev-click="handlepreclick"
+                      @next-click="handlenextclick"
+                     
+                      >
            </el-pagination> 
             <span>{{this.$store.state.user.name}}</span>  
          </div>
-        
-          </div>
-             
+          </div>       
         </div>
        
 </div>
 </template>
 <script scoped>
-import {getgoodsItems, goodsApi} from '@/api/goods'
-
+import {getgoodsItems} from '@/api/goods'
+import request from '@/service'
 export default {
      created(){
       this.getgoodsItems()
@@ -69,68 +71,59 @@ export default {
      data()
      {
              return {
-                //      isrouteralive:true,
                      goodsItems:[],
-                //      varchangecolor1:false,
-                //      varchangecolor2:false,
-                //      varchangecolor3:false,
-                //      varchangecolor4:false,
-                //      isactive:false,
                      i:0,
                      flag:0,
-                     keywords:null,
-                     OrderBy:null,
+                     keyword:null,//查询关键词
+                     orderby:0,//排序方式
+                     type:this.$router.params,//商品类型
                      total:0,//总条数
-                     currentpage:1,//当前页
-                     pagesize:10,//每页大小
+                     pagesize:12,//每页显示条目
+                     pagenum:0,//当前页
                      liItems:[{id: 1,name:'综合'},{id:2,name:'新品'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
                      list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']
              };
      },
      
-     computed:{
-             computedclass:function(){
-                     return{
-                             changecolor:this.varchangecolor,
-                             
-                     }
-             },
-             
-     },
+  
      methods: {
-        //      reload(){
-        //              this.isrouteralive=true
-        //              this.$nextTick(function(){
-        //                      this.isrouteralive=true
-        //              })
-        //      },
-             islogin(){
-                    const token=this.$store.user.token
-                    if(token !=null || token !="")
-                       ;
-                    else
-                      ;
+             handlecurrentchange(val)
+             {
+                     console.log(`当前页: ${val}`)
              },
-
              addClassfun2(index) {
-                     this.flag=index;
+                    this.flag=index;
              },
-             addClassfun(index) {
+             addClassfun(index){
                      this.i=index;
-                     if(index==2)
-                      {  this.OrderBy=1
-                        
-                      
-                        console.log(goodsItems)
+                     if(index==2)//选择以销量为排序方式
+                      {  this.orderby=1
+                        //  this.updategoodsItems()
+                         this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                         console.log(this.orderby)
                       }
-                     else
-                       { this.OrderBy=2;
-                //        this.$router.go(0);
-                        console.log("test");
+                     else 
+                       { this.orderby=2;   //选择以价格升序为排序方式  
+                        this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                        console.log(this.orderby)
                        }
              },
-             getgoodsItems(){
-             getgoodsItems().then(res => {
+             handlepreclick()
+             {
+                     this.pagenum-=1
+                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                      console.log(this.pagenum)
+                    
+             },
+             handlenextclick()
+             {       this.pagenum+=1
+                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                     console.log(this.pagenum)
+                     
+             },
+ 
+             getgoodsItems(type,pagenum,pagesize,orderby,keyword){
+             getgoodsItems(type,pagenum,pagesize,orderby,keyword).then(res => {
                      let status=this.$resultCode.getStatus(res.code)
                      let success=this.$resultCode.getSuccessStatus()
                      if(status !== success)

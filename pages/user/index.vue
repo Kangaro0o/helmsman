@@ -68,11 +68,19 @@
                             <h1>收货地址</h1>
                             <div class="address-box">
                                 <div class="address-list">
-                                    <div class="address-item">
-                                        <div class="add-desc">
+                                    <div class="address-item" @click="dialogFormVisible=true">
+                                        <div class="add-desc" >
                                             <i><span class="temp2 "></span></i>
                                             <span class="temp">添加新地址</span>
+
                                         </div>
+                                    </div>
+                                    <div  class="address-item" v-for="(item,index) in list" :key="index">
+                                    <div class="name">{{item.receiver_name}}</div>
+                                    <div class="tel">{{item.receiver_phone}}</div>
+                                    <div class="address">{{item.address}}</div>
+                                     <!-- <div class="postcode">{{item.postcode}}</div> -->
+                                    <div  class="address-action"><span class="operate">修改</span><span class="operate">删除</span></div>
                                     </div>
                                 </div> 
                             </div> 
@@ -83,18 +91,190 @@
                
             </div>
         </div>
+            <el-dialog title="添加收货地址" :visible.sync="dialogFormVisible" show-word-limit>
+  <el-form :model="form">
+    <el-form-item >
+      <el-input type="text" placeholder="姓名" v-model="form.receiver_name"   maxlength="10"></el-input>
+      <el-input placeholder="手机号" v-model="form.receiver_phone" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item >
+  
+      <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
+      <el-input placeholder="详细地址" v-model="form.receiver_address"></el-input>
+       <el-input placeholder="邮编" v-model="form.receiver_postcode" autocomplete="off"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="adddiv">确 定</el-button>
+  </div>
+</el-dialog>
     </div>
+    
 </template>
 <script>
 import Footer from '@/components/Footer'
+import {getaddressItems ,addaddress} from '@/api/address'
 export default {
+    created(){
+        this.getaddressItems()
+    },
     components: {
         'userfooter': Footer
+    },
+    data (){
+        return{
+            list:[],
+            text:'',
+            value:[],
+            options:[    {
+                value:'jiangsu',
+                label:'江苏省',
+                children:[{
+                    value:'nanjing',
+                    label:'南京市',
+                    children:[{
+                        value:'gulou',
+                        label:'鼓楼区',
+                         },
+                        {
+                            value:'jiangning',
+                            label:'江宁区'
+                        },
+                        {
+                            value:'xuanwu',
+                            label:'玄武区'
+                        },
+                        {   value:'yuhuatai',
+
+                            label:'雨花台'
+                        },
+                        {
+                            value:'lishui',
+                            label:'溧水区'
+                        }
+                    ]
+
+                },
+                {
+                    value:'taizhou',
+                    label:'泰州市',
+                    children:[{
+                        value:'xinhua',
+                        label:'兴化市'
+                    },{
+                        vaule:'jiangjiang',
+                        label:'靖江市'
+                    },{
+                        value:'jiangyan',
+                        label:'姜堰市'
+                    },{
+                        value:'taixing',
+                        label:'泰兴市'
+                    }]
+                },{
+                    value:'yangzhou',
+                    label:'扬州市',
+                    
+                },
+                {
+                    value:'xuzhou',
+                    label:'徐州市',
+                },
+                {
+                    value:'suqian',
+                    label:'宿迁市',
+
+                },{
+                    value:'zhenjiang',
+                    label:'镇江市'
+                },
+                ]
+            },{
+                value:'beijing',
+                label:'北京市',
+                children:[{value:'dongcheng',
+                    label:'东城区'
+                },{value:'fangshan',label:'房山区'},{value:'chaoyangqu',label:'朝阳区'}]
+            },
+            {
+                value:'shanghai',
+                label:'上海市',
+                children:[{value:'minghang',label:'闵行区'},{value:'jiading',label:'嘉定区'},{value:'baoshan',label:'宝山区'},{value:'songjia',label:'松江区'}]
+            },
+            {
+                value:'shenzhen',
+                label:'深圳市'
+            },
+            {
+                value:'guangdong',
+                label:'广东省'
+            }
+            ],
+            dialogFormVisible: false,
+        form: {
+          receiver_name: '',
+          receiver_postcode:'',
+          receiver_phone:'',
+          receiver_address:'',
+         region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+
+    }},methods:{
+        getaddressItems(){
+            getaddressItems().then(res=>{
+                let status =this.$resultCode.getStatus(res.code)
+                let success= this.$resultCode.getSuccessStatus()
+                if(status !== success)
+                {
+                    Message({
+                        message:res.message,
+                        type:status.type
+                    })
+                    return 
+                }
+                this.list=res.data.addresslist
+            })
+
+        },
+        addaddress(){
+
+        },
+         handleChange(value) {
+        console.log(value);
+      },
+      adddiv(){
+          this.dialogFormVisible = false
+          this.list.push({receiver_name:this.form.receiver_name,receiver_phone:this.form.receiver_phone,address:this.form.receiver_address,postcode:this.form.postcode})
+          this.addaddress()//向后台添加地址
+      }
     },
     layout: 'user'
 }
 </script>
 <style >
+.postcode{
+
+}
+  .operate{
+      margin-left:15px;
+  }
+.name{
+    font-size:18px;
+    color:#333;
+    line-height:30px;
+    margin-bottom:10px;
+}
+.tel{
+    line-height:22px;
+    color:#757575;
+}
 .temp{
     margin-top: 1px;
     margin-left:-11px;
@@ -103,8 +283,12 @@ export default {
      color:#ff9650;   
  }
    .address-list{
-       height:200px;
+     
    }
+   .address-action{
+    display:none;
+   
+}
    .address-item{
        display:inline-block;
        width:268px;
@@ -115,8 +299,20 @@ export default {
        margin-bottom:20px;
        vertical-align:top;
        transition:all .4s ease;
+       margin-left:5px;
        
-   }.temp2{
+   }
+     .address-item:hover .address-action{
+    display:block;
+    margin-left:120px;
+    /* text-align:right;
+    right:24px;
+    bottom:10px;
+    opacity:0; */
+    color:#ff9650;
+    
+}
+   .temp2{
        display:block;
        width:51px;
        height:51px;
