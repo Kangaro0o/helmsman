@@ -1,4 +1,5 @@
 <template>
+<div class="page">
   <div class="span16">
   <div class="uc-box uc-main-box">
     <div class="uc-content-box order-view-box">
@@ -7,17 +8,12 @@
           订单详情
           <small>
             请谨防钓鱼链接或诈骗电话，
-            <a
-              href="https://www.mi.com/service/buy/Avoid%20Fraud"
-              target="_blank"
-              data-stat-id="7c2062ba8275bad8"
-              onclick="_msq.push(['trackEvent', '7128be9aaf3e0d43-7c2062ba8275bad8', 'https://www.mi.com/service/buy/Avoid20Fraud', 'pcpid', '']);"
-            >了解更多&gt;</a>
+            <a href="/www.baidu.com">了解更多&gt;</a>
           </small>
         </h1>
         <div class="more clearfix">
           <h2 class="subtitle">
-            订单号：5200208209901643
+            订单号：{{this.$route.query.oid}}
             <span class="tag tag-subsidy"></span>
           </h2>
         </div>
@@ -26,23 +22,18 @@
         <div class="uc-order-item uc-order-item-shipping">
           <div class="order-detail">
             <div class="order-summary">
-              <div class="order-status">待发货</div>
-              <div class="order-progress">
-              </div>
+              <div class="order-status">{{orderStatus[Info.status]}}</div>
+              <!-- <div class="order-progress">
+              </div> -->
             </div>        
             <table class="order-items-table">
               <tbody>
                 <tr>
                   <td class="col col-thumb">
                     <div class="figure figure-thumb">
-                      <a
-                        target="_blank"
-                        href="//item.mi.com/1193200023.html"
-                        data-stat-id="3c28a414eeb9d8d7"
-                        onclick="_msq.push(['trackEvent', '7128be9aaf3e0d43-3c28a414eeb9d8d7', '//item.mi.com/1193200023.html', 'pcpid', '']);"
-                      >
+                      <a :href="Info.goods_id">
                         <img
-                          src="//cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1565313911.01343154.jpg?thumb=1&amp;w=80&amp;h=80"
+                          :src="Info.imgUrl"
                           width="80"
                           height="80"
                           alt
@@ -52,16 +43,11 @@
                   </td>
                   <td class="col col-name">
                     <p class="name">
-                      <a
-                        target="_blank"
-                        href="//item.mi.com/1193200023.html"
-                        data-stat-id="1a0f2f22e7c0b56d"
-                        onclick="_msq.push(['trackEvent', '7128be9aaf3e0d43-1a0f2f22e7c0b56d', '//item.mi.com/1193200023.html', 'pcpid', '']);"
-                      >米家迷你保温杯 黑色</a>
+                      <a :href="Info.goods_id">{{Info.goods_name}}</a>
                     </p>
                   </td>
                   <td class="col col-price">
-                    <p class="price">49元 × 1</p>
+                    <p class="price">{{Info.goods_price}}元 × {{Info.count}}</p>
                   </td>
                   <td class="col col-actions"></td>
                 </tr>
@@ -77,16 +63,21 @@
               <tbody>
                 <tr>
                   <th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</th>
-                  <td>赵越</td>
+                  <td>{{Info.receiver_name}}</td>
                 </tr>
                 <tr>
                   <th>联系电话：</th>
-                  <td>137****3890</td>
+                  <td>{{Info.receiver_phone}}</td>
                 </tr>
                 <tr>
                   <th>收货地址：</th>
-                  <td>江苏 扬州市 高邮市  </td>
+                  <td>{{Info.address}}</td>
                 </tr>
+                <tr>
+                  <th>邮政编码：</th>
+                  <td>{{Info.postcode}}</td>
+                </tr>
+                
               </tbody>
             </table>
           </div>
@@ -97,13 +88,16 @@
               <tbody>
                 <tr>
                   <th>创建时间：</th>
-                  <td>2017.01.01.10:30</td>
+                  <td>{{Info.create_time}}</td>
                 </tr>
                 <tr>
                   <th>支付时间：</th>
-                  <td>2017.01.01.10:30</td>
+                  <td>{{Info.pay_time}}</td>
                 </tr>
-
+                <tr>
+                  <th>支付方式：</th>
+                  <td>{{Info.pay_type}}</td>
+                </tr>
               </tbody>
             </table>
             <div class="actions"></div>
@@ -115,15 +109,16 @@
                 <tr>
                   <th>商品总价：</th>
                   <td>
-                    <span class="num">59.00</span>元
+                    <span class="num">{{Info.goods_price}}</span>元
                   </td>
                 </tr>
                 <tr>
                   <th class="total">实付金额：</th>
                   <td class="total">
-                    <span class="num">59.00</span>元
+                    <span class="num">{{Info.goods_price}}</span>元
                   </td>
                 </tr>
+                    <a class="btn btn-small btn-line-gray" @click="delOrdFun">删除订单</a>
               </tbody>
             </table>
           </div>
@@ -132,10 +127,57 @@
     </div>
   </div>
   </div>
+  </div>
 </template>
-
 <script>
-export default {};
+import { getOrdInfo } from '@/api/order'
+import { delOrd } from '@/api/order'
+export default {
+  data(){
+    return {
+      Info:[],
+      orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货"},
+    }
+  },
+  created() {
+    this.OrdInfoFun();
+  },
+  methods:{
+    delOrdFun() {  
+      delOrd(this.$route.query.oid).then(res => {
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          this.$message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }
+        this.$message({
+          message: res.message,
+          type: status.type
+        });
+      });
+      
+    },
+    OrdInfoFun() {
+      getOrdInfo(this.$route.query.oid).then(res => {
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          this.$message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }    
+        this.Info = res.data.ordItemsInfo;
+      });
+    },
+
+}
+};
 </script>
 
 
@@ -347,11 +389,14 @@ table {
     height: 28px;
     font-size: 12px;
     line-height: 28px;
+    margin-top:12px;
 }
 .btn-line-gray {
     border-color: #b0b0b0;
     background: #fff;
     color: #757575;
+    margin-top:20px;
+
 }
 .order-view-box .uc-order-item .order-items-table {
     width: 100%;
@@ -416,5 +461,46 @@ th {
     font-weight: 400;
     color: #333;
 }
+.btn {
+  display: block;
+  width: 158px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #b0b0b0;
+  font-size: 14px;
+  line-height: 38px;
+  text-align: center;
+  color: #b0b0b0;
+  cursor: pointer;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
 
+.btn-small {
+  width: 118px;
+  height: 28px;
+  font-size: 12px;
+  line-height: 28px;
+}
+
+.btn-line-gray {
+  border-color: #b0b0b0;
+  background: #fff;
+  color: #757575;
+  float:right;
+ 
+}
+
+.btn-line-gray:hover {
+    color: #fff;
+    background-color: #757575;
+    border-color: #757575;
+}
+.page {
+  background-color: #f5f5f5;
+  width: 100%;
+  min-height: 1000px;
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
 </style>
