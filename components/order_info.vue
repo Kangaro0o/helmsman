@@ -8,7 +8,7 @@
           订单详情
           <small>
             请谨防钓鱼链接或诈骗电话，
-            <a href="/www.baidu.com">了解更多&gt;</a>
+            <a href="https://www.baidu.com">了解更多&gt;</a>
           </small>
         </h1>
         <div class="more clearfix">
@@ -118,9 +118,11 @@
                     <span class="num">{{Info.goods_price}}</span>元
                   </td>
                 </tr>
-                    <a class="btn btn-small btn-line-gray" @click="delOrdFun">删除订单</a>
               </tbody>
             </table>
+            <div class="delete">
+              <a class="btn btn-small btn-line-gray" @click="delOrdFun">删除订单</a>
+            </div>
           </div>
         </div>
       </div>
@@ -158,6 +160,7 @@ export default {
           message: res.message,
           type: status.type
         });
+        this.$router.push("/order");
       });
       
     },
@@ -502,5 +505,9 @@ th {
   min-height: 1000px;
   padding-top: 40px;
   padding-bottom: 30px;
+}
+.delete{
+  height: 60px;
+  margin-top: 30px;
 }
 </style>
