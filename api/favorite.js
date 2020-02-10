@@ -1,3 +1,7 @@
+import request from '@/service'
+import { favorite } from '@/api/url'
+
+
 // 获取收藏商品
 export const getFav = keyword => {
     return request({

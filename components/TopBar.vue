@@ -10,7 +10,7 @@
       </div>
       <div class="topbar-info">
         <a href="/login">登录</a>
-        <a href="/fav">注册</a>
+        <a href="/order/orderinfo">注册</a>
       </div>
       <div class="topbar-cart" @mouseenter="cartEnter" @mouseleave="cartOut">
         <div class="cart" :class="{'active': cartStatus}">
