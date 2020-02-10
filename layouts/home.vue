@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <topBar></topBar>
-    <!-- <topHeader @func="getMsgFromSon"></topHeader> -->
     <nuxt />
     <footers></footers>
   </div>
@@ -9,26 +8,14 @@
 
 <script>
 import '@/assets/reset.css'
-import TopBar from '@/components/TopBar'
+import TopBar from '@/components/TopBarCopy'
 
 import Footer from '@/components/Footer'
 export default {
   components: {
     'topBar': TopBar,
-
     'footers': Footer
   },
-  data() {
-    return {
-      msgFromSon: ""
-    }
-  },
-  methods: {
-    getMsgFromSon(data) {
-      this.msgFromSon = data
-      // console.log(this.msgFromSon)
-    }
-  }
 }
 </script>
 <style>

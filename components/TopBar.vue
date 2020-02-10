@@ -4,7 +4,7 @@
       <div class="topbar-nav">
         <ul>
           <li class="item">
-            <a href="#">HelmsMan商城</a>
+            <a href="/">HelmsMan商城</a>
           </li>
         </ul>
       </div>
