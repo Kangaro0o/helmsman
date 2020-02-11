@@ -13,7 +13,7 @@ let cookieStorage = {
 export default ({ store }) => {
   window.onNuxtReady(() => {
     createPersistedState({
-      key: 'nuxt-state',
+      key: 'state',
       storage: cookieStorage,
       getState: cookieStorage.getItem,
       setState: cookieStorage.setItem

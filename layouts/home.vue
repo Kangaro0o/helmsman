@@ -8,7 +8,7 @@
 
 <script>
 import '@/assets/reset.css'
-import TopBar from '@/components/TopBarCopy'
+import TopBar from '@/components/TopBar'
 
 import Footer from '@/components/Footer'
 export default {

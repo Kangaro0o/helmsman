@@ -56,13 +56,6 @@
           </div>
         </span>
         <span class="sep">|</span>
-        <span class="message">
-          <a rel="nofollow" href="javascript:void(0);" class="J_needAgreement">
-            消息通知
-            <i class="J_miMessageTotal"></i>
-          </a>
-        </span>
-        <span class="sep">|</span>
         <a rel="nofollow" class="link link-order" href="//static.mi.com/order/" target="_blank">我的订单</a>
       </div>
     </div>
@@ -330,6 +323,9 @@ li {
   color: #b0b0b0;
   line-height: 40px;
   display: inline-block;
+}
+.site-topbar .topbar-info .sep {
+  margin: 0;
 }
 </style>
 
