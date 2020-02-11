@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <topBar></topBar>
-    <topHeader @func="getMsgFromSon"></topHeader>
-    <nuxt :finfo="msgFromSon" />
+    <topHeader></topHeader>
+    <nuxt />
     <footers></footers>
   </div>
 </template>
@@ -17,17 +17,6 @@ export default {
     'topBar': TopBar,
     'topHeader': TopHeader,
     'footers': Footer
-  },
-  data() {
-    return {
-      msgFromSon: ""
-    }
-  },
-  methods: {
-    getMsgFromSon(data) {
-      this.msgFromSon = data
-      // console.log(this.msgFromSon)
-    }
   }
 }
 </script>

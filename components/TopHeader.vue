@@ -16,7 +16,12 @@
           </li>
         </ul>
       </div>
-      <div class="header-search" @mouseenter="searchEnter" @mouseleave="searchLeave">
+      <div
+        class="header-search"
+        @mouseenter="searchEnter"
+        @mouseleave="searchLeave"
+        v-show="this.$route.path === '/'"
+      >
         <form>
           <input
             class="search-text"
@@ -36,7 +41,7 @@
             <span class="icon"></span>
           </label>
         </form>
-        <ul class="search-result" v-show="isFocus">
+        <ul class="search-result" v-show="isShow">
           <li v-for="(item,index) in results" :key="index">
             <span class="item-name" @mousedown="selectTips(item)">
               <small>{{item}}</small>
@@ -88,7 +93,8 @@ export default {
       isEnter: false,
       isNavEnter: false,
       isMenuEnter: false,
-      keyword: ''
+      keyword: '',
+      isShow: false
     }
   },
   methods: {
@@ -136,20 +142,24 @@ export default {
       this.isEnter = false
     },
     search: function () {
+      this.isShow = false
       this.$emit('kw', this.keyword)
     },
     getTips: function () {
       if (this.keyword !== "" && this.keyword !== null) {
+        this.isShow = true
         getGoodsTips(this.keyword).then(res => {
           this.results = res.data.results
         })
       } else {
+        this.isShow = false
         this.results = []
       }
 
     },
     selectTips: function (item) {
       this.keyword = item
+      this.isShow = false
       this.search()
     }
   }

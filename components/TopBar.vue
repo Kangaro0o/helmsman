@@ -4,47 +4,35 @@
       <div class="topbar-nav">
         <ul>
           <li class="item">
-            <a href="#">HelmsMan商城</a>
+            <a href="/">HelmsMan商城</a>
           </li>
         </ul>
       </div>
-      <div class="topbar-info">
+      <div class="topbar-info" v-if="getToken() === '' || getToken() === null">
         <a href="/login">登录</a>
-        <a href="/order/orderinfo">注册</a>
+        <a href="/register">注册</a>
       </div>
-      <div class="topbar-cart" @mouseenter="cartEnter" @mouseleave="cartOut">
-        <div class="cart" :class="{'active': cartStatus}">
-          <span class="icon"></span>
-          <a href="#">
-            购物车（
-            <span>0</span>）
-          </a>
-        </div>
-        <transition name="expand">
-          <div class="cart-detail" v-show="cartStatus">购物车中还没有商品，赶快选购吧！</div>
-        </transition>
+      <div class="topbar-info" v-else>
+        <a href="#">{{username}}</a>
+        <a href="/user" target="_blank">个人中心</a>
+        <a href="/order" target="_blank">我的订单</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
-  data() {
-    return {
-      cartStatus: false
-    }
-  },
   methods: {
-    cartEnter: function () {
-      this.cartStatus = true
-    },
-    cartOut: function () {
-      this.cartStatus = false
-    }
+    ...mapMutations({
+      getToken: 'user/get_token'
+    })
   },
-  components: {
-
+  computed: {
+    username: function () {
+      return this.$store.state.user.name
+    }
   }
 }
 </script>
