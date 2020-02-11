@@ -387,8 +387,10 @@ export default {
     handleChange(value) {
       console.log(value);
     },
-    setuserdefaultaddress(){
-         let aid={aid:this.defaultaddressid}
+    setuserdefaultaddress(index){
+          this.defaultaddressid=index
+          let aid= {aid : index}
+         console.log(index)
         setdefaultaddress(aid);//设置aid为id的地址为默认地址
     },
     setdefaultaddress(aid){
@@ -608,4 +610,4 @@ export default {
   display: block;
   height: 984px;
 }
-</style>
+</style> 

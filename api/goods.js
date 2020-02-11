@@ -48,4 +48,18 @@ export const getGoodsTips = keyword => {
   })
 }
 
+export const getimage = _=>{
+  return request({
+    url:goods.getimagesItems,
+    method:'get'
+  })
+
+}
+
+export function getgoodsinfo(gid){
+  return request({
+    url:`/goods/show/${gid}`,
+    method:'get'
+  })
+}
 

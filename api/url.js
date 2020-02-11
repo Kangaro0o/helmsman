@@ -28,7 +28,9 @@ export const goods = {
   carouselItems: '/goods/carouselItems',
   goodsItems: '/goods/${type}/list/${orderBy}/${keywords}',
   list: '/goods/list/',
-  tips: '/goods/tips/'
+  tips: '/goods/tips/',
+  getimagesItems:'/getimage',
+  // getgoodsinfo:'/goods/show/${gid}'
 }
 
 /**

@@ -34,6 +34,6 @@ export const setdefaultaddress =aid =>{
     return request({
         url:address.setdefaultaddress ,
         method:'put',
-        data:aid
+        data:{aid}
     })
 }
