@@ -52,8 +52,8 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
           <span>{{second}}</span>
         </div>
       </div>
-      <div class="goods-item" v-for="(item,index) in seckillGoods" :key="index">
-        <a :href="item.goods_id">
+      <div class="goods-item" v-for="(item,index) in seckillGoods.slice(0, 4)" :key="index">
+        <a :href="item.sgid">
           <img :src="item.imgUrl" alt />
           <p class="title">{{item.goods_name}}</p>
         </a>
@@ -100,10 +100,9 @@ export default {
           })
           return
         }
-        this.time_id = res.data.time_id
-        this.start_time = res.data.start_time
-        this.end_time = res.data.end_time
-        this.seckillGoods = res.data.list
+        this.start_time = res.data.startTime
+        this.end_time = res.data.endTime
+        this.seckillGoods = res.data.seckillGoodsList
         this.parsePlay(this.start_time)
         this.countdown()
       })

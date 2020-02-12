@@ -47,15 +47,15 @@ export const favorite = {
 
 // 订单相关的url
 export const order = {
-  ord:'/order/list/',
-  delOrd:'/order/',
-  ordInfo:'/order/info/'
+  ord: '/order/list/',
+  delOrd: '/order/',
+  ordInfo: '/order/info/'
 
 }
 
 export const address = {
-  addressItems:'/address/list',
-  addaddress:'/address/add',
-  deleteaddress:'/address/deleteaddress',
-  setdefaultaddress:'/address/default'
+  addressItems: '/address/list',
+  addaddress: '/address/add',
+  deleteaddress: '/address/deleteaddress',
+  setdefaultaddress: '/address/default'
 }
