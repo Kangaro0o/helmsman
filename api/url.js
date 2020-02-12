@@ -53,12 +53,11 @@ export const order = {
   delOrd:'/order/',
   ordInfo:'/order/info/',
   addorder:'/order/create',
-
 }
 
 export const address = {
-  addressItems:'/address/list',
-  addaddress:'/address/add',
-  deleteaddress:'/address/deleteaddress',
-  setdefaultaddress:'/address/default'
+  addressItems: '/address/list',
+  addaddress: '/address/add',
+  deleteaddress: '/address/deleteaddress',
+  setdefaultaddress: '/address/default'
 }
