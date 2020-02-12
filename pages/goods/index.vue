@@ -41,7 +41,7 @@
                    <h2 class="phone-desc">{{item.goods_name}}</h2>
                    <p class="phone-price">{{item.goods_price}}元起，<del>3000元起</del></p>
                    <p >{{item.desc}}</p>
-                   <el-button type="danger">立即购买</el-button>
+                   <el-button type="danger"><router-link :to="{path:'/goods/detail',query:{gid:item.gid}}">立即购买</router-link></el-button>
                 </div>
          <!-- </router-view> -->
         </div>
@@ -60,7 +60,7 @@
        
 </div>
 </template>
-<script scoped>
+<script >
 import {getgoodsItems} from '@/api/goods'
 import request from '@/service'
 export default {
