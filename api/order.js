@@ -24,3 +24,12 @@ export const delOrd = oid => {
       method: 'delete',
     })
 }
+//创建订单
+export const addorder = orderinfo =>{
+    return request({
+      url:order.addorder,
+      method:'post',
+      data:orderinfo
+    })
+
+}

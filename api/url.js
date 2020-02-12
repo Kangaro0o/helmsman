@@ -51,7 +51,8 @@ export const favorite = {
 export const order = {
   ord:'/order/list/',
   delOrd:'/order/',
-  ordInfo:'/order/info/'
+  ordInfo:'/order/info/',
+  addorder:'/order/create',
 
 }
 

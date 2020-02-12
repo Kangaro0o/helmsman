@@ -365,7 +365,7 @@ export default {
         receiver_postcode: "", //收件地址邮编
         receiver_phone: "", //收件人电话
         receiver_address: "", //收件地址
-        region: "" //收件地址区域
+        
       }
     };
   },

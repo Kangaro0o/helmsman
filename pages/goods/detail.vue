@@ -17,16 +17,16 @@
         <div class="detail">
           <div>
             <h1 class="pro-title" style="padding-top:15px;padding-bottom:15px;">{{goods.goods_name}}</h1>
-            <font color="#ff4a00">「分期享6期免息，购机享1TB小米云空间1年使用权」</font>
+            <font color="#ff4a00" style="margin-left:-5px;font-size:15px;">「分期享6期免息，购机享1TB小米云空间1年使用权」</font>
             <p class="sale-desc" style="“padding-top:10px;padding-bottom:15px;">{{goods.desc}}</p>
-            <font color="#ff4a00">小米自营</font>
-            <div style="padding-top:10px;">
+            <font color="#ff4a00" style="padding-top:10px;font-size:15px;">小米自营</font>
+            <div style="padding-top:20px;">
               <span class="final-price">{{goods.goods_price}}</span>
               <del class="origin-price">3099元</del>
             </div>
           </div>
           <div class="pro-list">
-            <span class="desc">小米cc9pro魔法绿镜</span>
+            选择购买数量<el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
             <span class="total-price">
               总计
               <font>{{this.totalprice}}</font>元
@@ -34,7 +34,7 @@
           </div>
           <ul class="btn-warp">
             <li>
-              <router-link to="/payment">
+              <router-link :to="{path:'/order/neworder',query:{gid:this.gid, count:this.count,price:this.totalprice}}">
                 <span class="btn-primary">去结算</span>
               </router-link>
             </li>
@@ -106,11 +106,16 @@ export default {
       src:
         "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a482afa34053b1b32ece1023475af7fb.jpeg",
       goods: {},
-      gid: 0,
-      totalprice: 0
+      gid:this.$route.query["gid"],
+      totalprice: 0,//商品总价
+      count:1,//商品购买数量
+      num:1
     };
   },
   methods: {
+    handleChange(value){
+      this.totalprice=this.goods.goods_price*this.num
+    },
     addFavorite() {//添加收藏
       this.gid = this.goods.gid;
       addFav(this.gid);
@@ -132,6 +137,7 @@ export default {
     },
 
     getgoodsinfo(gid) {//获取商品详细信息
+    console.log(gid)
       getgoodsinfo(gid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
@@ -233,13 +239,18 @@ export default {
 }
 .pro-list {
   background: #f9f9fa;
-  padding: 30px;
+  padding-top: 85px;
+  padding-bottom:20px;
   margin-bottom: 30px;
+  padding-left:0px;
+  color:#b0b0b0;
+  font-size:20px;
 }
 .final-price {
-  font-size: 18px;
+  font-size: 25px;
   line-height: 1;
   color: #ff6700;
+  padding-top:10px;
 }
 .origin-price {
   margin-left: 5px;
@@ -257,8 +268,9 @@ export default {
   color: #b0b0b0;
   margin: 0;
   padding: 0;
-  padding-top: 8px;
-  padding-bottom: 5px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size:15px;
 }
 .image-box {
   left: 1px;
