@@ -10,7 +10,7 @@ service.interceptors.request.use(config => {
   // 将token放入请求头信息
   console.log()
   if (getToken()) {
-    config.headers['Auth-Token'] = getToken()
+    config.headers['Authorization'] = getToken()
   }
   return config
 }, error => {
