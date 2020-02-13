@@ -10,7 +10,6 @@ export const user = {
   sendpwd: '/user/password',
   resetpwd: '/user/resetPwd',
   tabupdate: '/user/info',
-
 }
 
 /**
@@ -29,7 +28,7 @@ export const goods = {
   goodsItems: '/goods/${type}/list/${orderBy}/${keywords}',
   list: '/goods/list/',
   tips: '/goods/tips/',
-  getimagesItems:'/getimage',
+  getimagesItems: '/getimage',
   // getgoodsinfo:'/goods/show/${gid}'
 }
 
@@ -49,10 +48,10 @@ export const favorite = {
 
 // 订单相关的url
 export const order = {
-  ord:'/order/list/',
-  delOrd:'/order/',
-  ordInfo:'/order/info/',
-  addorder:'/order/create',
+  ord: '/order/list/',
+  delOrd: '/order/',
+  ordInfo: '/order/info/',
+  addorder: '/order/create',
 }
 
 export const address = {

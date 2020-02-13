@@ -154,6 +154,7 @@ export default {
       } else {
         this.isShow = false
         this.results = []
+        this.search()
       }
     },
     selectTips: function (item) {

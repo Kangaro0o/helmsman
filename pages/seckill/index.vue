@@ -15,9 +15,9 @@
               @click="switchBanner(index)"
             >
               <a href="#">
-                <em>{{parsePlay(item.start_time)}}</em>
+                <em>{{parsePlay(item.startTime)}}</em>
                 <span>
-                  {{playStatus(item.start_time, item.end_time)}}
+                  {{playStatus(item.startTime, item.endTime)}}
                   <br />
                   <em v-if="index === 0">{{desc + " " + hour +":" + minute + ":" + second}}</em>
                 </span>
@@ -38,7 +38,7 @@
                 <span class="pro-con">
                   <span class="name" :title="item.goods_name">{{item.goods_name}}</span>
                   <span class="desc">{{item.desc}}</span>
-                  <span class="process J_process" :class="{'hide': hide}">
+                  <span class="process J_process" :class="{'hide': !isLogin}">
                     <span :style="curProgress(item.count, item.remain_count)"></span>
                     <em>{{Math.floor(((item.count-item.remain_count)/item.count) * 100) }}%</em>
                   </span>
@@ -46,8 +46,8 @@
                     {{item.seckill_price}}元
                     <del>{{item.goods_price}}元</del>
                   </span>
-                  <span class="btn btn-green btn-small btn-primary" v-if="hide">登陆后抢购</span>
-                  <span class="btn btn-green btn-small btn-primary J_buy" v-else>立即抢购</span>
+                  <span class="btn btn-green btn-small btn-primary J_buy" v-if="isLogin">立即抢购</span>
+                  <span class="btn btn-green btn-small btn-primary" v-else>登陆后抢购</span>
                 </span>
               </a>
             </li>
@@ -73,8 +73,7 @@ export default {
   data() {
     return {
       list: [], // 所有场次秒杀商品列表
-      curList: [], // 最近依次秒杀商品列表
-      hide: true, // 是否显示销售进度条
+      curList: [], // 最近一次秒杀商品列表
       second: '00',
       minute: '00',
       hour: '00',
@@ -87,24 +86,15 @@ export default {
   },
   created: function () {
     this.getSeckillList()
-    this.isLogin()
   },
   methods: {
-    // 判断是否登录
-    isLogin() {
-      const token = this.$store.state.user.token
-      if (token != null || token != "")
-        this.hide = false
-      else
-        this.hide = true
-    },
     // 获取秒杀商品列表
     getSeckillList() {
       seckillList().then(res => {
-        this.list = res.data.list
+        this.list = res.data
         if (this.list.length !== 0 && this.list !== null) {
-          this.start_time = this.list[0].start_time
-          this.end_time = this.list[0].end_time
+          this.start_time = this.list[0].startTime
+          this.end_time = this.list[0].endTime
           this.countdown()
         }
       })
@@ -141,7 +131,7 @@ export default {
     // 获取当前展示的秒杀商品列表
     getCurList(index) {
       if (this.list.length !== 0)
-        this.curList = this.list[index].list
+        this.curList = this.list[index].seckillGoodsList
     },
     parsePlay: start_time => {
       return pp(start_time)
@@ -188,6 +178,12 @@ export default {
       if (this.start_time > now || this.end_time < now)
         return true // 禁用
       return false
+    },
+    isLogin: function () {
+      const token = this.$store.state.user.token
+      if (token === null || token === '' || token === undefined)
+        return false
+      return true
     }
   }
 }
