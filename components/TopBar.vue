@@ -8,7 +8,7 @@
           </li>
         </ul>
       </div>
-      <div class="topbar-info" v-if="getToken() === '' || getToken() === null">
+      <div class="topbar-info" v-if="!isLogin">
         <a href="/login">登录</a>
         <a href="/register">注册</a>
       </div>
@@ -22,16 +22,16 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 export default {
-  methods: {
-    ...mapMutations({
-      getToken: 'user/get_token'
-    })
-  },
   computed: {
     username: function () {
       return this.$store.state.user.name
+    },
+    isLogin: function () {
+      const token = this.$store.state.user.token
+      if (token === null || token === '' || token === undefined)
+        return false
+      return true
     }
   }
 }
