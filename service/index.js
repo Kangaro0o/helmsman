@@ -2,13 +2,13 @@ import axios from 'axios'
 import config from './config'
 import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
+import qs from 'qs'
 
 const service = axios.create(config)
 
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  console.log()
   if (getToken()) {
     config.headers['Authorization'] = getToken()
   }
