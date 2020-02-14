@@ -13,9 +13,9 @@ export const getCarouselItems = _ => {
 }
 
 
-export function getgoodsItems (type,pagenum,pagesize,orderby,keyword)  {  
+export function getgoodsItems (type,orderby,pagenum,pagesize,keyword)  {  
        return request({
-         url: `/goods/${type}/list/${pagenum}/${pagesize}/${orderby}/${keyword}/ `,
+         url: `/goods/${type}/list/${orderby}/${pagenum}/${pagesize}/${keyword}/ `,
          method: 'get'
        })  
 }
@@ -48,4 +48,18 @@ export const getGoodsTips = keyword => {
   })
 }
 
+export const getimage = _=>{
+  return request({
+    url:goods.getimagesItems,
+    method:'get'
+  })
+
+}
+
+export function getgoodsinfo(gid){
+  return request({
+    url:`/goods/show/${gid}`,
+    method:'get'
+  })
+}
 

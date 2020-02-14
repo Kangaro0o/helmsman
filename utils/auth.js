@@ -28,6 +28,6 @@ export function removeItem(key) {
 }
 
 export function removeAll() {
-  removeItem("nuxt-state")
+  removeItem("state")
   removeToken()
 }
