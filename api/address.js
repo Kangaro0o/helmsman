@@ -6,7 +6,7 @@ import request from '@/service'
 import { address } from '@/api/url';
 
 //获取地址列表
-export const getaddressItems = _ =>{
+export const getaddressItems = _=>{
     return request({
         url:address.addressItems,
         method:'get'
