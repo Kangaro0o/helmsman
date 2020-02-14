@@ -16,7 +16,12 @@
           </li>
         </ul>
       </div>
-      <div class="header-search" @mouseenter="searchEnter" @mouseleave="searchLeave">
+      <div
+        class="header-search"
+        @mouseenter="searchEnter"
+        @mouseleave="searchLeave"
+        v-show="this.$route.path === '/'"
+      >
         <form>
           <input
             class="search-text"
@@ -36,7 +41,7 @@
             <span class="icon"></span>
           </label>
         </form>
-        <ul class="search-result" v-show="isFocus">
+        <ul class="search-result" v-show="isShow">
           <li v-for="(item,index) in results" :key="index">
             <span class="item-name" @mousedown="selectTips(item)">
               <small>{{item}}</small>
@@ -52,11 +57,11 @@
       @mouseleave="isMenuEnter = false"
     >
       <ul v-for="(item,index) in navItems" v-show="item.type === selected" :key="index">
-        <li v-for="(key,index) in tabItems[item.type]" :key="index">
+        <li v-for="(key,index) in selectedType" :key="index">
           <div class="product">
             <!-- TODO:点击图片跳转 item.goods_id -->
             <a href="#">
-              <img :src="key.imgUrl" alt />
+              <img :src="key.imageUrl" alt />
             </a>
             <p class="title">{{key.goods_name}}</p>
             <p class="price">{{key.goods_price}}</p>
@@ -88,7 +93,8 @@ export default {
       isEnter: false,
       isNavEnter: false,
       isMenuEnter: false,
-      keyword: ''
+      keyword: '',
+      isShow: false
     }
   },
   methods: {
@@ -104,7 +110,7 @@ export default {
           })
           return
         }
-        this.navItems = res.data.navItems
+        this.navItems = res.data
       })
     }
     ,
@@ -120,7 +126,7 @@ export default {
           })
           return
         }
-        this.tabItems = res.data.tabItems
+        this.tabItems = res.data.tableItems
       })
     },
     inputFocus: function () {
@@ -136,21 +142,34 @@ export default {
       this.isEnter = false
     },
     search: function () {
+      this.isShow = false
       this.$emit('kw', this.keyword)
     },
     getTips: function () {
       if (this.keyword !== "" && this.keyword !== null) {
+        this.isShow = true
         getGoodsTips(this.keyword).then(res => {
           this.results = res.data.results
         })
       } else {
+        this.isShow = false
         this.results = []
+        this.search()
       }
-
     },
     selectTips: function (item) {
       this.keyword = item
+      this.isShow = false
       this.search()
+    }
+  },
+  computed: {
+    selectedType: function () {
+      for (let i = 0; i < this.tabItems.length; i++) {
+        if (this.tabItems[i].type === this.selected)
+          return this.tabItems[i].goodsResults
+      }
+      return null;
     }
   }
 }
@@ -324,8 +343,8 @@ export default {
           height: 110px;
         }
         .title {
-          margin-top: 20px;
-          margin-bottom: 5px;
+          margin-top: 10px;
+          margin-bottom: -10px;
           color: #333;
         }
         .price {

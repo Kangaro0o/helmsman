@@ -51,7 +51,7 @@ export default {
   methods: {
     getCarouselItems() {
       getCarouselItems().then(res => {
-        this.carouselItems = res.data.carouselItems
+        this.carouselItems = res.data
       })
     },
     playNext() {
