@@ -343,8 +343,8 @@ export default {
           height: 110px;
         }
         .title {
-          margin-top: 10px;
-          margin-bottom: -10px;
+          margin-top: 15px;
+          margin-bottom: -5px;
           color: #333;
         }
         .price {
