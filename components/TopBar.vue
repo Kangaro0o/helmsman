@@ -16,6 +16,7 @@
         <a href="#">{{username}}</a>
         <a href="/user" target="_blank">个人中心</a>
         <a href="/order" target="_blank">我的订单</a>
+        <a href="javascript:void(0);" @click="logout">退出</a>
       </div>
     </div>
   </div>
@@ -23,6 +24,15 @@
 
 <script>
 export default {
+  methods: {
+    logout: function () {
+      this.$store.dispatch('user/LogOut').then(res => {
+        if (res.code === 200) {
+          this.$router.push({ path: '/login' })
+        }
+      })
+    }
+  },
   computed: {
     username: function () {
       return this.$store.state.user.name
@@ -32,7 +42,7 @@ export default {
       if (token === null || token === '' || token === undefined)
         return false
       return true
-    }
+    },
   }
 }
 </script>

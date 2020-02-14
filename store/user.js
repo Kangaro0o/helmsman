@@ -61,10 +61,10 @@ export const actions = {
   // 登出
   LogOut({ commit }) {
     return new Promise((resolve, reject) => {
-      logout().then(() => {
+      logout().then(response => {
         // commit('set_token', '')
         removeAll()
-        resolve()
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
