@@ -9,7 +9,7 @@
         </ul>
       </div>
       <div class="topbar-info" v-if="!isLogin">
-        <a href="/login">登录</a>
+        <a href="/login">登录</a> 
         <a href="/register">注册</a>
       </div>
       <div class="topbar-info" v-else>
