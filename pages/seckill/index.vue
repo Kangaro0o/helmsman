@@ -31,7 +31,7 @@
           <ul class="J_currentCon clearfix active">
             <li v-for="(item, index) in curSeckillCon" :key="index">
               <!-- 前往商品详情页 -->
-              <a :href="item.sgid" class="item-box">
+              <a :href="'/goods/detail?gid='+item.sgid" class="item-box">
                 <span class="img-con">
                   <img :src="item.imgUrl" class="done" />
                 </span>
@@ -189,7 +189,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .seckill {
   background: #f5f5f5;
 }

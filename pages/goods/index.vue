@@ -1,255 +1,260 @@
 <template>
-<div id="app">
-        <div class="phone-header">
-               <div class="phone-header-nav"><span>首页</span>
-               <i class="el-icon-arrow-right"></i>
-               <span>全部结果</span>
-               <i class="el-icon-arrow-right"></i>
-               <!-- 当前页面商品种类 -->
-               <span>{{this.$router.params}}</span>
-               
-               </div>
-                
+  <div id="app">
+    <div class="phone-header">
+      <div class="phone-header-nav">
+        <span>首页</span>
+        <i class="el-icon-arrow-right"></i>
+        <span>全部结果</span>
+        <i class="el-icon-arrow-right"></i>
+        <!-- 当前页面商品种类 -->
+        <span>{{this.$router.params}}</span>
+      </div>
+    </div>
+    <div class="filter-list" id="j_filterList">
+      <span class="label">分类:</span>
+      <ul class="item-show-less" id="list_item_class">
+        <li
+          style="float:left; margin-left:60px;"
+          v-for="(item,index) in list2Items"
+          :key="index"
+          @click="addClassfun2(index)"
+          v-bind:class="{active:flag===index}"
+        >
+          <a @click="addClassfun2(index)" v-bind:class="{active:flag===index}">{{item}}</a>
+        </li>
+      </ul>
+      <span class="classer-more">
+        <i class="el-icon-arrow-down icon-more"></i>
+      </span>
+    </div>
+    <div class="phone-orderBy">
+      <div class="phone-list-box">
+        <div style="height:30px;">
+          <ul class="order-list">
+            <li
+              v-for="(liitem,index) in liItems"
+              :key="index"
+              @click="addClassfun(index)"
+              v-bind:class="{active:i===index}"
+            >
+              <a @click="addClassfun(index)" v-bind:class="{active:i===index}">{{liitem.name}}</a>
+            </li>
+          </ul>
         </div>
-        <div class="filter-list" id="j_filterList">
-                 <span class="label">分类:</span> 
-                <ul class="item-show-less" id="list_item_class">
-               
-                <li style="float:left; margin-left:60px;" v-for="(item,index) in list2Items" :key="index" @click="addClassfun2(index)" v-bind:class='{active:flag===index}' >
-                <a @click="addClassfun2(index)" v-bind:class='{active:flag===index}'>
-                {{item}}
-                </a>
-                </li>
-                
-                </ul>
-                <span class="classer-more"><i class="el-icon-arrow-down icon-more">  </i></span>
-        </div>
-        <div class="phone-orderBy">
-          <div class="phone-list-box">
-               <div style="height:30px;">
-                <ul class="order-list">
-                <li v-for="(liitem,index) in liItems" :key="index" @click="addClassfun(index)" v-bind:class='{active:i===index}'>
-                <a  @click="addClassfun(index)" v-bind:class='{active:i===index}'>{{liitem.name}}</a>
-                </li>        
-                </ul>
-               
-             </div>
-          <div class="phone-list" id="J_goodsList">
-                  <!-- <router-view v-if="isrouteralive"> -->
-                <div v-for="(item,index) in goodsItems" :key="index" class="phone-box">
-                   <div class="phone-img"> <img :src="item.imgurl" alt/> </div>
-                   <h2 class="phone-desc">{{item.goods_name}}</h2>
-                   <p class="phone-price">{{item.goods_price}}元起，<del>3000元起</del></p>
-                   <p >{{item.desc}}</p>
-                   <el-button type="danger"><router-link :to="{path:'/goods/detail',query:{gid:item.gid}}">立即购买</router-link></el-button>
-                </div>
-         <!-- </router-view> -->
+        <div class="phone-list" id="J_goodsList">
+          <!-- <router-view v-if="isrouteralive"> -->
+          <div v-for="(item,index) in goodsItems" :key="index" class="phone-box">
+            <div class="phone-img">
+              <img :src="item.imgurl" alt />
+            </div>
+            <h2 class="phone-desc">{{item.goods_name}}</h2>
+            <p class="phone-price">
+              {{item.goods_price}}元起，
+              <del>3000元起</del>
+            </p>
+            <p>{{item.desc}}</p>
+            <el-button type="danger">
+              <router-link :to="{path:'/goods/detail',query:{gid:item.gid}}">立即购买</router-link>
+            </el-button>
+          </div>
+          <!-- </router-view> -->
         </div>
         <div class="phone-list-dottom">
-           <el-pagination  :small="true" :background="true" :page-size="pagesize" :total="goodsItems.length" :current-page="pagenum"
-                      @current-change="handlecurrentchange"
-                      @prev-click="handlepreclick"
-                      @next-click="handlenextclick"
-                     
-                      >
-           </el-pagination> 
-            <span>{{this.$store.state.user.name}}</span>  
-         </div>
-          </div>       
+          <el-pagination
+            :small="true"
+            :background="true"
+            :page-size="pagesize"
+            :total="goodsItems.length"
+            :current-page="pagenum"
+            @current-change="handlecurrentchange"
+            @prev-click="handlepreclick"
+            @next-click="handlenextclick"
+          ></el-pagination>
+          <span>{{this.$store.state.user.name}}</span>
         </div>
-       
-</div>
+      </div>
+    </div>
+  </div>
 </template>
 <script >
-import {getgoodsItems} from '@/api/goods'
+import { getgoodsItems } from '@/api/goods'
 import request from '@/service'
 export default {
-     created(){
-      this.getgoodsItems()
-     },
+  created() {
+    this.getgoodsItems()
+  },
 
-     data()
-     {
-             return {
-                     goodsItems:[],
-                     i:0,
-                     flag:0,
-                     keyword:null,//查询关键词
-                     orderby:0,//排序方式
-                     type:this.$router.params,//商品类型
-                     total:0,//总条数
-                     pagesize:12,//每页显示条目
-                     pagenum:0,//当前页
-                     liItems:[{id: 1,name:'综合'},{id:2,name:'新品'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
-                     list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']
-             };
-     },
-     
-  
-     methods: {
-             handlecurrentchange(val)
-             {
-                     console.log(`当前页: ${val}`)
-             },
-             addClassfun2(index) {
-                    this.flag=index;
-             },
-             addClassfun(index){
-                     this.i=index;
-                     if(index==2)//选择以销量为排序方式
-                      {  this.orderby=1
-                        //  this.updategoodsItems()
-                         this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
-                         console.log(this.orderby)
-                      }
-                     else 
-                       { this.orderby=2;   //选择以价格升序为排序方式  
-                        this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
-                        console.log(this.orderby)
-                       }
-             },
-             handlepreclick()
-             {
-                     this.pagenum-=1
-                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
-                      console.log(this.pagenum)
-                    
-             },
-             handlenextclick()
-             {       this.pagenum+=1
-                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
-                     console.log(this.pagenum)
-                     
-             },
- 
-             getgoodsItems(type,pagenum,pagesize,orderby,keyword){
-             getgoodsItems(type,pagenum,pagesize,orderby,keyword).then(res => {
-                     let status=this.$resultCode.getStatus(res.code)
-                     let success=this.$resultCode.getSuccessStatus()
-                     if(status !== success)
-                     {
-                             Message({
-                                     message:res.message,
-                                     type: status.type
-                             })
-                             return
-                     }
-                     this.goodsItems = res.data.goodsItems
-             })},
-          
-     },
-     components: {
+  data() {
+    return {
+      goodsItems: [],
+      i: 0,
+      flag: 0,
+      keyword: null,//查询关键词
+      orderby: 0,//排序方式
+      type: this.$router.params,//商品类型
+      total: 0,//总条数
+      pagesize: 12,//每页显示条目
+      pagenum: 0,//当前页
+      liItems: [{ id: 1, name: '综合' }, { id: 2, name: '新品' }, { id: 3, name: '销量' }, { id: 4, name: '价格↑' }],
+      list2Items: ['全部', '手机', '出行', '包', '日用百货', '手机配件', '手机贴膜', '更多']
+    };
+  },
 
-     },
-     layout: 'goodslist'
+
+  methods: {
+    handlecurrentchange(val) {
+      console.log(`当前页: ${val}`)
+    },
+    addClassfun2(index) {
+      this.flag = index;
+    },
+    addClassfun(index) {
+      this.i = index;
+      if (index == 2)//选择以销量为排序方式
+      {      this.orderby = 1
+        //  this.updategoodsItems()
+        this.getgoodsItems(this.type, this.pagenum, this.pagesize, this.orderby, this.keyword)
+        console.log(this.orderby)
+      }
+      else {      this.orderby = 2;   //选择以价格升序为排序方式  
+        this.getgoodsItems(this.type, this.pagenum, this.pagesize, this.orderby, this.keyword)
+        console.log(this.orderby)
+      }
+    },
+    handlepreclick() {
+      this.pagenum -= 1
+      this.getgoodsItems(this.type, this.pagenum, this.pagesize, this.orderby, this.keyword)
+      console.log(this.pagenum)
+
+    },
+    handlenextclick() {    this.pagenum += 1
+      this.getgoodsItems(this.type, this.pagenum, this.pagesize, this.orderby, this.keyword)
+      console.log(this.pagenum)
+
+    },
+
+    getgoodsItems(type, pagenum, pagesize, orderby, keyword) {
+      getgoodsItems(type, pagenum, pagesize, orderby, keyword).then(res => {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        if (status !== success) {
+          Message({
+            message: res.message,
+            type: status.type
+          })
+          return
+        }
+        this.goodsItems = res.data.goodsItems
+      })    },
+
+  },
+  components: {
+
+  },
+  layout: 'goodslist'
 }
 </script>
 <style scoped>
- .active {
-        color:#ff6700;
+.active {
+  color: #ff6700;
 }
-.phone-list-dottom{
-        height:50px;
-        float:left;
-        padding-left:550px;
+.phone-list-dottom {
+  height: 50px;
+  float: left;
+  padding-left: 550px;
 }
-.phone-price{
-    margin: 0 0 15px;
-    color: #ff6700;
+.phone-price {
+  margin: 0 0 15px;
+  color: #ff6700;
 }
-.phone-price del{
-        color:#b0b0b0;
+.phone-price del {
+  color: #b0b0b0;
 }
-.phone-box{
-    position: relative;
-    float: left;
-    width: 296px;
-    height: 383px;
-    padding-top: 47px;
-    margin-right: 14px;
-    margin-bottom: 14px;
-    text-align: center;
-    background: #fff;
-    transition: box-shadow .5s linear;
+.phone-box {
+  position: relative;
+  float: left;
+  width: 296px;
+  height: 383px;
+  padding-top: 47px;
+  margin-right: 14px;
+  margin-bottom: 14px;
+  text-align: center;
+  background: #fff;
+  transition: box-shadow 0.5s linear;
 }
-.phone-list-box{
-      
-        height:2000px;
+.phone-list-box {
+  height: 2000px;
 }
-.phone-list{
-        
-        background:#f5f5f5;
-        padding-left:6%;
-        margin-top:30px;
-        height:75%;
-        width:1250px;
+.phone-list {
+  background: #f5f5f5;
+  padding-left: 6%;
+  margin-top: 30px;
+  height: 75%;
+  width: 1250px;
 }
-.type-list{
-        background:#fff;
-        width:100px;
-        height:30px;
-        float:right;
+.type-list {
+  background: #fff;
+  width: 100px;
+  height: 30px;
+  float: right;
 }
-.active{
-      float:left;  
+.active {
+  float: left;
 }
-.order-list{
-     height:30px;
-     line-height:30px;
-     float:left;
-     padding-left:60px;
-
+.order-list {
+  height: 30px;
+  line-height: 30px;
+  float: left;
+  padding-left: 60px;
 }
 
-.order-list li{
-      float:left;
-        padding-left:30px;
-        border-left:1px solid #e0e0e0;
-        padding-right:30px;
+.order-list li {
+  float: left;
+  padding-left: 30px;
+  border-left: 1px solid #e0e0e0;
+  padding-right: 30px;
 }
-.phone-orderBy{
-        background:#f5f5f5;
-        padding: 20px 0 100px;
-        
+.phone-orderBy {
+  background: #f5f5f5;
+  padding: 20px 0 100px;
 }
-.icon-more{
-        margin-left: -84px;
+.icon-more {
+  margin-left: -84px;
 }
- .liactive{
-         margin-left:90px;
-         float:left;
- }
- .allactive{
-                margin-left:90px; 
-                float:left;
- }        
-  .classer-more{
-          margin-left:90px;
-  }
- .filter-list{
-         height:55px;
-         background:#fff;
-         color:#757575;
-         margin-top:35px;
- }
- .label{
-         padding-left:90px;
-         float:left;
- }
- .phone-header{
-         background:#f5f5f5;
-         height:40px;
- }
- .phone-header-nav{
-        padding-left:90px;
-        padding-top:10px;
-        color:#757575; 
- }
+.liactive {
+  margin-left: 90px;
+  float: left;
+}
+.allactive {
+  margin-left: 90px;
+  float: left;
+}
+.classer-more {
+  margin-left: 90px;
+}
+.filter-list {
+  height: 55px;
+  background: #fff;
+  color: #757575;
+  margin-top: 35px;
+}
+.label {
+  padding-left: 90px;
+  float: left;
+}
+.phone-header {
+  background: #f5f5f5;
+  height: 40px;
+}
+.phone-header-nav {
+  padding-left: 90px;
+  padding-top: 10px;
+  color: #757575;
+}
 
-
- li a:hover{
-        color:#ff6700;
-          cursor: pointer;
-          outline: 0;
- } 
+li a:hover {
+  color: #ff6700;
+  cursor: pointer;
+  outline: 0;
+}
 </style>
