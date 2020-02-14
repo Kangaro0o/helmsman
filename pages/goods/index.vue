@@ -100,7 +100,6 @@ export default {
     };
   },
 
-
   methods: {
     handlecurrentchange(val) {
       console.log(`当前页: ${val}`)
@@ -146,7 +145,6 @@ export default {
         }
         this.goodsItems = res.data.goodsItems
       })    },
-
   },
   components: {
 
