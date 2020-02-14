@@ -65,7 +65,7 @@ import {getgoodsItems} from '@/api/goods'
 import request from '@/service'
 export default {
      created(){
-      this.getgoodsItems()
+      this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
      },
 
      data()
@@ -74,9 +74,9 @@ export default {
                      goodsItems:[],
                      i:0,
                      flag:0,
-                     keyword:null,//查询关键词
-                     orderby:0,//排序方式
-                     type:this.$router.params,//商品类型
+                     keyword:'',//查询关键词
+                     orderby:1,//排序方式
+                     type:'tv',//商品类型
                      total:0,//总条数
                      pagesize:12,//每页显示条目
                      pagenum:0,//当前页
@@ -99,31 +99,31 @@ export default {
                      if(index==2)//选择以销量为排序方式
                       {  this.orderby=1
                         //  this.updategoodsItems()
-                         this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                         this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                          console.log(this.orderby)
                       }
                      else 
                        { this.orderby=2;   //选择以价格升序为排序方式  
-                        this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                        this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                         console.log(this.orderby)
                        }
              },
              handlepreclick()
              {
                      this.pagenum-=1
-                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                    this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                       console.log(this.pagenum)
                     
              },
              handlenextclick()
              {       this.pagenum+=1
-                    this.getgoodsItems(this.type,this.pagenum,this.pagesize,this.orderby,this.keyword)
+                    this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                      console.log(this.pagenum)
                      
              },
  
-             getgoodsItems(type,pagenum,pagesize,orderby,keyword){
-             getgoodsItems(type,pagenum,pagesize,orderby,keyword).then(res => {
+             getgoodsItems(type,orderby,pagenum,pagesize,keyword){
+             getgoodsItems(type,orderby,pagenum,pagesize,keyword).then(res => {
                      let status=this.$resultCode.getStatus(res.code)
                      let success=this.$resultCode.getSuccessStatus()
                      if(status !== success)
