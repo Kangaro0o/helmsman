@@ -9,18 +9,19 @@ export const getOrder = (status,keyword) => {
       method: 'get',
     })
   }
-// 获取订单详情
 
+// 获取订单详情
 export const getOrdInfo = oid => {
     return request({
       url: order.ordInfo+oid,
       method: 'get',
     })
   }
+
 // 删除订单
 export const delOrd = oid => {
     return request({
-      url: order.ordInfo+oid,
+      url: order.delOrd+oid,
       method: 'delete',
     })
 }
