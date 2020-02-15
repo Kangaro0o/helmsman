@@ -66,8 +66,8 @@
                               {{item.receiver_name}}
                               <span class="sep">|</span>订单号：
                               <a
-                                :href="item.order_number"
-                              >{{item.order_number}}</a>
+                                :href="item.order_id"
+                              >{{item.order_id}}</a>
                             </p>
                           </th>
                           <th class="col-sub">
@@ -107,7 +107,7 @@
                           <td class="order-actions">
                             <a
                               class="btn btn-small btn-line-gray"
-                              @click="toOrderInfo(item.order_number)"
+                              @click="toOrderInfo(item.order_id)"
                             >订单详情</a>
                           </td>
                         </tr>
@@ -138,7 +138,7 @@ export default {
       search: "",
       orderList: [],
       orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货", "4": "已收货"},
-      keyword: "all",
+      keyword: "",
     }
   },
 
@@ -164,8 +164,8 @@ export default {
       }
     },
 
-    toOrderInfo(order_number) {
-      this.$router.push({ path: '/order/orderinfo', query: { oid: order_number } })
+    toOrderInfo(order_id) {
+      this.$router.push({ path: '/order/orderinfo', query: { oid: order_id } })
     },
     
     changeOrderStatus(status) {
