@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       list: [],
-      keyword:'all'  //需要删掉
+      keyword:''  //需要删掉
     };
   },
 
@@ -100,7 +100,7 @@ export default {
             message: res.message,
             type: status.type
           });
-          this.list = res.data.favItems;
+          this.list = res.data;
         });
       }
     },
