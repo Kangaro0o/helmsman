@@ -31,7 +31,7 @@ export function getgoodsItems2 (type,orderby,pagenum,pagesize)  {
 }
 
 
-}
+
 
 
 /**
