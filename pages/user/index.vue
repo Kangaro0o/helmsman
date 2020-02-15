@@ -380,6 +380,7 @@ export default {
             type: status.type
           });
           return;
+          console.log(res.data);
         }
         this.list = res.data.addresslist;
       });

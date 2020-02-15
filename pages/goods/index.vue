@@ -37,16 +37,17 @@
           <div class="phone-list" id="J_goodsList">
                   <!-- <router-view v-if="isrouteralive"> -->
                 <div v-for="(item,index) in goodsItems" :key="index" class="phone-box">
-                   <div class="phone-img"> <img :src="item.imgurl" alt/> </div>
+                   <div class="phone-img"> <img :src="item.imgUrl" alt/> </div>
                    <h2 class="phone-desc">{{item.goods_name}}</h2>
                    <p class="phone-price">{{item.goods_price}}元起，<del>3000元起</del></p>
                    <p >{{item.desc}}</p>
+                   <p style="display:block;">销量: {{item.count}}</p>
                    <el-button type="danger"><router-link :to="{path:'/goods/detail',query:{gid:item.gid}}">立即购买</router-link></el-button>
                 </div>
          <!-- </router-view> -->
         </div>
         <div class="phone-list-dottom">
-           <el-pagination  :small="true" :background="true" :page-size="pagesize" :total="goodsItems.length" :current-page="pagenum"
+           <el-pagination  :small="true" :background="true" :page-size="pagesize"  :current-page="pagenum"
                       @current-change="handlecurrentchange"
                       @prev-click="handlepreclick"
                       @next-click="handlenextclick"
@@ -61,7 +62,7 @@
 </div>
 </template>
 <script >
-import {getgoodsItems} from '@/api/goods'
+import {getgoodsItems,getgoodsItems2} from '@/api/goods'
 import request from '@/service'
 export default {
      created(){
@@ -74,13 +75,13 @@ export default {
                      goodsItems:[],
                      i:0,
                      flag:0,
-                     keyword:'',//查询关键词
-                     orderby:1,//排序方式
-                     type:'tv',//商品类型
+                     keyword:null,//查询关键词
+                     orderby:'default',//排序方式，默认是gid
+                     type:'miphone',//商品类型
                      total:0,//总条数
                      pagesize:12,//每页显示条目
                      pagenum:0,//当前页
-                     liItems:[{id: 1,name:'综合'},{id:2,name:'新品'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
+                     liItems:[{id: 1,name:'综合'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
                      list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']
              };
      },
@@ -96,14 +97,14 @@ export default {
              },
              addClassfun(index){
                      this.i=index;
-                     if(index==2)//选择以销量为排序方式
-                      {  this.orderby=1
+                     if(index==1)//选择以销量为排序方式
+                      {  this.orderby='salecount'
                         //  this.updategoodsItems()
                          this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                          console.log(this.orderby)
                       }
-                     else 
-                       { this.orderby=2;   //选择以价格升序为排序方式  
+                     else if(index==2) //选择以价格升序为排序方式  
+                       { this.orderby='price';  
                         this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
                         console.log(this.orderby)
                        }
@@ -123,7 +124,8 @@ export default {
              },
  
              getgoodsItems(type,orderby,pagenum,pagesize,keyword){
-             getgoodsItems(type,orderby,pagenum,pagesize,keyword).then(res => {
+                     if(this.keyword == null){
+             getgoodsItems2(type,orderby,pagenum,pagesize).then(res => {
                      let status=this.$resultCode.getStatus(res.code)
                      let success=this.$resultCode.getSuccessStatus()
                      if(status !== success)
@@ -134,8 +136,26 @@ export default {
                              })
                              return
                      }
-                     this.goodsItems = res.data.goodsItems
-             })},
+                     this.goodsItems = res.data
+                     console.log(this.goodsItems)
+             })}else{
+                      getgoodsItems(type,orderby,pagenum,pagesize,keyword).then(res => {
+                     let status=this.$resultCode.getStatus(res.code)
+                     let success=this.$resultCode.getSuccessStatus()
+                     if(status !== success)
+                     {
+                             Message({
+                                     message:res.message,
+                                     type: status.type
+                             })
+                             return
+                     }
+                     this.goodsItems = res.data
+                     console.log(this.goodsItems)
+             })
+             }
+             
+             },
           
      },
      components: {
