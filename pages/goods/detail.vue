@@ -21,7 +21,7 @@
             <p class="sale-desc" style="“padding-top:10px;padding-bottom:15px;">{{goods.desc}}</p>
             <font color="#ff4a00" style="padding-top:10px;font-size:15px;">小米自营</font>
             <div style="padding-top:20px;">
-              <span class="final-price">{{goods.goods_price}}</span>
+              <span class="final-price">{{this.goods.goods_price}}</span>
               <del class="origin-price">3099元</del>
             </div>
           </div>
@@ -103,13 +103,16 @@ export default {
   data() {
     return {
       imagelist: [],
-      src:
-        "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a482afa34053b1b32ece1023475af7fb.jpeg",
-      goods: {},
+      src: "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a482afa34053b1b32ece1023475af7fb.jpeg",
+      goodslist: [{gid : '', 
+      goods_name: '',
+      goods_price: '',
+      desc: ''}],
       gid:this.$route.query["gid"],
       totalprice: 0,//商品总价
       count:1,//商品购买数量
-      num:1
+      num:1,
+      goods:{}
     };
   },
   methods: {
@@ -148,10 +151,10 @@ export default {
           });
           return;
         }
-        this.goods = res.data;
-        this.totalprice = this.goods.goods_price;
-        console.log(this.totalprice);
+        this.goodslist = res.data;      
         console.log(this.goods);
+        this.goods=this.goodslist[0];
+         this.totalprice= this.goods.goods_price
       });
     },
     getimage() {
