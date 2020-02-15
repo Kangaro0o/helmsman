@@ -79,7 +79,7 @@ export default {
                      orderby:'default',//排序方式，默认是gid
                      type:'miphone',//商品类型
                      total:0,//总条数
-                     pagesize:12,//每页显示条目
+                     pagesize:6,//每页显示条目
                      pagenum:0,//当前页
                      liItems:[{id: 1,name:'综合'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
                      list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']

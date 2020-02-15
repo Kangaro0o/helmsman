@@ -18,9 +18,9 @@
             </h1>
             <div class="more clearfix">
               <ul class="filter-list J_orderType">
-                <li :class="{ 'active': isActive[4], 'first': true }">
+                <li :class="{ 'active': isActive[5], 'first': true }">
                   <a
-                    @click="changeOrderStatus(4)"
+                    @click="changeOrderStatus(5)"
                   >全部有效订单</a>
                 </li>
                 <li :class="{ 'active': isActive[1] }">
@@ -37,6 +37,11 @@
                   <a
                     @click="changeOrderStatus(3)"
                   >待收货</a>
+                </li>
+                <li :class="{ 'active': isActive[4] }">
+                  <a
+                    @click="changeOrderStatus(4)"
+                  >已收货</a>
                 </li>
               </ul>
               <label class="search-box">
@@ -61,8 +66,8 @@
                               {{item.receiver_name}}
                               <span class="sep">|</span>订单号：
                               <a
-                                :href="item.order_number"
-                              >{{item.order_number}}</a>
+                                :href="item.order_id"
+                              >{{item.order_id}}</a>
                             </p>
                           </th>
                           <th class="col-sub">
@@ -102,7 +107,7 @@
                           <td class="order-actions">
                             <a
                               class="btn btn-small btn-line-gray"
-                              @click="toOrderInfo(item.order_number)"
+                              @click="toOrderInfo(item.order_id)"
                             >订单详情</a>
                           </td>
                         </tr>
@@ -123,17 +128,17 @@
 import { getOrder } from '@/api/order'
 export default {
   created() {
-    this.getOrderList(4);
+    this.getOrderList(5);
   },
 
   data() {
     return {
-      isActive: [0, false, false, false, true],
-      currentStatus: 4,
+      isActive: [0, false, false, false, false, true],
+      currentStatus: 5,
       search: "",
       orderList: [],
-      orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货"},
-      keyword: "all",
+      orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货", "4": "已收货"},
+      keyword: "",
     }
   },
 
@@ -159,8 +164,8 @@ export default {
       }
     },
 
-    toOrderInfo(order_number) {
-      this.$router.push({ path: '/order/orderinfo', query: { oid: order_number } })
+    toOrderInfo(order_id) {
+      this.$router.push({ path: '/order/orderinfo', query: { oid: order_id } })
     },
     
     changeOrderStatus(status) {
@@ -168,14 +173,9 @@ export default {
         this.$set(this.isActive, this.currentStatus, false);
         this.$set(this.isActive, status, true);
         this.currentStatus = status;
-        console.log(this.currentStatus);
         this.getOrderList(this.currentStatus);
       }
     },
-  },
-
-  computed: {
-    
   },
 };
 </script>
