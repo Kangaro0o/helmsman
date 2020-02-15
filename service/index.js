@@ -2,13 +2,13 @@ import axios from 'axios'
 import config from './config'
 import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth'
+import qs from 'qs'
 
 const service = axios.create(config)
 
 // request拦截器
 service.interceptors.request.use(config => {
   // 将token放入请求头信息
-  console.log()
   if (getToken()) {
     config.headers['Authorization'] = getToken()
   }
@@ -23,8 +23,9 @@ service.interceptors.response.use(response => {
   // 获取返回信息
   const res = response.data
   // code不是200是为报错
-  if (res.code !== 200) {
-    // 401|403:未登录
+  // if (res.code !== 200) {
+  // 401|403:未登录
+  if ($nuxt.$route.path !== '/login' && $nuxt.$route.path !== '/register') {
     if (res.code === 401 || res.code === 403) {
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
         confirmButtonText: '重新登录',
@@ -32,10 +33,8 @@ service.interceptors.response.use(response => {
         type: 'warning'
       }).then(_ => {
         // TODO 做退出登录操作，返回登录页
-        $nuxt.$store.dispatch('user/LogOut').then(_ => {
-          console.log("logout")
-          location.reload()
-        })
+        console.log("logout")
+        $nuxt.$router.push({ path: '/login' })
       })
     }
   }

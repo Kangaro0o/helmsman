@@ -13,6 +13,8 @@ export const getCarouselItems = _ => {
 }
 
 
+
+
 export function getgoodsItems (type,orderby,pagenum,pagesize,keyword)  {  
        return request({
          url: `/goods/${type}/list/${orderby}/${pagenum}/${pagesize}/${keyword} `,
@@ -28,6 +30,8 @@ export function getgoodsItems2 (type,orderby,pagenum,pagesize)  {
 
 }
 
+
+}
 
 
 /**
@@ -53,18 +57,18 @@ export const getGoodsTips = keyword => {
   })
 }
 
-export const getimage = _=>{
+export const getimage = _ => {
   return request({
-    url:goods.getimagesItems,
-    method:'get'
+    url: goods.getimagesItems,
+    method: 'get'
   })
 
 }
 
-export function getgoodsinfo(gid){
+export function getgoodsinfo(gid) {
   return request({
-    url:`/goods/show/${gid}`,
-    method:'get'
+    url: `/goods/show/${gid}`,
+    method: 'get'
   })
 }
 

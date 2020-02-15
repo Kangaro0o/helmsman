@@ -55,7 +55,7 @@
                       <a href="//order.mi.com/cashAccount">现金账户</a>
                     </li>
                     <li class="ulclass">
-                      <a href="#">小米礼品卡</a>
+                      <a href="#" @click="getaddressItems">小米礼品卡</a>
                     </li>
                     <li class="ulclass">
                       <a href="#">现金券</a>
@@ -143,44 +143,59 @@
     </div>
     <el-dialog title="添加收货地址" :visible.sync="dialogFormVisible" show-word-limit>
       <div>
-      <el-form :model="form" status-icon :rules="rules" ref="form" class="input-text">
-          <div > 
-        <el-form-item prop="receiver_name" style="float:left;width:40%;">
-          <el-input type="text" placeholder="姓名" v-model="form.receiver_name" maxlength="10"></el-input>
-        </el-form-item>
-        <el-form-item prop="receiver_phone" style="float:right;width:50%">
-          <el-input placeholder="手机号" v-model="form.receiver_phone" autocomplete="off"></el-input>
-        </el-form-item>
+        <el-form :model="form" status-icon :rules="rules" ref="form" class="input-text">
+          <div>
+            <el-form-item prop="receiver_name" style="float:left;width:40%;">
+              <el-input type="text" placeholder="姓名" v-model="form.receiver_name" maxlength="10"></el-input>
+            </el-form-item>
+            <el-form-item prop="receiver_phone" style="float:right;width:50%">
+              <el-input placeholder="手机号" v-model="form.receiver_phone" autocomplete="off"></el-input>
+            </el-form-item>
           </div>
-        <div>
-        <el-cascader placeholder="选择/省/市/区" v-model="value" :options="options" @change="handleChange" style="width:100%"></el-cascader>
+          <div>
+            <el-cascader
+              placeholder="选择/省/市/区"
+              v-model="value"
+              :options="options"
+              @change="handleChange"
+              style="width:100%"
+            ></el-cascader>
+          </div>
+          <div>
+            <el-form-item prop="receiver_address" style="padding-top:10px;height:60px;">
+              <el-input placeholder="详细地址" v-model="form.receiver_address" type="textarea" :row="2"></el-input>
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item prop="receiver_postcode">
+              <el-input placeholder="邮编" v-model="form.receiver_postcode" autocomplete="off"></el-input>
+            </el-form-item>
+          </div>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button
+            type="danger"
+            @click="adddiv"
+            style="margin-left:20%;width:200px;"
+            autofocus
+          >确 定</el-button>
+          <el-button
+            type="info"
+            @click="dialogFormVisible = false"
+            style="margin-right:10%;width:200px;"
+            autofocus
+          >取 消</el-button>
         </div>
-        <div>
-        <el-form-item prop="receiver_address" style="padding-top:10px;height:60px;">
-          <el-input placeholder="详细地址" v-model="form.receiver_address" type="textarea" :row="2"></el-input>
-        </el-form-item>
-        </div>
-        <div>
-        <el-form-item prop="receiver_postcode">
-          <el-input placeholder="邮编" v-model="form.receiver_postcode" autocomplete="off"></el-input>
-        </el-form-item>
-        </div>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-         <el-button type="danger" @click="adddiv"  style="margin-left:20%;width:200px;" autofocus>确 定</el-button>
-        <el-button  type="info" @click="dialogFormVisible = false"  style="margin-right:10%;width:200px;" autofocus>取 消</el-button>
-
-      </div>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
 import Footer from "@/components/Footer";
-import { getaddressItems, addaddress, deleteaddress ,setdefaultaddress } from "@/api/address";
+import { getaddressItems, addaddress, deleteaddress, setdefaultaddress } from "@/api/address";
 export default {
   created() {
-    this.getaddressItems();
+    // this.getaddressItems();
   },
   components: {
     userfooter: Footer
@@ -247,7 +262,7 @@ export default {
     };
     return {
       list: [],
-      defaultaddressid:0,//默认地址id
+      defaultaddressid: 0,//默认地址id
       text: "",
       value: [],
       options: [
@@ -365,7 +380,7 @@ export default {
         receiver_postcode: "", //收件地址邮编
         receiver_phone: "", //收件人电话
         receiver_address: "", //收件地址
-        
+
       }
     };
   },
@@ -375,28 +390,28 @@ export default {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
-          Message({
+          this.$essage({
             message: res.message,
             type: status.type
           });
           return;
           console.log(res.data);
         }
-        this.list = res.data.addresslist;
+        this.list = res.data;
       });
     },
     handleChange(value) {
       console.log(value);
     },
-    setuserdefaultaddress(index){
-          this.defaultaddressid=index
-          let aid= {aid : index}
-         console.log(index)
-        setdefaultaddress(aid);//设置aid为id的地址为默认地址
+    setuserdefaultaddress(index) {
+      this.defaultaddressid = index
+      let aid = { aid: index }
+      console.log(index)
+      setdefaultaddress(aid);//设置aid为id的地址为默认地址
     },
-    setdefaultaddress(aid){
-        setdefaultaddress().then(res => {
-       
+    setdefaultaddress(aid) {
+      setdefaultaddress().then(res => {
+
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
@@ -406,7 +421,7 @@ export default {
           });
           return;
         }
-        })
+      })
     },
     adddiv(ev) {
       //向后台添加地址
@@ -416,7 +431,7 @@ export default {
         this.list.push({
           receiver_name: this.form.receiver_name,
           receiver_phone: this.form.receiver_phone,
-          address:prefix+this.form.receiver_address,
+          address: prefix + this.form.receiver_address,
           postcode: this.form.postcode
         });
         var addressinfo = {
@@ -455,7 +470,6 @@ export default {
 } */
 .operate {
   margin-left: 15px;
-  
 }
 .name {
   font-size: 18px;
@@ -475,7 +489,7 @@ export default {
   color: #ff9650;
 }
 .address {
-    line-height:30px;
+  line-height: 30px;
 }
 .address-action {
   display: none;
