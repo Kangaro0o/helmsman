@@ -19,7 +19,7 @@ export default {
   responseType: 'json',
   // `httpAgent` 和 `httpsAgent` 分别在 node.js 中用于定义在执行 http 和 https 时使用的自定义代理。允许像这样配置选项：
   // `keepAlive` 默认没有启用
-  httpAgent: new http.Agent({
+  httpAgent: new http.Agent({  
     keepAlive: true
   }),
   httpsAgent: new https.Agent({
