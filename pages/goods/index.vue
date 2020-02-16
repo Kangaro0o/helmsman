@@ -15,9 +15,9 @@
                  <span class="label">分类:</span> 
                 <ul class="item-show-less" id="list_item_class">
                
-                <li style="float:left; margin-left:60px;" v-for="(item,index) in list2Items" :key="index" @click="addClassfun2(index)" v-bind:class='{active:flag===index}' >
+                <li style="float:left; margin-left:60px;" v-for="(item,index) in navItems" :key="index" @click="addClassfun2(index)" v-bind:class='{active:flag===index}' >
                 <a @click="addClassfun2(index)" v-bind:class='{active:flag===index}'>
-                {{item}}
+                {{item.name}}
                 </a>
                 </li>
                 
@@ -47,14 +47,13 @@
          <!-- </router-view> -->
         </div>
         <div class="phone-list-dottom">
-           <el-pagination  :small="true" :background="true" :page-size="pagesize"  :current-page="pagenum"
-                      @current-change="handlecurrentchange"
-                      @prev-click="handlepreclick"
-                      @next-click="handlenextclick"
-                     
-                      >
-           </el-pagination> 
-            <span>{{this.$store.state.user.name}}</span>  
+           <el-pagination  background layout="prev, pager, next" :total="20" :page-size="pagesize"  :current-page="pagenum"
+          @current-change="handlecurrentchange"  @prev-click="handlepreclick"  @next-click="handlenextclick">
+           </el-pagination>
+
+           <!-- <el-pagination background layout="prev, pager, next"  :total="20" :page-size="pagesize"  :current-page="pagenum"
+          @current-change="handlecurrentchange"  @prev-click="handlepreclick"  @next-click="handlenextclick"  >
+</el-pagination> -->
          </div>
           </div>       
         </div>
@@ -63,12 +62,14 @@
 </template>
 <script >
 import {getgoodsItems,getgoodsItems2} from '@/api/goods'
+import {getNavItems} from '@/api/menu'
 import request from '@/service'
+import TopHeader from '@/components/TopHeader'
 export default {
      created(){
       this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
-     },
-
+      this.getNavItems()
+    },
      data()
      {
              return {
@@ -79,21 +80,52 @@ export default {
                      orderby:'default',//排序方式，默认是gid
                      type:'miphone',//商品类型
                      total:0,//总条数
-                     pagesize:6,//每页显示条目
+                     pagesize:12,//每页显示条目
                      pagenum:0,//当前页
                      liItems:[{id: 1,name:'综合'},{id:3,name:'销量'},{id:4,name:'价格↑'}],
-                     list2Items:['全部','手机','出行','包','日用百货','手机配件','手机贴膜','更多']
+                     navItems:[],
+                     show:false
+                
              };
      },
      
   
      methods: {
+             getNavItems()
+             {
+         getNavItems().then(res => {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错了，则弹框提示
+        if (status !== success) {
+          Message({
+            message: res.message,
+            type: status.type
+          })
+          return
+        }
+        this.navItems = res.data
+      })
+             },
              handlecurrentchange(val)
              {
-                     console.log(`当前页: ${val}`)
+                     this.pagenum=val
+                     console.log(this.pagenum)
+                     this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
              },
              addClassfun2(index) {
                     this.flag=index;
+                    this.type=this.navItems[index].type
+                    this.getgoodsItems(this.type,this.orderby,this.pagenum,this.pagesize,this.keyword)
+                   console.log(this.$route.params.navItems)
+                   console.log('test')
+                   console.log( this.type)
+                    console.log(this.$route.params.orderby)
+                //    console.log(test)
+                //    console.log(index);
+
+
+
              },
              addClassfun(index){
                      this.i=index;
@@ -159,7 +191,7 @@ export default {
           
      },
      components: {
-
+              'topHeader':TopHeader
      },
      layout: 'goodslist'
 }
@@ -172,6 +204,7 @@ export default {
         height:50px;
         float:left;
         padding-left:550px;
+        font-size:200px;
 }
 .phone-price{
     margin: 0 0 15px;
@@ -201,7 +234,6 @@ export default {
         background:#f5f5f5;
         padding-left:6%;
         margin-top:30px;
-        height:75%;
         width:1250px;
 }
 .type-list{
