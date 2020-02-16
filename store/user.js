@@ -43,16 +43,18 @@ export const actions = {
   // 登录
   Login({ commit }, { phone, password }) {
     return new Promise((resolve, reject) => {
-      login({ phone, password }).then(response => {
-        const data = response.data
-        setToken(data.token)
-        commit('set_token', data.token)
-        commit('set_name', data.user.name)
-        commit('set_email', data.user.email)
-        commit('set_phone', data.user.phone)
-        commit('set_addressId', data.user.addressId)
-        commit('set_role', data.user.role)
-        resolve(response)
+      login({ phone, password }).then(res => {
+        const data = res.data
+        if (data !== null && data !== '') {
+          setToken(data.token)
+          commit('set_token', data.token)
+          commit('set_name', data.user.name)
+          commit('set_email', data.user.email)
+          commit('set_phone', data.user.phone)
+          commit('set_addressId', data.user.addressId)
+          commit('set_role', data.user.role)
+        }
+        resolve(res)
       }).catch(error => {
         reject(error)
       })
