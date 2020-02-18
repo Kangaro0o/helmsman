@@ -18,10 +18,10 @@ export const delFav = fid => {
     })
   }
 // 添加收藏商品
-export const addFav = goods_id => {
+export const addFav = gid => {
     return request({
       url: favorite.addFav,
       method: 'post',
-      data:{goods_id}
+      data:{gid}
     })
   }

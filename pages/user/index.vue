@@ -129,8 +129,8 @@
                     <div class="address">{{item.address}}</div>
                     <!-- <div class="postcode">{{item.postcode}}</div> -->
                     <div class="address-action">
-                      <span class="operate">修改</span>
-                      <span class="operate">删除</span>
+                      <!-- <span class="operate">修改</span>
+                      <span class="operate">删除</span> -->
                       <span class="operate" @click="setuserdefaultaddress(index)">设置为默认地址</span>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ import Footer from "@/components/Footer";
 import { getaddressItems, addaddress, deleteaddress, setdefaultaddress } from "@/api/address";
 export default {
   created() {
-    // this.getaddressItems();
+     this.getaddressItems();
   },
   components: {
     userfooter: Footer
@@ -265,6 +265,7 @@ export default {
       defaultaddressid: 0,//默认地址id
       text: "",
       value: [],
+      updateaddressid: 0,
       options: [
         {
           value: "江苏省",
@@ -375,6 +376,9 @@ export default {
         receiver_address: [{ validator: checkaddress, trigger: "blur" }],
         receiver_postcode: [{ validator: checkpostcode, trigger: "blur" }]
       },
+      form2 :{
+          aid : 0
+      },
       form: {
         receiver_name: "", //收件人姓名
         receiver_postcode: "", //收件地址邮编
@@ -387,6 +391,9 @@ export default {
   methods: {
     getaddressItems() {
       getaddressItems().then(res => {
+        console.log(this.$store.state.user.name)
+        console.log(this.$store.state.user.email)
+        console.log(this.$store.state.user.addressId)
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
@@ -404,14 +411,17 @@ export default {
       console.log(value);
     },
     setuserdefaultaddress(index) {
-      this.defaultaddressid = index
-      let aid = { aid: index }
-      console.log(index)
-      setdefaultaddress(aid);//设置aid为id的地址为默认地址
-    },
-    setdefaultaddress(aid) {
-      setdefaultaddress().then(res => {
-
+      // this.defaultaddressid = index
+     this.form2.aid=this.list[index].aid
+    //  let aiddata =new FoemData();
+    //  aiddata.append('aid',this.updateaddressid)
+      // var aid=this.updateaddressid
+      console.log(typeof(this.list[index].aid))
+      let aid=this.form2.aid
+       console.log("test")
+       console.log(aid)
+      setdefaultaddress(JSON.parse(aid)).then(res => {
+        
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
@@ -421,8 +431,22 @@ export default {
           });
           return;
         }
-      })
+      });//设置aid为id的地址为默认地址
     },
+    
+    //   setdefaultaddress(aid).then(res => {
+        
+    //     let status = this.$resultCode.getStatus(res.code);
+    //     let success = this.$resultCode.getSuccessStatus();
+    //     if (status !== success) {
+    //       Message({
+    //         message: res.message,
+    //         type: status.type
+    //       });
+    //       return;
+    //     }
+    //   })
+    // ,
     adddiv(ev) {
       //向后台添加地址
       this.$refs.form.validate(valid => {
@@ -437,8 +461,8 @@ export default {
         var addressinfo = {
           receiver_phone: this.form.receiver_phone,
           receiver_name: this.form.receiver_name,
-          receiver_address: prefix + this.form.receiver_address,
-          receiver_postcodeL: this.form.receiver_postcode
+          address: prefix + this.form.receiver_address,
+          postcode: this.form.receiver_postcode
         };
         // const reg=/^[1](([3|5|8][\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\d]{8}$/;
         // if(!reg.test(this.receiver_phone))
