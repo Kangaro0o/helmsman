@@ -10,7 +10,7 @@
       <div class="topbar-info" id="J_userInfo">
         <el-dropdown>
           <span class="el-dropdown-link">
-            <router-link to="/user">用户名，待修改</router-link>
+            <router-link to="/user">{{this.$store.state.user.name}}</router-link>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -414,7 +414,8 @@ export default {
           });
           return;
         }
-        this.list = res.data.addresslist;
+        this.list = res.data
+        console.log(this.list.length)
       });
     },
 
@@ -430,8 +431,8 @@ export default {
         count: this.count, //购买数量
         price: this.price, //购买价格
         postcode: this.receiver_postcode, //收件地址邮编
-        phone: this.receiver_phone, //收件人电话,
-        name: this.receiver_name, //收件人姓名
+        receiverPhone: this.receiver_phone, //收件人电话,
+        receiverName: this.receiver_name, //收件人姓名
         address: this.receiver_address //收件地址
       };
       addorder(orderinfo).then(res => {

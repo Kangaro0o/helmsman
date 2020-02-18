@@ -118,6 +118,8 @@ export default {
   methods: {
     handleChange(value){
       this.totalprice=this.goods.goods_price*this.num
+      console.log(value)
+      this.count=value
     },
     addFavorite() {//添加收藏
       this.gid = this.goods.gid;
@@ -126,7 +128,7 @@ export default {
 
     addFav(gid) {
       addFav(gid).then(res => {
-        let goods_id = { good_id: this.gid };
+        let gid = { gid: this.gid };
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
