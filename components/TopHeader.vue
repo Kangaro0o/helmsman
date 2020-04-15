@@ -189,13 +189,12 @@ export default {
     > .logo-mi {
       width: 55px;
       height: 55px;
-      background: url(../assets/logo-mi.png) no-repeat;
+      background: url("../assets/logo2.png") no-repeat;
     }
     > .gif {
       width: 163px;
       height: 66px;
       margin-left: 20px;
-      background: url(../assets/win.gif) no-repeat;
     }
     > .header-nav {
       margin-right: auto;
