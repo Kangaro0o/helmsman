@@ -27,5 +27,32 @@ export default {
     code: 403,
     message: '没有相关权限',
     type: 'warning'
+  },
+  // 1000-1999 参数相关错误
+  BINDING_ARGS_ERROR: {
+    code: 1002,
+    message: '参数格式错误',
+    type: 'warning'
+  },
+  PASSWORD_ERROR: {
+    code: 1003,
+    message: '登录密码错误',
+    type: 'error'
+  },
+  // 2000-2999 数据库相关错误
+  PHONE_NOT_FOUND: {
+    code: 2001,
+    message: '手机号不存在',
+    type: 'warning'
+  },
+  HAS_EXIST: {
+    code: 2001,
+    message: '该号码已被注册',
+    type: 'warning'
+  },
+  DATABASE_ERROR: {
+    code: 2003,
+    message: '数据库异常',
+    type: 'error'
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="login-bg">
-      <a href="/" id="J_link">舵手网</a>
+      <a href="#" id="J_link">舵手网</a>
     </div>
     <div class="login-panel">
       <div class="login-box">
