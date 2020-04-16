@@ -100,16 +100,11 @@ export default {
           sendpwd(params).then(data => {
             this.logining = false
             let status = this.$resultCode.getStatus(data.code)
-            let success = this.$resultCode.getSuccessStatus()
-            if (status !== success) {
-              this.$message({
-                message: data.message,
-                type: status.type
-              })
-              return
-            }
+            this.$message({
+              message: data.message,
+              type: status.type
+            })
             this.$router.push({ path: '/login' })
-
           }).catch(err => {
             this.logining = false
             console.log(err)
