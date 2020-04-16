@@ -6,14 +6,14 @@ export const verify = verifyInfo => {
   return request({
     url: user.verify,
     method: 'post',
-    data: verifyInfo
+    params: verifyInfo
   })
 }
 export const getchkCode = phone => {
   return request({
     url: user.chkcode,
     method: 'post',
-    data: {phone}
+    params: { phone }
   })
 }
 export const sendpwd = params => {

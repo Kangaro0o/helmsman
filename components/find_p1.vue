@@ -97,14 +97,10 @@ export default {
       if (this.checkMobile(tel)) {
         getchkCode(this.ruleForm.phone).then(data => {
           let status = this.$resultCode.getStatus(data.code)
-          let success = this.$resultCode.getSuccessStatus()
-          if (status !== success) {
-            this.$message({
-              message: data.message,
-              type: status.type
-            })
-            return
-          }
+          this.$message({
+            message: data.message,
+            type: status.type
+          })
           this.sending = false;
           this.disabled = true;
           this.timeDown();
