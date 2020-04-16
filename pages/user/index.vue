@@ -14,85 +14,17 @@
             <div id="J-userMenu" class="uc-box uc-sub-box">
               <div class="uc-nav-box">
                 <div class="box-hd">
-                  <h3 class="title">订单中心</h3>
-                </div>
-                <div class="box-bd">
-                  <ul class="uc-nav-list J_navList">
-                    <li class="ulclass">
-                      <a class="J-noRandom" href="static.mi.com/order/">我的订单</a>
-                    </li>
-                    <li data-type="11" class="ulclass">
-                      <a class="J_tuanList" href="static.mi.com/order/?type=11">团购订单</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//order.mi.com/user/comment">评价晒单</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//order.mi.com/user/recharge">话费充值订单</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//huanxin.mi.com/order/list">以旧换新订单</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="uc-nav-box">
-                <div class="box-hd">
                   <h3 class="title">个人中心</h3>
                 </div>
                 <div class="box-bd">
                   <ul id="J_orderNavList" class="uc-nav-list">
                     <li class="ulclass">
-                      <a href="//order.mi.com/portal">我的个人中心</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//order.mi.com/message/list">消息通知</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//order.mi.com/invite/list">购买资格</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="//order.mi.com/cashAccount">现金账户</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#" @click="getaddressItems">小米礼品卡</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#">现金券</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#">喜欢的商品</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#">优惠券</a>
-                    </li>
-                    <li class="ulclass">
                       <a href="#" class="active">收货地址</a>
                     </li>
-                    <li class="ulclass">
-                      <a href="#">红包</a>
-                    </li>
                   </ul>
                 </div>
               </div>
-              <div class="uc-nav-box">
-                <div class="box-hd">
-                  <h3 class="title">售后服务</h3>
-                </div>
-                <div class="bx-bd">
-                  <ul class="uc-nav-list">
-                    <li class="ulclass">
-                      <a href="#">服务记录</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#">申请服务</a>
-                    </li>
-                    <li class="ulclass">
-                      <a href="#">领取快递报销</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
               <div class="uc-nav-box">
                 <div class="box-hd">
                   <h3 class="title">账户管理</h3>
@@ -100,7 +32,7 @@
                 <div class="box-bd">
                   <ul class="uc-nav-list">
                     <li class="ulclass">
-                      <a href="#">个人信息</a>
+                      <a href="/tabinfo/">个人信息</a>
                     </li>
                     <li class="ulclass">
                       <a href="#">修改密码</a>
@@ -130,7 +62,7 @@
                     <!-- <div class="postcode">{{item.postcode}}</div> -->
                     <div class="address-action">
                       <!-- <span class="operate">修改</span>
-                      <span class="operate">删除</span> -->
+                      <span class="operate">删除</span>-->
                       <span class="operate" @click="setuserdefaultaddress(index)">设置为默认地址</span>
                     </div>
                   </div>
@@ -195,7 +127,7 @@ import Footer from "@/components/Footer";
 import { getaddressItems, addaddress, deleteaddress, setdefaultaddress } from "@/api/address";
 export default {
   created() {
-     this.getaddressItems();
+    this.getaddressItems();
   },
   components: {
     userfooter: Footer
@@ -376,8 +308,8 @@ export default {
         receiver_address: [{ validator: checkaddress, trigger: "blur" }],
         receiver_postcode: [{ validator: checkpostcode, trigger: "blur" }]
       },
-      form2 :{
-          aid : 0
+      form2: {
+        aid: 0
       },
       form: {
         receiver_name: "", //收件人姓名
@@ -397,7 +329,7 @@ export default {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
-          this.$essage({
+          this.$message({
             message: res.message,
             type: status.type
           });
@@ -412,16 +344,16 @@ export default {
     },
     setuserdefaultaddress(index) {
       // this.defaultaddressid = index
-     this.form2.aid=this.list[index].aid
-    //  let aiddata =new FoemData();
-    //  aiddata.append('aid',this.updateaddressid)
+      this.form2.aid = this.list[index].aid
+      //  let aiddata =new FoemData();
+      //  aiddata.append('aid',this.updateaddressid)
       // var aid=this.updateaddressid
-      console.log(typeof(this.list[index].aid))
-      let aid=this.form2.aid
-       console.log("test")
-       console.log(aid)
+      console.log(typeof (this.list[index].aid))
+      let aid = this.form2.aid
+      console.log("test")
+      console.log(aid)
       setdefaultaddress(JSON.parse(aid)).then(res => {
-        
+
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
@@ -433,9 +365,9 @@ export default {
         }
       });//设置aid为id的地址为默认地址
     },
-    
+
     //   setdefaultaddress(aid).then(res => {
-        
+
     //     let status = this.$resultCode.getStatus(res.code);
     //     let success = this.$resultCode.getSuccessStatus();
     //     if (status !== success) {

@@ -16,6 +16,14 @@ export const getchkCode = phone => {
     params: { phone }
   })
 }
+
+export const getUserInfo = () => {
+  return request({
+    url: user.info,
+    method: 'get'
+  })
+}
+
 export const sendpwd = params => {
   return request({
     url: user.sendpwd,
@@ -31,10 +39,12 @@ export const resetpwd = resetpwdInfo => {
     data: resetpwdInfo
   })
 }
+
+
 export const tabupdate = tabupdateInfo => {
   return request({
     url: user.tabupdate,
     method: 'patch',
-    data: tabupdateInfo
+    params: tabupdateInfo
   })
 }

@@ -9,7 +9,7 @@
         </ul>
       </div>
       <div class="topbar-info" v-if="!isLogin">
-        <a href="/login">登录</a> 
+        <a href="/login">登录</a>
         <a href="/register">注册</a>
       </div>
       <div class="topbar-info" v-else>
@@ -27,9 +27,7 @@ export default {
   methods: {
     logout: function () {
       this.$store.dispatch('user/LogOut').then(res => {
-        if (res.code === 200) {
-          this.$router.push({ path: '/login' })
-        }
+        this.$router.push({ path: '/login' })
       })
     }
   },
