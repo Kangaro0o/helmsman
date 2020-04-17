@@ -9,7 +9,8 @@ export const user = {
   chkcode: '/user/chkCode',
   sendpwd: '/user/password/reset',
   resetpwd: '/user/resetPwd',
-  tabupdate: '/user/info',
+  tabupdate: '/user/update',
+  info: '/user/info',
 }
 
 /**

@@ -86,7 +86,7 @@ export default {
     margin-bottom: 8px;
     & .brick-list {
       margin: 0 0 -14px -14px;
-      height: 614px;
+      height: 307px;
       padding: 0;
       list-style-type: none;
       .brick-item {
