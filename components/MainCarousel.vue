@@ -10,7 +10,7 @@
         >
           <!-- 商品id，用于跳转item.goods_id -->
           <a href="#">
-            <img :src="item.imgUrl" alt />
+            <img :src="item.imgUrl" alt width="1226" height="460" />
           </a>
         </div>
       </transition-group>
