@@ -416,14 +416,7 @@ export default {
   layout: "user"
 };
 </script>
-<style >
-/* .input-text{
-    padding:10px 16px;
-    border:1px solid #e0e0e0;
-    font-size:14px;
-    line-height:18px;
-    background-color:#fff;
-} */
+<style scoped>
 .operate {
   margin-left: 15px;
 }
