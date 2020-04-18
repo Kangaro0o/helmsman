@@ -52,12 +52,12 @@
             <div class="goods-item" v-for="(item, index) in onePageTableData" :key="index">
               <div class="figure figure-img">
                 <!-- 商品详情 -->
-                <a target="_blank" href="#">
+                <a target="_blank" :href="'/goods/detail?gid='+item.gid">
                   <img :src="item.imgUrl" width="200" height="200" alt />
                 </a>
               </div>
               <h2 class="title">
-                <a target="_blank" :href="item.gid">{{item.goods_name}}</a>
+                <a target="_blank" :href="'/goods/detail?gid='+item.gid">{{item.goods_name}}</a>
               </h2>
               <p class="price">{{item.goods_price}}元</p>
             </div>
