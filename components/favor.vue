@@ -7,7 +7,13 @@
             <div class="box-hd">
               <h1 class="title">喜欢的商品</h1>
               <label class="search-box">
-                <input type="text" placeholder="搜索商品" class="search" style="height: 30px;" v-model="search">
+                <input
+                  type="text"
+                  placeholder="搜索商品"
+                  class="search"
+                  style="height: 30px;"
+                  v-model="keyword"
+                />
                 <i slot="suffix" class="el-icon-search icon-search" @click="searchFavFun"></i>
               </label>
             </div>
@@ -34,7 +40,7 @@
                         <!---->
                       </p>
                       <div class="actions">
-                        <a class="btn btn-small btn-line-gray" @click="delFavFun(item.fid)" >删除</a>
+                        <a class="btn btn-small btn-line-gray" @click="delFavFun(item.fid)">删除</a>
                         <a :href="item.goods_id" class="btn btn-small btn-primary">查看详情</a>
                       </div>
                     </li>
@@ -51,14 +57,13 @@
 </template>
 
 <script>
-import { getFav } from '@/api/favorite'
-import { delFav } from '@/api/favorite'
+import { getFav, delFav } from '@/api/favorite'
 export default {
   data() {
     return {
       list: [],
-      keyword:''  //需要删掉
-    };
+      keyword: ''  //需要删掉
+    }
   },
 
   created() {
@@ -68,7 +73,6 @@ export default {
   methods: {
     FavList() {
       getFav(this.keyword).then(res => {
-        console.log(this.keyword)
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
@@ -78,14 +82,11 @@ export default {
           });
           return;
         }
-       
-        this.list = res.data.favItems;
-        console.log("aa"+this.list)
+        this.list = res.data;
       });
     },
     searchFavFun(ev) {
-      if (this.search) {
-        let keyword = this.search;
+      if (this.keyword) {
         getFav(keyword).then(res => {
           let status = this.$resultCode.getStatus(res.code);
           let success = this.$resultCode.getSuccessStatus();
@@ -104,7 +105,7 @@ export default {
         });
       }
     },
-    delFavFun(fid) {  
+    delFavFun(fid) {
       delFav(fid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
@@ -121,7 +122,7 @@ export default {
         });
         this.FavList();
       });
-      
+
     }
   }
 };
@@ -174,7 +175,7 @@ del {
 }
 
 .ds-uc-box .box-hd .icon-search {
-  margin-top: 13px; 
+  margin-top: 13px;
   margin-right: 5px;
   left: -28px;
   position: relative;
@@ -186,10 +187,10 @@ del {
   margin-top: 23px;
   color: #757575;
   width: 200px;
-  background-color: #FFF;
+  background-color: #fff;
   background-image: none;
   border-radius: 4px;
-  border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
   box-sizing: border-box;
   font-size: inherit;
   height: 40px;
@@ -197,8 +198,8 @@ del {
   outline: 0;
   padding: 0 15px;
   padding-right: 30px;
-  -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  -webkit-transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   font-size: 10pt;
 }
 

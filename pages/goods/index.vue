@@ -1,267 +1,307 @@
 <template>
-  <div id="app">
-    <div class="phone-header">
-      <div class="phone-header-nav">
-        <span>首页</span>
-        <i class="el-icon-arrow-right"></i>
-        <span>全部结果</span>
-        {{this.$route.query["keyword"]}}
-        <i class="el-icon-arrow-right"></i>
-        <!-- 当前页面商品种类 -->
-        <span>{{this.$router.params}}</span>
+  <div class="goodsList">
+    <div class="breadcrumbs">
+      <div class="container">
+        <a href="//www.mi.com/index.html" data-stat-id="b67dea7347d3b7fc">首页</a>
+        <span class="sep">&gt;</span>
+        <a href="//search.mi.com/search_保护壳" data-stat-id="a44441c01531f404">全部结果</a>
+        <span class="sep">&gt;</span>
+        <span>保护壳</span>
       </div>
     </div>
-    <div class="filter-list" id="j_filterList">
-      <span class="label">分类:</span>
-      <ul class="item-show-less" id="list_item_class">
-        <li
-          style="float:left; margin-left:60px;"
-          v-for="(item,index) in navItems"
-          :key="index"
-          @click="addClassfun2(index)"
-          v-bind:class="{active:flag===index}"
-        >
-          <a @click="addClassfun2(index)" v-bind:class="{active:flag===index}">{{item.name}}</a>
-        </li>
-      </ul>
-    </div>
-    <div class="phone-orderBy">
-      <div class="phone-list-box">
-        <div style="height:30px;">
-          <ul class="order-list">
-            <li
-              v-for="(liitem,index) in liItems"
-              :key="index"
-              @click="addClassfun(index)"
-              v-bind:class="{active:i===index}"
-            >
-              <a @click="addClassfun(index)" v-bind:class="{active:i===index}">{{liitem.name}}</a>
+
+    <div class="search-filter">
+      <div class="filter-wrap" style="display: block;">
+        <div class="filter-list" id="J_filterList">
+          <ul class="item show-less" id="list_item_class">
+            <span class="label">分类：</span>
+            <li class="active">
+              <a class="product-type-item">全部</a>
+            </li>
+            <li class>
+              <a class="product-type-item">手机配件</a>
+            </li>
+            <li class>
+              <a class="product-type-item">手机保护壳</a>
             </li>
           </ul>
         </div>
-        <div class="phone-list" id="J_goodsList">
-          <!-- <router-view v-if="isrouteralive"> -->
-          <div v-for="(item,index) in goodsItems" :key="index" class="phone-box">
-            <div class="phone-img">
-              <router-link :to="{path:'/goods/detail',query:{gid:item.gid}}"><img  :src="item.imgUrl" alt /></router-link>
+      </div>
+    </div>
+
+    <div class="search-reuslt">
+      <div class="reuslt-order">
+        <!-- 搜索结果列表过滤 -->
+        <div class="order-list-box clearfix">
+          <ul class="order-list" id="J_orderList">
+            <li class="active">
+              <a class="goods-order-item" rel="nofollow">综合</a>
+            </li>
+            <li class>
+              <a class="goods-order-item" rel="nofollow">新品</a>
+            </li>
+            <li class>
+              <a class="goods-order-item" rel="nofollow">销量</a>
+            </li>
+            <li class>
+              <a class="goods-order-item" rel="nofollow">
+                价格
+                <i class="iconfont">↑</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="goods-list-box">
+          <div class="goods-list clearfix" id="J_goodsList">
+            <div class="goods-item" v-for="(item, index) in 10" :key="index">
+              <div class="figure figure-img">
+                <a
+                  data-log_code="pc_search_0_0#seid=21:0:0:0:0:0:0:0:0:0&amp;page=pc_search&amp;pid=11645&amp;keyword=保护壳&amp;search_word=%!(EXTRA string=保护壳)"
+                  target="_blank"
+                  href="//item.mi.com/1200900023.html?cfrom=search"
+                >
+                  <img
+                    src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1583054172.3762992.jpg"
+                    width="200"
+                    height="200"
+                    alt
+                  />
+                </a>
+              </div>
+              <h2 class="title">
+                <a
+                  target="_blank"
+                  href="//item.mi.com/1200900023.html?cfrom=search"
+                >黑鲨游戏手机 3 全包保护壳 黑色</a>
+              </h2>
+              <p class="price">59元</p>
             </div>
-            <h2 class="phone-desc">{{item.goods_name}}</h2>
-            <p class="phone-price">
-              {{item.goods_price}}元起，
-              <del>3000元起</del>
-            </p>
-            <p>{{item.desc}}</p>
-            <p style="display:block;">销量: {{item.count}}</p>
-            <el-button type="danger">
-              <router-link :to="{path:'/goods/detail',query:{gid:item.gid}}">立即购买</router-link>
-            </el-button>
           </div>
         </div>
-        <div class="phone-list-dottom">
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="20"
-            :page-size="pagesize"
-            :current-page="pagenum"
-            @current-change="handlecurrentchange"
-            @prev-click="handlepreclick"
-            @next-click="handlenextclick"
-          ></el-pagination>
-        </div>
+        <el-pagination
+          background
+          hide-on-single-page="true"
+          layout="prev, pager, next"
+          :total="20"
+          :page-size="pagesize"
+          :current-page="pagenum"
+          @current-change="handlecurrentchange"
+          @prev-click="handlepreclick"
+          @next-click="handlenextclick"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
-<script >
-import { getgoodsItems, getgoodsItems2 } from "@/api/goods";
-import { getNavItems } from "@/api/menu";
-import request from "@/service";
-import TopHeader from "@/components/TopHeader";
+<script>
 export default {
-  created() {
-    this.getgoodsItems(
-      this.type,
-      this.orderby,
-      this.pagenum,
-      this.pagesize,
-      this.keyword
-    );
-    this.getNavItems();
-  },
+  layout: 'goodslist',
   data() {
     return {
       goodsItems: [],
-      i: 0,
-      flag: 0,
-      keyword: null, //查询关键词
-      orderby: "default", //排序方式，默认是gid
-      type: "miphone", //商品类型
-      total: 0, //总条数
-      pagesize: 12, //每页显示条目
-      pagenum: 0, //当前页
-      liItems: [
-        { id: 1, name: "综合" },
-        { id: 3, name: "销量↓" },
-        { id: 4, name: "价格↓" }
-      ],
-      navItems: [],
-      show: false
-    };
-  },
 
-  methods: {
-    getNavItems() {
-      getNavItems().then(res => {
-        let status = this.$resultCode.getStatus(res.code);
-        let success = this.$resultCode.getSuccessStatus();
-        // 如果出错了，则弹框提示
-        if (status !== success) {
-          Message({
-            message: res.message,
-            type: status.type
-          });
-          return;
-        }
-        this.navItems = res.data;
-      });
-    },
-    handlecurrentchange(val) {
-      this.pagenum = val;
-      console.log(this.pagenum);
-      this.getgoodsItems(
-        this.type,
-        this.orderby,
-        this.pagenum,
-        this.pagesize,
-        this.keyword
-      );
-    },
-    addClassfun2(index) {
-      this.flag = index;
-      this.type = this.navItems[index].type;
-      this.getgoodsItems(
-        this.type,
-        this.orderby,
-        this.pagenum,
-        this.pagesize,
-        this.keyword
-      );
-      console.log(this.$route.params.navItems);
-      console.log(index);
-      console.log(this.type);
-      console.log(this.$route.params.orderby);
-    },
-    addClassfun(index) {
-      this.i = index;
-      if (index == 1) {
-        //选择以销量为排序方式
-        this.orderby = "salecount";
-        //  this.updategoodsItems()
-        this.getgoodsItems(
-          this.type,
-          this.orderby,
-          this.pagenum,
-          this.pagesize,
-          this.keyword
-        );
-        console.log(this.orderby);
-      } else if (index == 2) {
-        //选择以价格升序为排序方式
-        this.orderby = "price";
-        this.getgoodsItems(
-          this.type,
-          this.orderby,
-          this.pagenum,
-          this.pagesize,
-          this.keyword
-        );
-        console.log(this.orderby);
-      }
-    },
-    handlepreclick() {
-      this.pagenum -= 1;
-      this.getgoodsItems(
-        this.type,
-        this.orderby,
-        this.pagenum,
-        this.pagesize,
-        this.keyword
-      );
-      console.log(this.pagenum);
-    },
-    handlenextclick() {
-      this.pagenum += 1;
-      this.getgoodsItems(
-        this.type,
-        this.orderby,
-        this.pagenum,
-        this.pagesize,
-        this.keyword
-      );
-      console.log(this.pagenum);
-    },
-
-    getgoodsItems(type, orderby, pagenum, pagesize, keyword) {
-      if (this.keyword == null) {
-        getgoodsItems2(type, orderby, pagenum, pagesize).then(res => {
-          let status = this.$resultCode.getStatus(res.code);
-          let success = this.$resultCode.getSuccessStatus();
-          if (status !== success) {
-            Message({
-              message: res.message,
-              type: status.type
-            });
-            return;
-          }
-          this.goodsItems = res.data.reverse();
-          console.log(this.goodsItems);
-        });
-      } else {
-        getgoodsItems(type, orderby, pagenum, pagesize, keyword).then(res => {
-          let status = this.$resultCode.getStatus(res.code);
-          let success = this.$resultCode.getSuccessStatus();
-          if (status !== success) {
-            Message({
-              message: res.message,
-              type: status.type
-            });
-            return;
-          }
-          this.goodsItems = res.data.reverse();
-          console.log(this.goodsItems);
-        });
-      }
     }
-  },
-  components: {
-    topHeader: TopHeader
-  },
-  layout: "goodslist"
-};
+  }
+
+}
 </script>
 <style scoped>
-.active {
-  color: #ff6700;
+.breadcrumbs {
+  height: 40px;
+  font-size: 12px;
+  line-height: 40px;
+  background: #f5f5f5;
+  color: #616161;
 }
-.phone-list-dottom {
-  height: 50px;
-  float: left;
-  padding-left: 550px;
-  font-size: 200px;
+.container {
+  width: 1226px;
+  *zoom: 1;
+  margin-right: auto;
+  margin-left: auto;
 }
-.phone-price {
-  margin: 0 0 15px;
-  color: #ff6700;
+.container:before,
+.container:after {
+  content: " ";
+  display: table;
 }
-.phone-price del {
+.breadcrumbs a {
+  color: #757575;
+}
+a {
+  cursor: pointer;
+  color: #757575;
+  text-decoration: none;
+}
+.breadcrumbs .sep {
+  margin: 0 0.5em;
   color: #b0b0b0;
 }
-.phone-box {
+.sep,
+.ndash {
+  margin: 0 0.25em;
+  font-family: sans-serif;
+}
+.search-filter {
+  background: #fff;
+}
+.search-filter .filter-wrap {
+  margin: auto;
+  width: 1226px;
+  padding: 18px 0;
+  display: none;
+}
+.search-filter .filter-list {
   position: relative;
+}
+div {
+  display: block;
+}
+.search-filter .filter-list .item:first-child {
+  border-top: none;
+}
+.search-filter .filter-list .item.show-less {
+  height: 48px;
+}
+.search-filter .filter-list .item {
+  position: relative;
+  overflow: hidden;
+  padding: 0 60px 0 124px;
+  margin: 0;
+  list-style: none;
+  font-size: 0;
+}
+.search-filter .filter-list .label {
+  top: 0;
+  left: 0;
+  color: #b0b0b0;
+}
+.search-filter .filter-list .label,
+.search-filter .filter-list .more-btn {
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  padding: 14px 0;
+  font-size: 14px;
+}
+.search-filter .filter-list .item li {
   display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #424242;
+  font-size: 14px;
+  width: 148px;
+  padding: 14px 0;
+  height: 20px;
+  line-height: 20px;
+}
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+.search-filter .filter-list .item .active a {
+  color: #f60;
+}
+.search-reuslt {
+  /* padding: 20px 0 2250px; */
+  padding: auto;
+  background: #f5f5f5;
+}
+.reuslt-order {
+  padding-top: 25px;
+  width: 1226px;
+  position: relative;
+  margin: 0 auto;
+  font-size: 1.2em;
+}
+.reuslt-order .order-list-box {
+  height: 50px;
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.reuslt-order .order-list-box .order-list,
+.reuslt-order .order-list-box .type-list {
+  height: 30px;
+  line-height: 30px;
+}
+.order-list-box .order-list {
+  float: left;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+menu,
+ol,
+ul {
+  padding: 0 0 0 40px;
+}
+dl,
+menu,
+ol,
+ul {
+  margin: 1em 0;
+}
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+.reuslt-order .order-list-box .order-list li:first-child {
+  border-left: none;
+}
+.order-list-box .order-list li {
+  float: left;
+  padding: 0 30px;
+  border-left: 1px solid #e0e0e0;
+  line-height: 20px;
+}
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+.order-list-box .order-list li.active a {
+  color: #ff6700;
+}
+.order-list-box .order-list li a {
+  color: #424242;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+}
+a {
+  cursor: pointer;
+}
+a {
+  color: #757575;
+  text-decoration: none;
+}
+.goods-list-box {
+  width: 1226px;
+  /* background-color: #757575; */
+}
+.goods-list {
+  width: 1240px;
+  margin: 0;
+  list-style-type: none;
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.goods-item {
+  position: relative;
+  float: left;
   width: 296px;
-  height: 383px;
+  height: 318px;
   padding-top: 47px;
   margin-right: 14px;
   margin-bottom: 14px;
@@ -269,77 +309,67 @@ export default {
   background: #fff;
   transition: box-shadow 0.5s linear;
 }
-.phone-list-box {
+.goods-item .figure-img {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 16px;
 }
-.phone-list {
-  background: #f5f5f5;
-  padding-left: 6%;
-  margin-top: 30px;
-  width: 1250px;
+.goods-item .figure-img a {
+  display: block;
 }
-.type-list {
-  background: #fff;
-  width: 100px;
-  height: 30px;
-  float: right;
+.goods-item .figure-img img {
+  width: 200px;
+  height: 200px;
 }
-.active {
-  float: left;
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
 }
-.order-list {
-  height: 30px;
-  line-height: 30px;
-  float: left;
-  padding-left: 60px;
+.goods-item .title {
+  margin: 0 auto;
+  width: 230px;
 }
-
-.order-list li {
-  float: left;
-  padding-left: 30px;
-  border-left: 1px solid #e0e0e0;
-  padding-right: 30px;
+.goods-item .title {
+  margin: 0 0 3px;
+  font-size: 14px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  _zoom: 1;
 }
-.phone-orderBy {
-  background: #f5f5f5;
-  padding: 20px 0 100px;
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
 }
-.icon-more {
-  margin-left: -84px;
+.goods-item .title a {
+  color: #424242;
 }
-.liactive {
-  margin-left: 90px;
-  float: left;
-}
-.allactive {
-  margin-left: 90px;
-  float: left;
-}
-.classer-more {
-  margin-left: 90px;
-}
-.filter-list {
-  height: 55px;
-  background: #fff;
-  color: #757575;
-  margin-top: 35px;
-}
-.label {
-  padding-left: 90px;
-  float: left;
-}
-.phone-header {
-  background: #f5f5f5;
-  height: 40px;
-}
-.phone-header-nav {
-  padding-left: 90px;
-  padding-top: 10px;
-  color: #757575;
-}
-
-li a:hover {
+.goods-item .price {
+  margin: 0 0 15px;
   color: #ff6700;
-  cursor: pointer;
-  outline: 0;
+}
+p,
+pre {
+  margin: 1em 0;
+}
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.el-pagination {
+  float: left;
+  padding-left: 500px;
+  margin-bottom: 100px;
 }
 </style>

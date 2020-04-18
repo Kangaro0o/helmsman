@@ -27,7 +27,7 @@ export const menu = {
 export const goods = {
   carouselItems: '/goods/carouselItems',
   goodsItems: '/goods/${type}/list/${orderBy}/${keywords}',
-  list: '/goods/list/',
+  list: '/goods/list/hot',
   tips: '/goods/tips/',
   getimagesItems: '/getimage',
   // getgoodsinfo:'/goods/show/${gid}'
