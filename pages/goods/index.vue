@@ -2,11 +2,9 @@
   <div class="goodsList">
     <div class="breadcrumbs">
       <div class="container">
-        <a href="//www.mi.com/index.html" data-stat-id="b67dea7347d3b7fc">首页</a>
+        <a href="/">首页</a>
         <span class="sep">&gt;</span>
-        <a href="//search.mi.com/search_保护壳" data-stat-id="a44441c01531f404">全部结果</a>
-        <span class="sep">&gt;</span>
-        <span>保护壳</span>
+        <a href="#">全部结果</a>
       </div>
     </div>
 
@@ -15,14 +13,11 @@
         <div class="filter-list" id="J_filterList">
           <ul class="item show-less" id="list_item_class">
             <span class="label">分类：</span>
-            <li class="active">
-              <a class="product-type-item">全部</a>
+            <li :class="{'active': activeIndex === -1}">
+              <a class="product-type-item" @click="switchTab(-1)">全部</a>
             </li>
-            <li class>
-              <a class="product-type-item">手机配件</a>
-            </li>
-            <li class>
-              <a class="product-type-item">手机保护壳</a>
+            <li :class="{'active': activeTab(index)}" v-for="(nav, index) in navs" :key="index">
+              <a class="product-type-item" @click="switchTab(index)">{{nav.name}}</a>
             </li>
           </ul>
         </div>
@@ -34,19 +29,19 @@
         <!-- 搜索结果列表过滤 -->
         <div class="order-list-box clearfix">
           <ul class="order-list" id="J_orderList">
-            <li class="active">
-              <a class="goods-order-item" rel="nofollow">综合</a>
+            <li :class="{'active': orderby == 'default'}">
+              <a class="goods-order-item" rel="nofollow" @click="switchSort('default')">综合</a>
             </li>
-            <li class>
-              <a class="goods-order-item" rel="nofollow">新品</a>
+            <li :class="{'active': orderby == 'salecount'}">
+              <a class="goods-order-item" rel="nofollow" @click="switchSort('salecount')">
+                销量
+                <i class="iconfont">↓</i>
+              </a>
             </li>
-            <li class>
-              <a class="goods-order-item" rel="nofollow">销量</a>
-            </li>
-            <li class>
-              <a class="goods-order-item" rel="nofollow">
+            <li :class="{'active': orderby == 'price'}">
+              <a class="goods-order-item" rel="nofollow" @click="switchSort('price')">
                 价格
-                <i class="iconfont">↑</i>
+                <i class="iconfont">↓</i>
               </a>
             </li>
           </ul>
@@ -54,56 +49,112 @@
 
         <div class="goods-list-box">
           <div class="goods-list clearfix" id="J_goodsList">
-            <div class="goods-item" v-for="(item, index) in 10" :key="index">
+            <div class="goods-item" v-for="(item, index) in onePageTableData" :key="index">
               <div class="figure figure-img">
-                <a
-                  data-log_code="pc_search_0_0#seid=21:0:0:0:0:0:0:0:0:0&amp;page=pc_search&amp;pid=11645&amp;keyword=保护壳&amp;search_word=%!(EXTRA string=保护壳)"
-                  target="_blank"
-                  href="//item.mi.com/1200900023.html?cfrom=search"
-                >
-                  <img
-                    src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1583054172.3762992.jpg"
-                    width="200"
-                    height="200"
-                    alt
-                  />
+                <!-- 商品详情 -->
+                <a target="_blank" href="#">
+                  <img :src="item.imgUrl" width="200" height="200" alt />
                 </a>
               </div>
               <h2 class="title">
-                <a
-                  target="_blank"
-                  href="//item.mi.com/1200900023.html?cfrom=search"
-                >黑鲨游戏手机 3 全包保护壳 黑色</a>
+                <a target="_blank" :href="item.gid">{{item.goods_name}}</a>
               </h2>
-              <p class="price">59元</p>
+              <p class="price">{{item.goods_price}}元</p>
             </div>
           </div>
         </div>
-        <el-pagination
-          background
-          hide-on-single-page="true"
-          layout="prev, pager, next"
-          :total="20"
-          :page-size="pagesize"
-          :current-page="pagenum"
-          @current-change="handlecurrentchange"
+        <!-- hide-on-single-page="true" -->
+        <!-- @current-change="handlecurrentchange"
           @prev-click="handlepreclick"
-          @next-click="handlenextclick"
+        @next-click="handlenextclick"-->
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          background
+          :current-page="currentPage"
+          :page-size="pageSize"
+          layout="prev, pager, next"
+          :total="pageTotal"
         ></el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { getNavItems } from '@/api/menu'
+import { getGoodsListByKw } from '@/api/goods'
 export default {
+  name: 'goods-list',
   layout: 'goodslist',
+  created() {
+    this.navItems()
+    this.getGoodsListByKw()
+  },
   data() {
     return {
+      navs: [],
+      activeIndex: '',
+      keyword: '',
+      orderby: 'default',
+      type: this.$route.query.type,
       goodsItems: [],
+      pageSize: 8,
+      pageTotal: 0,
+      currentPage: 1
+    }
+  },
+  methods: {
+    navItems() {
+      getNavItems().then(res => {
+        this.navs = res.data
+        this.setInitActiveIndex(this.$route.query.type)
+      })
+    },
+    getGoodsListByKw() {
+      let params = { 'type': this.type, 'orderby': this.orderby, 'keyword': this.keyword }
+      getGoodsListByKw(params).then(res => {
+        this.goodsItems = res.data
+        this.pageTotal = this.goodsItems.length
+      })
+    },
+    setInitActiveIndex(type_en) {
+      for (let i = 0; i < this.navs.length; i++) {
+        if (this.navs[i].type === type_en) {
+          this.switchTab(i)
+        }
+      }
+    },
+    activeTab(index) {
+      return this.activeIndex === index
+    },
+    switchTab(index) {
+      this.activeIndex = index
+      if (index !== -1) {
+        this.type = this.navs[index].type
+      } else {
+        this.type = 'all'
+      }
+      // 切换Tab时重新请求新的商品列表
+      this.getGoodsListByKw()
+    },
+    switchSort(sort) {
+      this.orderby = sort
+      this.getGoodsListByKw()
+    },
+    handleSizeChange(size) {
+      this.currentPage = size
+    },
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage
+      //this.goodsItems = this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+    },
 
+  },
+  computed: {
+    onePageTableData: function () {
+      return this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     }
   }
-
 }
 </script>
 <style scoped>
@@ -327,7 +378,7 @@ img {
 }
 .goods-item .title {
   margin: 0 auto;
-  width: 230px;
+  /* width: 230px; */
 }
 .goods-item .title {
   margin: 0 0 3px;
@@ -368,8 +419,9 @@ p {
   margin-inline-end: 0px;
 }
 .el-pagination {
-  float: left;
-  padding-left: 500px;
-  margin-bottom: 100px;
+  margin: auto;
+  position: absolute;
+  bottom: -400px;
+  left: 540px;
 }
 </style>

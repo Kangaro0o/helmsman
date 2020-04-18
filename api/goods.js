@@ -13,20 +13,19 @@ export const getCarouselItems = _ => {
 }
 
 
-
-
-export function getgoodsItems (type,orderby,pagenum,pagesize,keyword)  {  
-       return request({
-         url: `/goods/${type}/list/${orderby}/${pagenum}/${pagesize}/${keyword} `,
-         method: 'get'
-       })  
+export function getGoodsListByKw({ type, orderby, keyword }) {
+  return request({
+    url: goods.goodsItems,
+    method: 'get',
+    params: { type, orderby, keyword }
+  })
 }
 
-export function getgoodsItems2 (type,orderby,pagenum,pagesize)  {  
+export function getgoodsItems2(type, orderby, pagenum, pagesize) {
   return request({
     url: `/goods/${type}/list/${orderby}/${pagenum}/${pagesize}`,
     method: 'get'
-  }) 
+  })
 
 }
 

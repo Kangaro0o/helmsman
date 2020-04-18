@@ -8,7 +8,7 @@
       <div class="box-hd clearfix">
         <h2 class="title">{{item.type_zh}}</h2>
         <div class="more">
-          <a href="#" class="more-link">
+          <a @click="goGoodsListPage(item.type_en)" class="more-link" style="cursor: pointer">
             查看全部
             <i class="el-icon-caret-right"></i>
           </a>
@@ -68,6 +68,9 @@ export default {
       getGoodsList(this.keyword).then(res => {
         this.list = res.data.list
       })
+    },
+    goGoodsListPage(type_en) {
+      this.$router.push({ path: '/goods', query: { 'type': type_en } })
     }
   },
   watch: {
