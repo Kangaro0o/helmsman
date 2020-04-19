@@ -2,6 +2,7 @@ import Cookies from "js-cookie"
 
 const TokenKey = "loginToken"
 const TokenHead = "Bearer"
+const ExpireTime = 60
 
 export function getToken() {
   return getItem(TokenKey)
@@ -20,7 +21,8 @@ export function getItem(key) {
 }
 
 export function setItem(key, value) {
-  return Cookies.set(key, value, { expires: 3, secure: false })
+  var inFifteenMinutes = new Date(new Date().getTime() + ExpireTime * 60 * 1000);
+  return Cookies.set(key, value, { expires: inFifteenMinutes, secure: false })
 }
 
 export function removeItem(key) {
