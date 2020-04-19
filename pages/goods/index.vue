@@ -74,11 +74,8 @@
             </div>
           </div>
         </div>
-        <!-- hide-on-single-page="true" -->
-        <!-- @current-change="handlecurrentchange"
-          @prev-click="handlepreclick"
-        @next-click="handlenextclick"-->
         <el-pagination
+          hide-on-single-page="true"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           background
@@ -145,11 +142,13 @@ export default {
       } else {
         this.type = 'all'
       }
+      this.currentPage = 1
       // 切换Tab时重新请求新的商品列表
       this.getGoodsListByKw()
     },
     switchSort(sort) {
       this.orderby = sort
+      this.currentPage = 1
       this.getGoodsListByKw()
     },
     handleSizeChange(size) {
@@ -159,6 +158,7 @@ export default {
       this.currentPage = currentPage
     },
     searchGoods() {
+      this.currentPage = 1
       this.getGoodsListByKw()
     }
   },
@@ -435,8 +435,9 @@ p {
 .el-pagination {
   margin: auto;
   position: absolute;
-  bottom: -400px;
+  bottom: -760px;
   left: 540px;
+  margin-bottom: 20px;
 }
 .search-box {
   border-color: transparent;
