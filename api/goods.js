@@ -12,7 +12,6 @@ export const getCarouselItems = _ => {
   })
 }
 
-
 export function getGoodsListByKw({ type, orderby, keyword }) {
   return request({
     url: goods.goodsItems,
@@ -28,10 +27,6 @@ export function getgoodsItems2(type, orderby, pagenum, pagesize) {
   })
 
 }
-
-
-
-
 
 /**
  * 获取商城首页商品列表
@@ -64,10 +59,9 @@ export const getimage = _ => {
 
 }
 
-export function getgoodsinfo(gid) {
+export const getGoodsInfo = gid => {
   return request({
-    url: `/goods/show/${gid}`,
+    url: goods.detail + gid,
     method: 'get'
   })
 }
-

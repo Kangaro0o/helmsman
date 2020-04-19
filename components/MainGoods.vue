@@ -21,7 +21,7 @@
               <ul class="brick-list clearfix">
                 <div v-for="(goods, gIndex) in item.list" :key="gIndex">
                   <li class="brick-item brick-item-m brick-item-m-2">
-                    <a :href="goods.goods_id">
+                    <a :href="'/goods/detail?gid=' + goods.goods_id">
                       <div class="figure figure-img">
                         <img
                           width="160"

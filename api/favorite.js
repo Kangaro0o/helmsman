@@ -16,6 +16,14 @@ export const delFav = fid => {
     method: 'delete',
   })
 }
+// 取消收藏
+export const cancelFav = gid => {
+  return request({
+    url: favorite.cancel,
+    method: 'delete',
+    params: { gid }
+  })
+}
 // 添加收藏商品
 export const addFav = gid => {
   return request({

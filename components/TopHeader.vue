@@ -1,7 +1,7 @@
 <template>
   <div class="top-header">
     <div class="container">
-      <a class="logo-mi"></a>
+      <a class="logo-mi" href="/"></a>
       <a class="gif"></a>
       <div class="header-nav" @mouseenter="isNavEnter = true" @mouseleave="isNavEnter = false">
         <ul>
