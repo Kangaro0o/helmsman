@@ -166,7 +166,7 @@ export default {
     onePageTableData: function () {
       if (this.goodsItems != null)
         return this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
-      return null;
+      return [];
     }
   }
 }
