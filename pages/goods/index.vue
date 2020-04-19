@@ -45,6 +45,17 @@
               </a>
             </li>
           </ul>
+          <label class="search-box">
+            <input
+              type="text"
+              placeholder="搜索商品"
+              class="search"
+              style="height: 30px;"
+              v-model="keyword"
+              v-on:keyup.13="searchGoods"
+            />
+            <i slot="suffix" class="el-icon-search icon-search" @click="searchGoods"></i>
+          </label>
         </div>
 
         <div class="goods-list-box">
@@ -146,13 +157,16 @@ export default {
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
-      //this.goodsItems = this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
     },
-
+    searchGoods() {
+      this.getGoodsListByKw()
+    }
   },
   computed: {
     onePageTableData: function () {
-      return this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+      if (this.goodsItems != null)
+        return this.goodsItems.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+      return [];
     }
   }
 }
@@ -423,5 +437,52 @@ p {
   position: absolute;
   bottom: -400px;
   left: 540px;
+}
+.search-box {
+  border-color: transparent;
+  border: 0;
+  float: right;
+  margin-top: -12px;
+}
+
+.icon-search {
+  margin-top: 13px;
+  margin-right: 5px;
+  left: -28px;
+  position: relative;
+  cursor: pointer;
+}
+
+.search {
+  margin: 0;
+  margin-top: 13px;
+  color: #757575;
+  width: 200px;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  font-size: inherit;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  padding: 0 15px;
+  padding-right: 30px;
+  -webkit-transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  font-size: 10pt;
+}
+
+.search::-webkit-input-placeholder {
+  color: #c2c2c2;
+}
+
+.search:hover {
+  border-color: #b0b0b0;
+}
+
+.search:focus {
+  border-color: #ff6700;
 }
 </style>

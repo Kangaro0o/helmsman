@@ -54,5 +54,25 @@ export default {
     code: 2003,
     message: '数据库异常',
     type: 'error'
+  },
+  SECKILL_NOT_FOUND: {
+    code: 2004,
+    message: '暂时没有秒杀活动',
+    type: 'info'
+  },
+  GOODS_NOT_FOUND: {
+    code: 2005,
+    message: '没找到相关商品',
+    type: 'info'
+  },
+  FAV_EXIST: {
+    code: 3001,
+    message: '该商品已被收藏',
+    type: 'info'
+  },
+  FAV_NOT_FOUND: {
+    code: 3002,
+    message: '没有相关收藏',
+    type: 'warning'
   }
 }
