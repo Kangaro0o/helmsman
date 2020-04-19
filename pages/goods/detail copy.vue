@@ -20,31 +20,36 @@
               class="pro-title"
               style="padding-top:15px;padding-bottom:15px;"
             >{{goodsInfo.goods_name}}</h1>
+            <font
+              color="#ff4a00"
+              style="margin-left:-5px;font-size:15px;"
+            >「分期享6期免息，购机享1TB小米云空间1年使用权」</font>
             <p class="sale-desc" style="“padding-top:10px;padding-bottom:15px;">{{goodsInfo.desc}}</p>
+            <font color="#ff4a00" style="padding-top:10px;font-size:15px;">小米自营</font>
             <div style="padding-top:20px;">
-              <span class="final-price">{{goodsInfo.goods_price}} 元</span>
+              <span class="final-price">{{goodsInfo.goods_price}}</span>
+              <del class="origin-price">3099元</del>
             </div>
           </div>
           <div class="pro-list">
             选择购买数量
-            <el-input-number v-model="num" :min="0" :max="goodsInfo.count"></el-input-number>
+            <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
             <span class="total-price">
               总计
-              <font>{{goodsTotalPrice}}</font>元
+              <font>{{this.totalprice}}</font>元
             </span>
           </div>
           <ul class="btn-warp">
             <li>
-              <!-- <router-link
+              <router-link
                 :to="{path:'/order/neworder',query:{gid:this.gid, count:this.count,price:this.totalprice}}"
-              > -->
+              >
                 <span class="btn-primary">去结算</span>
               </router-link>
             </li>
             <li>
               <a href="#" class="btn-like">
-                <i class="el-icon-star-off" v-if="!isFav" @click="addFavorite">收藏</i>
-                <i class="el-icon-star-on" v-else @click="cancelFavorite">收藏</i>
+                <i class="el-icon-star-off" @click="addFavorite()">喜欢</i>
               </a>
             </li>
           </ul>
@@ -98,9 +103,8 @@
 </template>
 <script>
 import { getimage, getGoodsInfo } from "@/api/goods";
-import { addFav, cancelFav } from "@/api/favorite";
+import { addFav } from "@/api/favorite";
 export default {
-  layout: "goodsdetail",
   created() {
     this.getGoodsInfo(this.gid);
   },
@@ -110,11 +114,37 @@ export default {
       tipsImg: "http://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a482afa34053b1b32ece1023475af7fb.jpeg",
       goodsInfo: '',
       gid: this.$route.query.gid,
+      totalprice: 0,//商品总价
+      count: 1,//商品购买数量
       num: 1,
-      isFav: false // 是否收藏
     };
   },
   methods: {
+    handleChange(value) {
+      this.totalprice = this.goods.goods_price * this.num
+      console.log(value)
+      this.count = value
+    },
+    addFavorite() {//添加收藏
+      this.gid = this.goods.gid;
+      addFav(this.gid);
+    },
+
+    addFav(gid) {
+      addFav(gid).then(res => {
+        let gid = { gid: this.gid };
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          this.$message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }
+      });
+    },
+
     getGoodsInfo(gid) {//获取商品详细信息
       getGoodsInfo(gid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
@@ -127,38 +157,29 @@ export default {
           return;
         }
         this.goodsInfo = res.data;
+        console.log(this.goodsInfo)
         // 保存照片
         this.imagelist[0] = this.goodsInfo.imgurl
-        this.isFav = this.goodsInfo.favorited
-      })
+        this.totalprice = this.goodsInfo.goods_price
+      });
     },
-    //添加收藏
-    addFavorite() {
-      addFav(this.gid).then(res => {
-        let status = this.$resultCode.getStatus(res.code)
-        this.$message({
-          message: res.message,
-          type: status.type
-        })
-        this.isFav = !this.isFav
-      })
-    },
-    cancelFavorite() {
-      cancelFav(this.gid).then(res => {
+    getimage() {
+      getimage().then(res => {
         let status = this.$resultCode.getStatus(res.code);
-        this.$message({
-          message: res.message,
-          type: status.type
-        });
-        this.isFav = !this.isFav
-      })
+        let success = this.$resultCode.getSuccessStatus();
+        if (status !== success) {
+          this.$message({
+            message: res.message,
+            type: status.type
+          });
+          return;
+        }
+        this.imagelist = res.data.imgItems;
+      });
     }
   },
-  computed: {
-    goodsTotalPrice() {
-      return this.goodsInfo.goods_price * this.num
-    }
-  }
+
+  layout: "goodsdetail"
 };
 </script>
 <style scoped>

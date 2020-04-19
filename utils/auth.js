@@ -21,8 +21,8 @@ export function getItem(key) {
 }
 
 export function setItem(key, value) {
-  var inFifteenMinutes = new Date(new Date().getTime() + ExpireTime * 60 * 1000);
-  return Cookies.set(key, value, { expires: inFifteenMinutes, secure: false })
+  // var inFifteenMinutes = new Date(new Date().getTime() + ExpireTime * 60 * 1000);
+  return Cookies.set(key, value, { expires: 50, secure: false })
 }
 
 export function removeItem(key) {

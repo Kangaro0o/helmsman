@@ -53,7 +53,7 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods.slice(0, 4)" :key="index">
-        <a :href="item.sgid">
+        <a :href="'/goods/detail/' + item.sgid">
           <img :src="item.imgUrl" alt />
           <p class="title">{{item.goods_name}}</p>
         </a>

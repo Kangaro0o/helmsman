@@ -30,7 +30,7 @@ export const goods = {
   list: '/goods/list/hot',
   tips: '/goods/tips/',
   getimagesItems: '/getimage',
-  // getgoodsinfo:'/goods/show/${gid}'
+  detail: '/goods/show/'
 }
 
 /**
@@ -44,7 +44,8 @@ export const seckill = {
 export const favorite = {
   fav: '/favorite/list/',
   delFav: '/favorite/',
-  addFav: '/favorite'
+  addFav: '/favorite',
+  cancel: '/favorite/cancel'
 }
 
 // 订单相关的url
