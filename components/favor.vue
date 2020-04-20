@@ -108,19 +108,11 @@ export default {
     delFavFun(fid) {
       delFav(fid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
-        let success = this.$resultCode.getSuccessStatus();
-        if (status !== success) {
-          this.$message({
-            message: res.message,
-            type: status.type
-          });
-          return;
-        }
         this.$message({
           message: res.message,
           type: status.type
         });
-        this.FavList();
+        this.$router.go(0);
       });
 
     }
