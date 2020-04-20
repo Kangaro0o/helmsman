@@ -58,6 +58,6 @@ export const order = {
 export const address = {
   addressItems: '/address/list',
   addaddress: '/address/add',
-  deleteaddress: '/address/deleteaddress',
+  deleteaddress: '/address/deleteaddress/',
   setdefaultaddress: '/address/default'
 }

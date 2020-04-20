@@ -61,8 +61,7 @@
                     <div class="address">{{item.address}}</div>
                     <!-- <div class="postcode">{{item.postcode}}</div> -->
                     <div class="address-action">
-                      <!-- <span class="operate">修改</span>
-                      <span class="operate">删除</span>-->
+                      <span class="operate" @click="deladdressFun(index)">删除</span>
                       <span class="operate" @click="setuserdefaultaddress(index)">设置为默认地址</span>
                     </div>
                   </div>
@@ -124,7 +123,8 @@
 </template>
 <script>
 import Footer from "@/components/Footer";
-import { getaddressItems, addaddress, deleteaddress, setdefaultaddress } from "@/api/address";
+import { getaddressItems, addaddress, deladdress, setdefaultaddress} from "@/api/address";
+
 export default {
   created() {
     this.getaddressItems();
@@ -343,26 +343,39 @@ export default {
       console.log(value);
     },
     setuserdefaultaddress(index) {
-      // this.defaultaddressid = index
       this.form2.aid = this.list[index].aid
-      //  let aiddata =new FoemData();
-      //  aiddata.append('aid',this.updateaddressid)
-      // var aid=this.updateaddressid
       console.log(typeof (this.list[index].aid))
       let aid = this.form2.aid
       console.log("test")
       console.log(aid)
       setdefaultaddress(JSON.parse(aid)).then(res => {
-
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
-        if (status !== success) {
-          Message({
+        console.log(status);
+        if (status == success) {
+          this.$message({
             message: res.message,
             type: status.type
           });
           return;
         }
+      });//设置aid为id的地址为默认地址
+    },
+    deladdressFun(index) {
+      this.form2.aid = this.list[index].aid
+      console.log(typeof (this.list[index].aid))
+      let aid = this.form2.aid
+      console.log("test")
+      console.log(aid)
+      deladdress(JSON.parse(aid)).then(res => {
+        let status = this.$resultCode.getStatus(res.code);
+        let success = this.$resultCode.getSuccessStatus();
+        console.log(status);
+        this.$message({
+          message: res.message,
+          type: status.type
+        });
+        this.$router.go(0);
       });//设置aid为id的地址为默认地址
     },
 

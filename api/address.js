@@ -22,7 +22,7 @@ export const addaddress = addressinfo => {
 }
 
 //删除地址
-export const deleteaddress = aid => {
+export const deladdress = aid => {
     return request({
         url: address.deleteaddress + aid,
         method: 'delete',
