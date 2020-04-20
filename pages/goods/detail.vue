@@ -37,9 +37,12 @@
             <li>
               <!-- <router-link
                 :to="{path:'/order/neworder',query:{gid:this.gid, count:this.count,price:this.totalprice}}"
-              > -->
+              >-->
+
+              <a href="javascript:void" @click="goPay">
                 <span class="btn-primary">去结算</span>
-              </router-link>
+              </a>
+              <!-- </router-link> -->
             </li>
             <li>
               <a href="#" class="btn-like">
@@ -52,11 +55,11 @@
             <ul class>
               <li class="labels">
                 <i class="el-icon-circle-check iconfont"></i>
-                <span class="spanitem">小米自营</span>
+                <span class="spanitem">舵手自营</span>
               </li>
               <li class="labels">
                 <i class="el-icon-circle-check iconfont"></i>
-                <span class="spanitem">小米发货</span>
+                <span class="spanitem">舵手发货</span>
               </li>
               <li class="labels">
                 <i class="el-icon-circle-check iconfont"></i>
@@ -65,10 +68,6 @@
               <li class="labels">
                 <i class="el-icon-circle-check iconfont"></i>
                 <span class="spanitem">运费说明</span>
-              </li>
-              <li class="labels">
-                <i class="el-icon-circle-check iconfont"></i>
-                <span class="spanitem">企业信息</span>
               </li>
               <li class="labels">
                 <i class="el-icon-circle-check iconfont"></i>
@@ -115,6 +114,21 @@ export default {
     };
   },
   methods: {
+    goPay() {
+      if (this.num <= 0) {
+        this.$message({
+          message: '请选择购买商品数量',
+          type: 'warning'
+        })
+        return
+      }
+      let params = {
+        'gid': this.goodsInfo.gid,
+        'price': this.goodsInfo.goods_price,
+        'num': this.num
+      }
+      this.$router.push({ name: 'order-neworder', params: params })
+    },
     getGoodsInfo(gid) {//获取商品详细信息
       getGoodsInfo(gid).then(res => {
         let status = this.$resultCode.getStatus(res.code);

@@ -16,6 +16,7 @@
         <a href="#">{{username}}</a>
         <a href="/user" target="_blank">个人中心</a>
         <a href="/order" target="_blank">我的订单</a>
+        <a href="/fav" target="_blank">我的收藏</a>
         <a href="javascript:void(0);" @click="logout">退出</a>
       </div>
     </div>

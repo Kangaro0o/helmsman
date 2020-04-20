@@ -2,7 +2,7 @@
   <div class="body">
     <div class="header">
       <div class="header-logo">
-        <a class="logo" href="//www.mi.com/index.html" title="小米官网"></a>
+        <a class="logo" href="/" title="舵手官网"></a>
       </div>
       <div class="header-title" id="J_miniHeaderTitle">
         <h2>支付订单</h2>
@@ -21,7 +21,7 @@
               <router-link to="/order">我的订单</router-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <router-link to="/fav">我的喜欢</router-link>
+              <router-link to="/fav">我的收藏</router-link>
             </el-dropdown-item>
             <el-dropdown-item>
               <a rel="nonfollow" href="#">退出登录</a>
@@ -69,19 +69,17 @@
               <ul style="float:left">
                 <li class="clearfix">
                   <label>商品件数:</label>
-                  <span class="val">{{this.count}}件</span>
+                  <span class="val">{{count}}件</span>
                 </li>
                 <li class="clearfix">
-                  <label>商品总价:</label>
-                  <span class="val">{{this.price}}元</span>
+                  <label>商品单价:</label>
+                  <span class="val">{{price}}元</span>
                 </li>
                 <!-- <li class="clearfix"><label>活动优惠:</label><span class="val">-0元</span></li>    
                 <li class="clearfix"><label>运费:</label><span class="val">0元</span></li>-->
                 <li class="clearfix total-price">
                   <label>应付总额:</label>
-                  <span class="val">
-                    <em>{{this.price}}</em>
-                  </span>
+                  <span class="val">{{price * count}}元</span>
                 </li>
               </ul>
             </div>
@@ -89,9 +87,12 @@
           <div class="section-bar">
             <div v-show="addressdivvisible">{{this.address}}</div>
             <span class="btn-primary" @click="createorder()">
-              <router-link v-if="isselected" :to="{path:'/payment',query:{price: this.price,address: this.address,}}" style="color:#fff;padding-top:5px;" class="pay"> 
-              立即下单
-              </router-link> 
+              <router-link
+                v-if="isselected"
+                :to="{path:'/payment',query:{price: this.price,address: this.address,}}"
+                style="color:#fff;padding-top:5px;"
+                class="pay"
+              >立即下单</router-link>
             </span>
           </div>
         </div>
@@ -113,7 +114,6 @@
               placeholder="选择/省/市/区"
               v-model="value"
               :options="options"
-              
               style="width:100%"
             ></el-cascader>
           </div>
@@ -144,11 +144,11 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog  title="提示"  :visible.sync="dialog2visible"  show-word-limit>
-        <div class="tishi">请先选择收货地址！</div>
-        <div style="text-align:center;">
-            <el-button @click="dialog2visible = false">确定</el-button>
-        </div>
+    <el-dialog title="提示" :visible.sync="dialog2visible" show-word-limit>
+      <div class="tishi">请先选择收货地址！</div>
+      <div style="text-align:center;">
+        <el-button @click="dialog2visible = false">确定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -156,6 +156,7 @@
 import { getaddressItems, addaddress } from "@/api/address.js";
 import { addorder } from "@/api/order.js";
 export default {
+  name: 'newOrderPage',
   created() {
     this.getaddressItems();
   },
@@ -225,17 +226,17 @@ export default {
       addressdivvisible: false,
       addresslist: null,
       dialogFormVisible: false,
-      gid: this.$route.query["gid"], //商品id
-      count: this.$route.query["count"], //商品数量
-      price: this.$route.query["price"], //商品购买总价
+      gid: this.$route.params.gid, //商品id
+      count: this.$route.params.num, //商品数量
+      price: this.$route.params.price, //商品购买总价
       receiver_name: "",
       receiver_phone: "",
       receiver_address: "",//收件地址
       receiver_postcode: "",
       address: {},//收件信息
       value: [],
-      dialog2visible :false,
-      isselected:false,
+      dialog2visible: false,
+      isselected: false,
       options: [
         {
           value: "江苏省",
@@ -355,7 +356,7 @@ export default {
   methods: {
     selected(index) {
       this.addressdivvisible = true;
-      this.isselected=true;
+      this.isselected = true;
       this.i = index;
       let address = this.$refs.addresstiem[index].innerText;
       this.address = address;
@@ -368,7 +369,7 @@ export default {
       // console.log(address);
       // console.log(addressbox);
     },
-    
+
     adddiv(ev) {
       this.$refs.form.validate(valid => {
         var prefix = this.value.join(""); //加上地址-省市区前缀
@@ -376,10 +377,10 @@ export default {
         this.list.push({
           receiver_name: this.form.receiver_name,
           receiver_phone: this.form.receiver_phone,
-          address: prefix+ this.form.receiver_address,
+          address: prefix + this.form.receiver_address,
           postcode: this.form.postcode
         });
-        
+
 
         var addressinfo = {
           receiver_phone: this.form.receiver_phone,
@@ -420,41 +421,39 @@ export default {
     },
 
     createorder() {
-        if(this.isselected === false)
-                  { this.dialog2visible=!this.dialog2visible;
-                  
-                  }
-      else
-      {   console.log('eee');
-          var orderinfo = {
-        gid: this.gid, //商品id
-        count: this.count, //购买数量
-        price: this.price, //购买价格
-        postcode: this.receiver_postcode, //收件地址邮编
-        receiverPhone: this.receiver_phone, //收件人电话,
-        receiverName: this.receiver_name, //收件人姓名
-        address: this.receiver_address //收件地址
-      };
-      addorder(orderinfo).then(res => {
-        let status = this.$resultCode.getStatus(res.code);
-        let success = this.$resultCode.getSuccessStatus();
-        if (status !== success) {
-          Message({
-            message: res.message,
-            type: status.type
-          });
-          return;
-        }
-      });
-    }}
+      if (this.isselected === false) {      this.dialog2visible = !this.dialog2visible;
+
+      }
+      else {        console.log('eee');
+        var orderinfo = {
+          gid: this.gid, //商品id
+          count: this.count, //购买数量
+          price: this.price, //购买价格
+          postcode: this.receiver_postcode, //收件地址邮编
+          receiverPhone: this.receiver_phone, //收件人电话,
+          receiverName: this.receiver_name, //收件人姓名
+          address: this.receiver_address //收件地址
+        };
+        addorder(orderinfo).then(res => {
+          let status = this.$resultCode.getStatus(res.code);
+          let success = this.$resultCode.getSuccessStatus();
+          if (status !== success) {
+            Message({
+              message: res.message,
+              type: status.type
+            });
+            return;
+          }
+        });
+      }    }
   },
   layout: "neworder"
 };
 </script>
 <style scoped>
-.tishi{
-    font-size:20px;
-    text-align:center;
+.tishi {
+  font-size: 20px;
+  text-align: center;
 }
 .active {
   border: 1px solid #ff6700;
@@ -492,7 +491,7 @@ export default {
   background-color: #ff6700;
   width: 55px;
   height: 55px;
-  background: url(/img/logo-mi.png) no-repeat;
+  background: url("../../assets/logo2.png") no-repeat;
 }
 .name {
   font-size: 18px;

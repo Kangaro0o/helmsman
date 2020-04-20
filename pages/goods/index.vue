@@ -75,7 +75,7 @@
           </div>
         </div>
         <el-pagination
-          hide-on-single-page="true"
+          :hide-on-single-page="true"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           background
