@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="header">
+    <!-- <div class="header">
       <div class="header-logo">
         <a class="logo" href="/" title="舵手官网"></a>
       </div>
@@ -35,7 +35,7 @@
           </span>
         </div>
       </div>
-    </div>
+    </div>-->
     <div class="neworderclass">
       <div class="order-body">
         <div class="check-box">
@@ -86,7 +86,7 @@
           </div>
           <div class="section-bar">
             <div v-show="addressdivvisible">{{this.address}}</div>
-            <span class="btn-primary" @click="createorder()">
+            <span class="btn btn-primary" @click="createorder()">
               <router-link
                 v-if="isselected"
                 :to="{path:'/payment',query:{price: this.price,address: this.address,}}"
@@ -157,6 +157,7 @@ import { getaddressItems, addaddress } from "@/api/address.js";
 import { addorder } from "@/api/order.js";
 export default {
   name: 'newOrderPage',
+  layout: 'layout-confirm-order',
   created() {
     this.getaddressItems();
   },
@@ -392,7 +393,7 @@ export default {
           let status = this.$resultCode.getStatus(res.code);
           let success = this.$resultCode.getSuccessStatus();
           if (status !== success) {
-            Message({
+            this.$message({
               message: res.message,
               type: status.type
             });
@@ -409,7 +410,7 @@ export default {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         if (status !== success) {
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           });
@@ -438,7 +439,7 @@ export default {
           let status = this.$resultCode.getStatus(res.code);
           let success = this.$resultCode.getSuccessStatus();
           if (status !== success) {
-            Message({
+            this.$message({
               message: res.message,
               type: status.type
             });
@@ -447,7 +448,6 @@ export default {
         });
       }    }
   },
-  layout: "neworder"
 };
 </script>
 <style scoped>
@@ -526,6 +526,31 @@ export default {
   margin-right: -42px;
   margin-top: -20px;
   cursor: pointer;
+  /* float: right;
+  background: #ff6700;
+  border-color: #ff6700;
+  color: #fff;
+  margin-top: -20px; */
+}
+a {
+  text-decoration: none;
+}
+.btn {
+  /* display: inline-block; */
+  width: 158px;
+  height: 38px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #b0b0b0;
+  font-size: 14px;
+  line-height: 38px;
+  text-align: center;
+  color: #b0b0b0;
+  cursor: pointer;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  margin-left: 30px;
+  vertical-align: top;
 }
 .section-bar {
   border-top: 2px solid #f5f5f5;
@@ -589,8 +614,6 @@ export default {
   padding: 48px 0 0;
   background-color: #fff;
   display: block;
-}
-.body {
 }
 .header {
   height: 100px;

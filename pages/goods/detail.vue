@@ -39,8 +39,8 @@
                 :to="{path:'/order/neworder',query:{gid:this.gid, count:this.count,price:this.totalprice}}"
               >-->
 
-              <a href="javascript:void" @click="goPay">
-                <span class="btn-primary">去结算</span>
+              <a href="javascript:void(0);" @click="addCart">
+                <span class="btn-primary">加入购物车</span>
               </a>
               <!-- </router-link> -->
             </li>
@@ -96,8 +96,9 @@
   </div>
 </template>
 <script>
-import { getimage, getGoodsInfo } from "@/api/goods";
-import { addFav, cancelFav } from "@/api/favorite";
+import { getimage, getGoodsInfo } from "@/api/goods"
+import { addFav, cancelFav } from "@/api/favorite"
+import { saveToCart } from '@/api/order'
 export default {
   layout: "goodsdetail",
   created() {
@@ -114,7 +115,7 @@ export default {
     };
   },
   methods: {
-    goPay() {
+    addCart() {
       if (this.num <= 0) {
         this.$message({
           message: '请选择购买商品数量',
@@ -122,12 +123,16 @@ export default {
         })
         return
       }
-      let params = {
+      // 把商品信息加入到购物车
+      let info = {
         'gid': this.goodsInfo.gid,
+        'num': this.num,
         'price': this.goodsInfo.goods_price,
-        'num': this.num
+        'name': this.goodsInfo.goods_name,
+        'image': this.goodsInfo.imgurl
       }
-      this.$router.push({ name: 'order-neworder', params: params })
+      saveToCart(info)
+      this.$router.push({ path: '/buy/successTip' })
     },
     getGoodsInfo(gid) {//获取商品详细信息
       getGoodsInfo(gid).then(res => {

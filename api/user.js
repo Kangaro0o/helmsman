@@ -1,5 +1,6 @@
 import request from '@/service'
-import { user } from '@/api/url';
+import { user } from '@/api/url'
+import { getItem } from '@/utils/auth'
 
 
 export const verify = verifyInfo => {
@@ -15,6 +16,10 @@ export const getchkCode = phone => {
     method: 'post',
     params: { phone }
   })
+}
+
+export const getDefaultAddressId = _ => {
+  return getItem('state').user.addressId
 }
 
 export const getUserInfo = () => {
