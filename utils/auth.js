@@ -25,6 +25,14 @@ export function setItem(key, value) {
   return Cookies.set(key, value, { expires: 50, secure: false })
 }
 
+export function addCart(value) {
+  return Cookies.set("myCart", value, { expires: 0.5 })
+}
+
+export function getCart() {
+  return Cookies.getJSON("myCart")
+}
+
 export function removeItem(key) {
   return Cookies.remove(key)
 }
