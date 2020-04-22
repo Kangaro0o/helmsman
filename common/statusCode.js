@@ -79,5 +79,10 @@ export default {
     code: 2006,
     message: "创建订单异常",
     type: 'error'
+  },
+  ORDER_NOT_FOUND: {
+    code: 2007,
+    message: '当前没有订单',
+    type: 'info'
   }
 }
