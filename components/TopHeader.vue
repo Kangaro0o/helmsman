@@ -120,7 +120,7 @@ export default {
         let success = this.$resultCode.getSuccessStatus()
         // 如果出错则弹框提示
         if (status !== success) {
-          Message({
+          this.$message({
             message: res.message,
             type: status.type
           })

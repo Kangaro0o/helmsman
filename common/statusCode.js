@@ -74,5 +74,10 @@ export default {
     code: 3002,
     message: '没有相关收藏',
     type: 'warning'
+  },
+  CREATE_ORDER_ERROR: {
+    code: 2006,
+    message: "创建订单异常",
+    type: 'error'
   }
 }
