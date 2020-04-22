@@ -54,11 +54,14 @@ export const order = {
   delOrd: '/order/',
   ordInfo: '/order/info/',
   addorder: '/order/create',
+  create: '/order/'
 }
 
 export const address = {
   addressItems: '/address/list',
   addaddress: '/address/add',
   deleteaddress: '/address/deleteaddress/',
-  setdefaultaddress: '/address/default'
+  setdefaultaddress: '/address/default',
+  // 某个地址详情
+  detail: '/address/'
 }

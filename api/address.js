@@ -3,7 +3,7 @@
 *@description
 */
 import request from '@/service'
-import { address, menu } from '@/api/url'
+import { address } from '@/api/url'
 
 //获取地址列表
 export const getaddressItems = _ => {
@@ -12,6 +12,15 @@ export const getaddressItems = _ => {
         method: 'get'
     })
 }
+
+// 获取指定id的地址
+export const getAddressById = aid => {
+    return request({
+        url: address.detail + aid,
+        method: 'get'
+    })
+}
+
 //添加地址
 export const addaddress = addressinfo => {
     return request({

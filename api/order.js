@@ -20,6 +20,15 @@ export const getOrder = (status, keyword) => {
   })
 }
 
+// 创建订单
+export const createOrder = ({ addressId, goodsId, payWay, num }) => {
+  return request({
+    url: order.create,
+    method: 'post',
+    data: { addressId, goodsId, payWay, num }
+  })
+}
+
 // 获取订单详情
 export const getOrdInfo = oid => {
   return request({

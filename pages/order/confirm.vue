@@ -128,14 +128,10 @@
               <div class="operating-button">
                 <a
                   data-log_code="bid=3515489.8&amp;bpm=25.83.3513216.1&amp;next=26.82"
-                  href="javascript:void(0);"
+                  :href="'/order/submit?aid=' + selectedAddress"
                   class="btn btn-primary"
                 >立即下单</a>
-                <a
-                  href="javascript:void(0);"
-                  class="btn btn-return"
-                  @click="this.$router.go(-1)"
-                >返回购物车</a>
+                <a href="javascript:void(0);" class="btn btn-return" @click="goBack">返回购物车</a>
               </div>
             </div>
           </div>
@@ -167,6 +163,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
     initSelectedAddress() {
       this.selectedAddress = getDefaultAddressId()
     },
@@ -183,7 +182,7 @@ export default {
 
     },
     selectDefaultAddress(aid) {
-      for (let i = 0; i < this.addressList.length; i++) {
+      for (let i = 0; this.addressList != null && i < this.addressList.length; i++) {
         if (this.addressList[i].aid == this.selectedAddress) {
           this.defaultReceiver = this.addressList[i].receiver_name + " " + this.addressList[i].receiver_phone
           this.defaultAddress = this.addressList[i].address

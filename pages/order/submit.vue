@@ -7,16 +7,13 @@
             <div class="fl">
               <h2 class="title">最后一步！去付款咯～</h2>
               <p class="order-time" id="J_deliverDesc"></p>
-              <p class="post-info" id="J_postInfo">
-                收货信息：刘文 158****2877 &nbsp;&nbsp;
-                江苏&nbsp;&nbsp;南京市&nbsp;&nbsp;鼓楼区&nbsp;&nbsp;湖南路街道&nbsp;&nbsp;汉口路22号 南京大学鼓楼校区
-              </p>
+              <p class="post-info" id="J_postInfo">收货信息：{{address}}</p>
             </div>
             <div class="fr">
               <p class="total">
                 应付总额：
                 <span class="money">
-                  <em>12897</em>元
+                  <em>{{cart.price * cart.num}}</em>元
                 </span>
               </p>
               <!-- <a href="javascript:void(0);" class="show-detail" id="J_showDetail">
@@ -35,7 +32,7 @@
               <ul class="clearfix payment-list J_paymentList J_linksign-customize">
                 <li
                   class="J_bank"
-                  :class="{'selected': payWay == 'zhifubao'}"
+                  :class="{'selected': payWay == '支付宝'}"
                   @click="selectPayWay('zhifubao')"
                 >
                   <img
@@ -46,7 +43,7 @@
                 </li>
                 <li
                   id="J_weixin"
-                  :class="{'selected': payWay == 'weixin'}"
+                  :class="{'selected': payWay == '微信'}"
                   @click="selectPayWay('weixin')"
                 >
                   <img
@@ -62,12 +59,8 @@
         <div class="section footer-detail clearfix">
           <div class="handle-action">
             <div class="operating-button">
-              <a href="javascript:void(0);" class="btn btn-primary">确认支付</a>
-              <a
-                href="javascript:void(0);"
-                class="btn btn-return"
-                @click="this.$router.go(-1)"
-              >返回上一级</a>
+              <a href="javascript:void(0);" class="btn btn-primary" @click="pay">确认支付</a>
+              <a href="javascript:void(0);" class="btn btn-return" @click="goBack">返回上一级</a>
             </div>
           </div>
         </div>
@@ -76,16 +69,68 @@
   </div>
 </template>
 <script>
+import { getAddressById } from '@/api/address'
+import { getGoodsFromCart, createOrder } from '@/api/order'
 export default {
   layout: 'layout-submit-order',
+  created() {
+    this.getAddress()
+  },
+  mounted() {
+    this.getCart()
+  },
   data() {
     return {
-      payWay: 'zhifubao'
+      payWay: '支付宝',
+      addressId: this.$route.query.aid,
+      address: '',
+      cart: ''
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
     selectPayWay(payWay) {
       this.payWay = payWay
+    },
+    getCart() {
+      this.cart = getGoodsFromCart()
+    },
+    getAddress() {
+      getAddressById(this.addressId).then(res => {
+        let status = this.$resultCode.getStatus(res.code)
+        let success = this.$resultCode.getSuccessStatus()
+        // 如果出错则弹框提示
+        if (status !== success) {
+          this.$message({
+            message: res.message,
+            type: status.type
+          })
+          return
+        }
+        let address = res.data
+        this.address = address.receiverName + " "
+          + address.receiverPhone + " " + address.address
+      })
+    },
+    pay() {
+      let params = {
+        'addressId': this.addressId,
+        'goodsId': this.cart.gid,
+        'payWay': this.payWay,
+        'num': this.cart.num
+      }
+      createOrder(params).then(res => {
+        let status = this.$resultCode.getStatus(res.code)
+        this.$message({
+          message: res.message,
+          type: status.type
+        })
+        setTimeout(_ => {
+          this.$router.push({ path: '/order/list' })
+        }, 1500)
+      })
     }
   }
 }
