@@ -8,52 +8,48 @@
               我的订单
               <small>
                 请谨防钓鱼链接或诈骗电话，
-                <a
-                  href="//www.mi.com/service/buy/Avoid%20Fraud/"
-                  target="_blank"
-                  data-stat-id="1dcad210d69d2f73"
-                  onclick="_msq.push(['trackEvent', '5cc76a9bce8347f4-1dcad210d69d2f73', '//www.mi.com/service/buy/Avoid20Fraud/', 'pcpid', '']);"
-                >了解更多&gt;</a>
+                <a href="#">了解更多&gt;</a>
               </small>
             </h1>
             <div class="more clearfix">
               <ul class="filter-list J_orderType">
-                <li :class="{ 'active': isActive[5], 'first': true }">
-                  <a
-                    @click="changeOrderStatus(5)"
-                  >全部有效订单</a>
+                <li :class="{ 'active': currentStatus === 5 }">
+                  <a @click="changeOrderStatus(5)">全部有效订单</a>
                 </li>
-                <li :class="{ 'active': isActive[1] }">
-                  <a
-                    @click="changeOrderStatus(1)"
-                  >待支付</a>
+                <li :class="{ 'active': currentStatus === 1 }">
+                  <a @click="changeOrderStatus(1)">待付款</a>
                 </li>
-                <li :class="{ 'active': isActive[2] }">
-                  <a
-                    @click="changeOrderStatus(2)"
-                  >待发货</a>
+                <li :class="{ 'active': currentStatus === 2 }">
+                  <a @click="changeOrderStatus(2)">待发货</a>
                 </li>
-                <li :class="{ 'active': isActive[3] }">
-                  <a
-                    @click="changeOrderStatus(3)"
-                  >待收货</a>
+                <li :class="{ 'active': currentStatus === 3 }">
+                  <a @click="changeOrderStatus(3)">待收货</a>
                 </li>
-                <li :class="{ 'active': isActive[4] }">
-                  <a
-                    @click="changeOrderStatus(4)"
-                  >已收货</a>
+                <li :class="{ 'active': currentStatus === 4 }">
+                  <a @click="changeOrderStatus(4)">已收货</a>
                 </li>
               </ul>
               <label class="search-box">
-                <input type="text" placeholder="搜索订单" class="search" style="height: 30px;" v-model="search">
+                <input
+                  type="text"
+                  placeholder="搜索订单"
+                  class="search"
+                  style="height: 30px;"
+                  v-model="keyword"
+                  v-on:keyup.13="searchOrd"
+                />
                 <i slot="suffix" class="el-icon-search icon-search" @click="searchOrd"></i>
               </label>
             </div>
           </div>
           <div class="box-bd">
             <div id="J_orderList">
-              <ul class="order-list">
-                <li class="uc-order-item uc-order-item-shipping" v-for="(item, index) in orderList" :key="index">
+              <ul class="order-list" v-if="orderList != null">
+                <li
+                  class="uc-order-item uc-order-item-shipping"
+                  v-for="(item, index) in orderList"
+                  :key="index"
+                >
                   <div class="order-detail">
                     <div class="order-summary">
                       <div class="order-status">{{orderStatus[item.status]}}</div>
@@ -65,9 +61,7 @@
                             <p class="caption-info">
                               {{item.receiver_name}}
                               <span class="sep">|</span>订单号：
-                              <a
-                                :href="item.order_id"
-                              >{{item.order_id}}</a>
+                              <a :href="item.order_id">{{item.order_id}}</a>
                             </p>
                           </th>
                           <th class="col-sub">
@@ -84,9 +78,7 @@
                             <ul class="goods-list">
                               <li>
                                 <div class="figure figure-thumb">
-                                  <a
-                                    :href="item.goods_id"
-                                  >
+                                  <a :href="item.goods_id">
                                     <img
                                       :src="item.imgUrl"
                                       width="80"
@@ -96,9 +88,7 @@
                                   </a>
                                 </div>
                                 <p class="name">
-                                  <a
-                                    :href="item.goods_id"
-                                  >{{item.goods_name}}</a>
+                                  <a :href="item.goods_id">{{item.goods_name}}</a>
                                 </p>
                                 <p class="price">{{item.goods_price}} × {{item.count}}</p>
                               </li>
@@ -116,6 +106,7 @@
                   </div>
                 </li>
               </ul>
+              <p class="empty" v-else>{{tip}}</p>
             </div>
           </div>
         </div>
@@ -133,47 +124,35 @@ export default {
 
   data() {
     return {
-      isActive: [0, false, false, false, false, true],
       currentStatus: 5,
-      search: "",
       orderList: [],
-      orderStatus: {"1": "待付款", "2": "待发货", "3": "待收货", "4": "已收货"},
+      orderStatus: { "1": "待付款", "2": "待发货", "3": "待收货", "4": "已收货" },
       keyword: "",
+      tip: ''
     }
   },
 
   methods: {
-    getOrderList(status) {
-      getOrder(status, this.keyword).then(res => {
+    getOrderList() {
+      getOrder(this.currentStatus, this.keyword).then(res => {
         let status = this.$resultCode.getStatus(res.code);
-        let success = this.$resultCode.getSuccessStatus();
-        if (status !== success) {
-          this.$message({
-            message: res.message,
-            type: status.type
-          });
-          return;
-        }
-        this.orderList = res.data.ordItems;
+        this.tip = res.message
+        this.orderList = res.data != null ? res.data.ordItems : null;
       })
     },
 
-    searchOrd(ev) {
-      if (this.search) {
-        this.getOrderList(this.currentStatus);
-      }
+    searchOrd() {
+      this.getOrderList();
     },
 
     toOrderInfo(order_id) {
       this.$router.push({ path: '/order/orderinfo', query: { oid: order_id } })
     },
-    
+
     changeOrderStatus(status) {
       if (this.currentStatus != status) {
-        this.$set(this.isActive, this.currentStatus, false);
-        this.$set(this.isActive, status, true);
-        this.currentStatus = status;
-        this.getOrderList(this.currentStatus);
+        this.currentStatus = status
+        this.getOrderList()
       }
     },
   },
@@ -279,7 +258,7 @@ a {
 }
 
 .uc-content-box .box-hd .filter-list a:hover {
-    color: #333;
+  color: #333;
 }
 
 .order-list-box .order-list {
@@ -304,7 +283,7 @@ a {
 }
 
 .uc-content-box .box-hd .icon-search {
-  margin-top: 13px; 
+  margin-top: 13px;
   margin-right: 5px;
   left: -28px;
   position: relative;
@@ -316,10 +295,10 @@ a {
   margin-top: 13px;
   color: #757575;
   width: 200px;
-  background-color: #FFF;
+  background-color: #fff;
   background-image: none;
   border-radius: 4px;
-  border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
   box-sizing: border-box;
   font-size: inherit;
   height: 40px;
@@ -327,8 +306,8 @@ a {
   outline: 0;
   padding: 0 15px;
   padding-right: 30px;
-  -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+  -webkit-transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   font-size: 10pt;
 }
 
@@ -366,8 +345,8 @@ a {
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 .order-list-box .order-detail-table {
@@ -513,8 +492,29 @@ table {
 }
 
 .btn-line-gray:hover {
-    color: #fff;
-    background-color: #757575;
-    border-color: #757575;
+  color: #fff;
+  background-color: #757575;
+  border-color: #757575;
+}
+.uc-content-box .box-bd .empty {
+  margin: 40px 0;
+  font-size: 18px;
+  text-align: center;
+  color: #b0b0b0;
+}
+.order-list-box .empty {
+  font-size: 16px;
+  text-align: center;
+}
+p,
+pre {
+  margin: 1em 0;
+}
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 </style>
