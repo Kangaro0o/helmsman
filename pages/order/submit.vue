@@ -33,7 +33,7 @@
                 <li
                   class="J_bank"
                   :class="{'selected': payWay == '支付宝'}"
-                  @click="selectPayWay('zhifubao')"
+                  @click="selectPayWay('支付宝')"
                 >
                   <img
                     src="//s01.mifile.cn/i/banklogo/payOnline_zfb.png?ver2015"
@@ -41,11 +41,7 @@
                     style="margin-left: 0;"
                   />
                 </li>
-                <li
-                  id="J_weixin"
-                  :class="{'selected': payWay == '微信'}"
-                  @click="selectPayWay('weixin')"
-                >
+                <li id="J_weixin" :class="{'selected': payWay == '微信'}" @click="selectPayWay('微信')">
                   <img
                     src="//c1.mifile.cn/f/i/16/pay/weixinpay.png"
                     alt="微信支付"
