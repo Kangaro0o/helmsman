@@ -86,7 +86,7 @@
                     </tr>
                     <tr>
                       <th>支付时间：</th>
-                      <td>{{Info.pay_time}}</td>
+                      <td>{{Info.payTime}}</td>
                     </tr>
                     <tr>
                       <th>支付方式：</th>
@@ -126,8 +126,7 @@
   </div>
 </template>
 <script>
-import { getOrdInfo } from '@/api/order'
-import { delOrd } from '@/api/order'
+import { getOrdInfo, delOrd } from '@/api/order'
 export default {
   data() {
     return {

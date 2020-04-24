@@ -19,7 +19,7 @@
                 <router-link to="/user">个人中心</router-link>
               </el-dropdown-item>
               <el-dropdown-item>
-                <router-link to="/order">我的订单</router-link>
+                <router-link to="/order/list">我的订单</router-link>
               </el-dropdown-item>
               <el-dropdown-item>
                 <router-link to="/fav">我的收藏</router-link>
