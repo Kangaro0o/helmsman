@@ -8,8 +8,6 @@
               <a
                 href="javascript:void(0)"
                 class="choose-btn btn btn-primary"
-                data-stat-id="ee202123db3b6aa6"
-                onclick="_msq.push(['trackEvent', 'f8510bf55a388fba-ee202123db3b6aa6', 'javascript:void0', 'pcpid', '']);"
               >选择该收货地址</a>
               <div class="address-title">
                 <span class="address-desc">刘文</span>
@@ -183,7 +181,7 @@ export default {
     },
     selectDefaultAddress(aid) {
       for (let i = 0; this.addressList != null && i < this.addressList.length; i++) {
-        if (this.addressList[i].aid == this.selectedAddress) {
+        if (this.addressList[i].aid === this.selectedAddress) {
           this.defaultReceiver = this.addressList[i].receiver_name + " " + this.addressList[i].receiver_phone
           this.defaultAddress = this.addressList[i].address
         }

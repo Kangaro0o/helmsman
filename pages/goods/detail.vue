@@ -96,7 +96,7 @@
   </div>
 </template>
 <script>
-import { getimage, getGoodsInfo } from "@/api/goods"
+import { getGoodsInfo } from "@/api/goods"
 import { addFav, cancelFav } from "@/api/favorite"
 import { saveToCart } from '@/api/order'
 export default {
@@ -125,11 +125,12 @@ export default {
       }
       // 把商品信息加入到购物车
       let info = {
-        'gid': this.goodsInfo.gid,
+        'id': this.goodsInfo.gid,
         'num': this.num,
         'price': this.goodsInfo.goods_price,
         'name': this.goodsInfo.goods_name,
-        'image': this.goodsInfo.imgurl
+        'image': this.goodsInfo.imgurl,
+        'isSecKill': false
       }
       saveToCart(info)
       this.$router.push({ path: '/buy/successTip' })

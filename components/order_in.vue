@@ -67,7 +67,7 @@
                           <th class="col-sub">
                             <p class="caption-price">
                               实付金额：
-                              <span class="num">{{item.goods_price}}</span>元
+                              <span class="num">{{item.goods_price * item.count}}</span>元
                             </p>
                           </th>
                         </tr>

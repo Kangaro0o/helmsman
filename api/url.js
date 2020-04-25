@@ -55,7 +55,9 @@ export const order = {
   delOrd: '/order/',
   ordInfo: '/order/',
   addorder: '/order/create',
-  create: '/order/'
+  create: '/order/',
+  // 创建秒杀订单
+  seckill: '/order/seckill'
 }
 
 export const address = {
