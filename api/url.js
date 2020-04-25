@@ -38,7 +38,8 @@ export const goods = {
  */
 export const seckill = {
   slide: '/seckill/slide',
-  list: '/seckill/list'
+  list: '/seckill/list',
+  detail: '/seckill/show/'
 }
 // 收藏列表相关的URL
 export const favorite = {

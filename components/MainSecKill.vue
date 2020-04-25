@@ -41,7 +41,7 @@ kBtXIpwT3iFV06zqquaKPKEtKIsM6Mo/StoWiQeMvSCJjO4+54hEwTCjuTk0STgckUm6QxTY3LgU
 Kc+/jyFrblyKCIkKbnPjSkT8HDGV5saVyBAtVHZz40Ik7HNTRtrcuBARF2tQbW5ciCR0mhvbIs2E
 cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
 7x4iTALjhcgVQSIl3v87w5vePcY/AQYAFYR6skFSqBUAAAAASUVORK5CYII="
-          alt="小米闪购"
+          alt="舵手闪购"
         />
         <div class="desc">{{desc}}</div>
         <div class="countdown clearfix">
@@ -53,7 +53,7 @@ cnNjWySh29zYFGnIK25KzY1Nkdziptzc2BKJUu7Qbm5sicQom2o3NzZEKqiu/DZpbmyIjIAHNBMZ
         </div>
       </div>
       <div class="goods-item" v-for="(item,index) in seckillGoods.slice(0, 4)" :key="index">
-        <a :href="'/goods/detail/' + item.sgid">
+        <a :href="'/seckill/detail?sgid=' + item.sgid" target="_blank">
           <img :src="item.imgUrl" alt />
           <p class="title">{{item.goods_name}}</p>
         </a>
