@@ -11,14 +11,10 @@
           href="javascript:void(0);"
           class="btn btn-primary btn-login"
           id="J_loginBtn"
-          data-stat-id="6ab7b2b79aa79ef3"
-          onclick="_msq.push(['trackEvent', '5df97b551662ffe7-6ab7b2b79aa79ef3', 'javascript:void0', 'pcpid', '']);"
         >立即登录</a>
         <a
           href="//list.mi.com/0"
           class="btn btn-primary btn-shoping J_goShoping"
-          data-stat-id="f7e2e8ff3af3bfec"
-          onclick="_msq.push(['trackEvent', '5df97b551662ffe7-f7e2e8ff3af3bfec', '//list.mi.com/0', 'pcpid', '']);"
         >马上去购物</a>
       </div>
       <div id="J_cartBox" class>
@@ -121,7 +117,6 @@
 
 <script>
 import { getGoodsFromCart } from '@/api/order'
-// import { getCart } from '@/utils/auth'
 export default {
   head() {
     return {

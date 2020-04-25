@@ -16,10 +16,6 @@
                   <em>{{cart.price * cart.num}}</em>元
                 </span>
               </p>
-              <!-- <a href="javascript:void(0);" class="show-detail" id="J_showDetail">
-                订单详情
-                <i class="iconfont"></i>
-              </a>-->
             </div>
           </div>
         </div>
@@ -32,7 +28,7 @@
               <ul class="clearfix payment-list J_paymentList J_linksign-customize">
                 <li
                   class="J_bank"
-                  :class="{'selected': payWay == '支付宝'}"
+                  :class="{'selected': payWay === '支付宝'}"
                   @click="selectPayWay('支付宝')"
                 >
                   <img
@@ -41,7 +37,7 @@
                     style="margin-left: 0;"
                   />
                 </li>
-                <li id="J_weixin" :class="{'selected': payWay == '微信'}" @click="selectPayWay('微信')">
+                <li id="J_weixin" :class="{'selected': payWay === '微信'}" @click="selectPayWay('微信')">
                   <img
                     src="//c1.mifile.cn/f/i/16/pay/weixinpay.png"
                     alt="微信支付"
@@ -66,7 +62,7 @@
 </template>
 <script>
 import { getAddressById } from '@/api/address'
-import { getGoodsFromCart, createOrder } from '@/api/order'
+import { getGoodsFromCart, createOrder, createSecKillOrder } from '@/api/order'
 export default {
   layout: 'layout-submit-order',
   created() {
@@ -110,13 +106,7 @@ export default {
           + address.receiverPhone + " " + address.address
       })
     },
-    pay() {
-      let params = {
-        'addressId': this.addressId,
-        'goodsId': this.cart.gid,
-        'payWay': this.payWay,
-        'num': this.cart.num
-      }
+    buyCommonGoods(params) {
       createOrder(params).then(res => {
         let status = this.$resultCode.getStatus(res.code)
         this.$message({
@@ -127,6 +117,31 @@ export default {
           this.$router.push({ path: '/order/list' })
         }, 1500)
       })
+    },
+    buySecKillGoods(params) {
+      createSecKillOrder(params).then(res => {
+        let status = this.$resultCode.getStatus(res.code)
+        this.$message({
+          message: res.message,
+          type: status.type
+        })
+        setTimeout(_ => {
+          this.$router.push({ path: '/order/list' })
+        }, 1500)
+      })
+    },
+    pay() {
+      let params = {
+        'addressId': this.addressId,
+        'goodsId': this.cart.id,
+        'payWay': this.payWay,
+        'num': this.cart.num
+      }
+      if (this.cart.isSecKill) {
+        this.buySecKillGoods(params)
+      } else {
+        this.buyCommonGoods(params)
+      }
     }
   }
 }
