@@ -155,21 +155,27 @@ export default {
     addFavorite() {
       addFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
+        let success = ths.$resultCode.getSuccessStatus()
+        // if (status === success) {
+        //   this.isFav = !this.isFav
+        // }
         this.$message({
           message: res.message,
           type: status.type
         })
-        this.isFav = !this.isFav
       })
     },
     cancelFavorite() {
       cancelFav(this.gid).then(res => {
-        let status = this.$resultCode.getStatus(res.code);
+        let status = this.$resultCode.getStatus(res.code)
+        let success = ths.$resultCode.getSuccessStatus()
+        // if (status === success) {
+        //   this.isFav = !this.isFav
+        // }
         this.$message({
           message: res.message,
           type: status.type
-        });
-        this.isFav = !this.isFav
+        })
       })
     }
   },

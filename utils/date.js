@@ -24,6 +24,11 @@ export const timeDiff = (start, end) => {
   }
 }
 
+/**
+ * 计算秒杀活动场次，如10:00
+ * @param start_time
+ * @returns {string}
+ */
 export const parsePlay = start_time => {
   let start = new Date(start_time)
   let hour = start.getHours()

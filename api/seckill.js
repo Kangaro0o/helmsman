@@ -20,3 +20,12 @@ export const seckillList = _ => {
     method: 'get'
   })
 }
+
+// 获取秒杀商品详情
+export const getSeckillGoods = sgid => {
+  // console.log(seckill.detail + sgid)
+  return request({
+    url: seckill.detail + sgid,
+    method: 'get'
+  })
+}
