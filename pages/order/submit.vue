@@ -37,7 +37,11 @@
                     style="margin-left: 0;"
                   />
                 </li>
-                <li id="J_weixin" :class="{'selected': payWay === '微信'}" @click="selectPayWay('微信')">
+                <li
+                  id="J_weixin"
+                  :class="{'selected': payWay === '微信'}"
+                  @click="selectPayWay('微信')"
+                >
                   <img
                     src="//c1.mifile.cn/f/i/16/pay/weixinpay.png"
                     alt="微信支付"
@@ -131,15 +135,26 @@ export default {
       })
     },
     pay() {
-      let params = {
-        'addressId': this.addressId,
-        'goodsId': this.cart.id,
-        'payWay': this.payWay,
-        'num': this.cart.num
-      }
       if (this.cart.isSecKill) {
+        let params = {
+          'gid': this.cart.id,
+          'receiverPhone': this.cart.receiverPhone,
+          'receiverName': this.cart.receiverName,
+          'address': this.cart.address,
+          'postcode': this.cart.postcode,
+          'count': this.cart.num,
+          'price': this.cart.price,
+          'payType': this.payWay,
+        }
+        console.log(params)
         this.buySecKillGoods(params)
       } else {
+        let params = {
+          'addressId': this.addressId,
+          'goodsId': this.cart.id,
+          'payWay': this.payWay,
+          'num': this.cart.num
+        }
         this.buyCommonGoods(params)
       }
     }

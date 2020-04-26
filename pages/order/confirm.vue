@@ -3,19 +3,6 @@
     <div class="container">
       <div class="checkout-wrap">
         <div class="checkout-detail">
-          <div class="fixed-header" style="display: none;">
-            <div class="fixed-address-choose">
-              <a
-                href="javascript:void(0)"
-                class="choose-btn btn btn-primary"
-              >选择该收货地址</a>
-              <div class="address-title">
-                <span class="address-desc">刘文</span>
-                <span class="address-desc">15850682877</span>
-                <span class="address-desc">江苏 南京市 鼓楼区 汉口路22号 南京大学鼓楼校区</span>
-              </div>
-            </div>
-          </div>
           <div class="detail-section address-detail">
             <div class="address-header">
               <span class="header-title">收货地址</span>
@@ -115,7 +102,7 @@
           <div class="detail-section footer-detail clearfix">
             <div class="footer-address">
               <div class="selecter-address">
-                <div class="address-name">{{defaultReceiver}}</div>
+                <div class="address-name">{{defaultReceiver + " " + defaultPhone}}</div>
                 <div class="address-desc">
                   <span>{{defaultAddress}}</span>
                   <!-- <a >修改</a> -->
@@ -126,8 +113,8 @@
               <div class="operating-button">
                 <a
                   data-log_code="bid=3515489.8&amp;bpm=25.83.3513216.1&amp;next=26.82"
-                  :href="'/order/submit?aid=' + selectedAddress"
                   class="btn btn-primary"
+                  @click="goSubmit"
                 >立即下单</a>
                 <a href="javascript:void(0);" class="btn btn-return" @click="goBack">返回购物车</a>
               </div>
@@ -139,7 +126,7 @@
   </div>
 </template>
 <script>
-import { getGoodsFromCart } from '@/api/order'
+import { getGoodsFromCart, saveToCart } from '@/api/order'
 import { getaddressItems } from '@/api/address'
 import { getDefaultAddressId } from '@/api/user'
 export default {
@@ -156,11 +143,23 @@ export default {
       goodsInfo: '',
       addressList: [],
       defaultReceiver: '',
+      defaultPhone: '',
+      defaultPostCode: '',
       defaultAddress: '',
       selectedAddress: 0
     }
   },
   methods: {
+    goSubmit() {
+      // 添加收货人信息到cookie
+      this.goodsInfo['receiverPhone'] = this.defaultPhone
+      this.goodsInfo['receiverName'] = this.defaultReceiver
+      this.goodsInfo['address'] = this.defaultAddress
+      this.goodsInfo['postcode'] = this.defaultPostCode
+      // 将地址信息保存到cookie
+      saveToCart(this.goodsInfo)
+      this.$router.push({ path: '/order/submit?aid=' + this.selectedAddress })
+    },
     goBack() {
       this.$router.go(-1)
     },
@@ -182,8 +181,10 @@ export default {
     selectDefaultAddress(aid) {
       for (let i = 0; this.addressList != null && i < this.addressList.length; i++) {
         if (this.addressList[i].aid === this.selectedAddress) {
-          this.defaultReceiver = this.addressList[i].receiver_name + " " + this.addressList[i].receiver_phone
+          this.defaultReceiver = this.addressList[i].receiver_name
+          this.defaultPhone = this.addressList[i].receiver_phone
           this.defaultAddress = this.addressList[i].address
+          this.defaultPostCode = this.addressList[i].postcode
         }
       }
     },

@@ -30,11 +30,15 @@ export const createOrder = ({ addressId, goodsId, payWay, num }) => {
 }
 
 // 创建秒杀订单
-export const createSecKillOrder = ({addressId, goodsId, payWay, num}) => {
+export const createSecKillOrder = ({ gid, receiverPhone, receiverName, address, postcode,
+  count, price, payType }) => {
   return request({
     url: order.seckill,
     method: 'post',
-    data: {addressId, goodsId, payWay, num}
+    data: {
+      gid, receiverPhone, receiverName, address, postcode,
+      count, price, payType
+    }
   })
 }
 
