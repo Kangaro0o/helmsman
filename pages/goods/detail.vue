@@ -157,9 +157,9 @@ export default {
       addFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
         let success = ths.$resultCode.getSuccessStatus()
-        // if (status === success) {
-        //   this.isFav = !this.isFav
-        // }
+        if (status === success) {
+          this.isFav = !this.isFav
+        }
         this.$message({
           message: res.message,
           type: status.type
@@ -170,9 +170,9 @@ export default {
       cancelFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
         let success = ths.$resultCode.getSuccessStatus()
-        // if (status === success) {
-        //   this.isFav = !this.isFav
-        // }
+        if (status === success) {
+          this.isFav = !this.isFav
+        }
         this.$message({
           message: res.message,
           type: status.type
