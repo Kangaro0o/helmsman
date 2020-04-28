@@ -12,7 +12,7 @@ export default {
   // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
   // http://120.55.168.67:7300/mock/5e13222762413f3b595c34e4/helmsman
   // http://49.235.238.192:8888
-  baseURL: 'http://39.105.49.12:8090',
+  baseURL: 'http://localhost:8090',
   // 超时设置
   timeout: 3000, // 3秒
   // 响应的数据格式 json/blob/document/arraybuffer/text/stream

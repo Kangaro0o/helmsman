@@ -35,14 +35,9 @@
           </div>
           <ul class="btn-warp">
             <li>
-              <!-- <router-link
-                :to="{path:'/order/neworder',query:{gid:this.gid, count:this.count,price:this.totalprice}}"
-              >-->
-
               <a href="javascript:void(0);" @click="addCart">
                 <span class="btn-primary">加入购物车</span>
               </a>
-              <!-- </router-link> -->
             </li>
             <li>
               <a href="#" class="btn-like">
@@ -157,7 +152,7 @@ export default {
       addFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
         let success = ths.$resultCode.getSuccessStatus()
-        if (status === success) {
+        if (status == success) {
           this.isFav = !this.isFav
         }
         this.$message({
@@ -170,7 +165,7 @@ export default {
       cancelFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
         let success = ths.$resultCode.getSuccessStatus()
-        if (status === success) {
+        if (status == success) {
           this.isFav = !this.isFav
         }
         this.$message({
