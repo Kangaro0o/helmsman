@@ -123,7 +123,7 @@
 </template>
 <script>
 import Footer from "@/components/Footer";
-import { getaddressItems, addaddress, deladdress, setdefaultaddress} from "@/api/address";
+import { getaddressItems, addaddress, deladdress, setdefaultaddress } from "@/api/address";
 
 export default {
   created() {
@@ -348,7 +348,8 @@ export default {
       let aid = this.form2.aid
       console.log("test")
       console.log(aid)
-      setdefaultaddress(JSON.parse(aid)).then(res => {
+      // JSON.parse(aid)
+      setdefaultaddress(aid).then(res => {
         let status = this.$resultCode.getStatus(res.code);
         let success = this.$resultCode.getSuccessStatus();
         console.log(status);

@@ -13,6 +13,7 @@
                   class="search"
                   style="height: 30px;"
                   v-model="keyword"
+                  v-on:keyup.13="searchFavFun"
                 />
                 <i slot="suffix" class="el-icon-search icon-search" @click="searchFavFun"></i>
               </label>
@@ -33,7 +34,7 @@
                       <p class="price">
                         <span class="price_span">
                           <span class="price_span">{{item.goods_price}}元</span>
-                          <del>{{item.seckill_price}}元</del>
+                          <!-- <del>{{item.seckill_price}}元</del> -->
                         </span>
                       </p>
                       <p class="rank">
@@ -87,7 +88,7 @@ export default {
     },
     searchFavFun(ev) {
       if (this.keyword) {
-        getFav(keyword).then(res => {
+        getFav(this.keyword).then(res => {
           let status = this.$resultCode.getStatus(res.code);
           let success = this.$resultCode.getSuccessStatus();
           if (status !== success) {
