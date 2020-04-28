@@ -149,9 +149,10 @@ export default {
     },
     //添加收藏
     addFavorite() {
+      console.log("addFav:")
       addFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
-        let success = ths.$resultCode.getSuccessStatus()
+        let success = this.$resultCode.getSuccessStatus()
         if (status == success) {
           this.isFav = !this.isFav
         }
@@ -164,7 +165,7 @@ export default {
     cancelFavorite() {
       cancelFav(this.gid).then(res => {
         let status = this.$resultCode.getStatus(res.code)
-        let success = ths.$resultCode.getSuccessStatus()
+        let success = this.$resultCode.getSuccessStatus()
         if (status == success) {
           this.isFav = !this.isFav
         }
